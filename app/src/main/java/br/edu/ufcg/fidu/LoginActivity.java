@@ -1,4 +1,4 @@
-package ufcg.edu.br.fidu;
+package br.edu.ufcg.fidu;
 
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;

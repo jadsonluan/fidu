@@ -1,4 +1,4 @@
-package ufcg.edu.br.fidu;
+package br.edu.ufcg.fidu;
 
 import org.junit.Test;
 
