@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">Fidu</string>
+    <string name="signup">Cadastrar</string>
+    <string name="login">Entrar</string>
 </resources>
