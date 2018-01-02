@@ -1,9 +1,16 @@
 <resources>
+
     <string name="app_name">Fidu</string>
-    <string name="signup">Cadastrar</string>
+
     <string name="login">Entrar</string>
-    <string name="forget_password">Esqueceu sua senha?</string>
+    <string name="signup">Cadastrar</string>
+
     <string name="email">E-mail</string>
+
     <string name="password">Senha</string>
+    <string name="forgot_password">Esqueceu sua senha?</string>
+
+    <string name="auth_success">Autenticado</string>
     <string name="auth_failed">A autenticação falhou</string>
+
 </resources>
