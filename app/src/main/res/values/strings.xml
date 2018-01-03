@@ -1,24 +1,29 @@
 <resources>
 
     <string name="app_name">Fidu</string>
-    <string name="signup">Cadastrar</string>
     <string name="login">Entrar</string>
+    <string name="signup">Cadastrar</string>
+
     <string name="name">Nome de exibição</string>
     <string name="address">Endereço</string>
     <string name="email">E-mail</string>
     <string name="password">Senha</string>
-    <string name="donater">Doador</string>
-    <string name="donatory">Instituição</string>
+    <string name="donor">Doador</string>
+    <string name="donee">Donatário</string>
     <string name="confirm_password">Confirme sua senha</string>
     <string name="forgot_password">Esqueceu sua senha?</string>
 
-    <string name="auth_success">Autenticado</string>
-    <string name="auth_failed">A autenticação falhou</string>
+    <string name="email_empty">E-mail vazio</string>
+    <string name="password_empty">Senha vazia</string>
 
-    <string name="password_doesnt_matches">As senhas não correspondem</string>
+    <string name="password_doesnt_match">As senhas não correspondem</string>
     <string name="email_invalid">E-mail inválido</string>
     <string name="password_too_short">Senha muito curta</string>
     <string name="name_is_empty">Nome de exibição vazio</string>
+    <string name="address_empty">Endereço vazio</string>
+
+    <string name="auth_success">Autenticado</string>
+    <string name="auth_failed">A autenticação falhou</string>
 
     <string name="signup_failed">Falha no cadastro</string>
     <string name="signup_success">Cadastro realizado</string>

@@ -1,7 +1,6 @@
 package br.edu.ufcg.fidu;
 
 import android.content.Context;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
@@ -17,11 +16,10 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.GetTokenResult;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
-import br.edu.ufcg.fidu.models.Donater;
+import br.edu.ufcg.fidu.models.Donor;
 
 public class DonaterSignupFragment extends Fragment {
     // UI Components
@@ -82,8 +80,8 @@ public class DonaterSignupFragment extends Fragment {
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if (task.isSuccessful()) {
                     String uid = task.getResult().getUser().getUid();;
-                    Donater donater = new Donater(name, email, password);
-                    mDatabase.child("users").child("donors").child(uid).setValue(donater);
+                    Donor donor = new Donor(name, email, password);
+                    mDatabase.child("users").child("donors").child(uid).setValue(donor);
                     Toast.makeText(getActivity(), R.string.signup_success, Toast.LENGTH_SHORT).show();
                 } else {
                     Toast.makeText(getActivity(), R.string.signup_failed, Toast.LENGTH_SHORT).show();

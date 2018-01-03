@@ -1,7 +1,6 @@
 package br.edu.ufcg.fidu;
 
 import android.content.Context;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
@@ -19,7 +18,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
-import br.edu.ufcg.fidu.models.Donatory;
+import br.edu.ufcg.fidu.models.Donee;
 
 public class DonatorySignupFragment extends Fragment {
     // UI Components
@@ -84,8 +83,8 @@ public class DonatorySignupFragment extends Fragment {
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if (task.isSuccessful()) {
                     String uid = task.getResult().getUser().getUid();
-                    Donatory donatory = new Donatory(name, email, password, address);
-                    mDatabase.child("users").child("donees").child(uid).setValue(donatory);
+                    Donee donee = new Donee(name, email, password, address);
+                    mDatabase.child("users").child("donees").child(uid).setValue(donee);
                     Toast.makeText(getActivity(), R.string.signup_success, Toast.LENGTH_SHORT)
                             .show();
                 } else {
