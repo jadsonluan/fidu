@@ -20,7 +20,8 @@ import com.google.firebase.database.FirebaseDatabase;
 
 import br.edu.ufcg.fidu.models.Donee;
 
-public class DonatorySignupFragment extends Fragment {
+public class DoneeSignupFragment extends Fragment {
+
     // UI Components
     private EditText etName;
     private EditText etEmail;
@@ -29,11 +30,11 @@ public class DonatorySignupFragment extends Fragment {
     private EditText etAddress;
     private Button btnSignup;
 
-    // Firebase stuff
+    // Firebase Components
     private FirebaseAuth mAuth;
     private DatabaseReference mDatabase;
 
-    public DonatorySignupFragment() {}
+    public DoneeSignupFragment() {}
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -43,7 +44,7 @@ public class DonatorySignupFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_donatory_signup, container, false);
+        return inflater.inflate(R.layout.fragment_donee_signup, container, false);
     }
 
     @Override
@@ -57,6 +58,7 @@ public class DonatorySignupFragment extends Fragment {
         etPasswordConfirm = (EditText) view.findViewById(R.id.etPasswordConfirm);
         etAddress = (EditText) view.findViewById(R.id.etAddress);
         btnSignup = (Button) view.findViewById(R.id.btnSignup);
+
         btnSignup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -73,7 +75,8 @@ public class DonatorySignupFragment extends Fragment {
 
     private void signup(final String name, final String email, final String password,
                         final String passwordConfirm, final String address) {
-        if (!validate(name, email, password, passwordConfirm)) {
+
+        if (!validate(name, email, password, passwordConfirm, address)) {
             return;
         }
 
@@ -87,7 +90,9 @@ public class DonatorySignupFragment extends Fragment {
                     mDatabase.child("users").child("donees").child(uid).setValue(donee);
                     Toast.makeText(getActivity(), R.string.signup_success, Toast.LENGTH_SHORT)
                             .show();
-                } else {
+                }
+
+                else {
                     Toast.makeText(getActivity(), R.string.signup_failed, Toast.LENGTH_SHORT)
                             .show();
                 }
@@ -96,25 +101,35 @@ public class DonatorySignupFragment extends Fragment {
 
     }
 
-    private boolean validate(String name, String email, String password, String passwordConfirm) {
-        if (!password.equals(passwordConfirm)) {
-            Toast.makeText(getActivity(), R.string.password_doesnt_matches, Toast.LENGTH_SHORT)
-                    .show();
+    private boolean validate(String name, String email, String password, String passwordConfirm,
+                             String address) {
+        if (name == null || name.trim().equals("")) {
+            Toast.makeText(getActivity(), R.string.name_is_empty, Toast.LENGTH_SHORT).show();
             return false;
         }
 
-        if (password.length() <= 4) {
-            Toast.makeText(getActivity(), R.string.password_too_short, Toast.LENGTH_SHORT).show();
+        if (address == null || address.trim().equals("")) {
+            Toast.makeText(getActivity(), R.string.address_empty, Toast.LENGTH_SHORT).show();
             return false;
         }
 
-        if (!email.contains("@")) {
+        if (email == null || email.trim().equals("")) {
+            Toast.makeText(getActivity(), R.string.email_empty, Toast.LENGTH_SHORT).show();
+            return false;
+        }
+
+        if (!email.contains("@") || !email.contains(".")) {
             Toast.makeText(getActivity(), R.string.email_invalid, Toast.LENGTH_SHORT).show();
             return false;
         }
 
-        if (name == null || name.trim().equals("")) {
-            Toast.makeText(getActivity(), R.string.name_is_empty, Toast.LENGTH_SHORT).show();
+        if (password.length() < 5) {
+            Toast.makeText(getActivity(), R.string.password_too_short, Toast.LENGTH_SHORT).show();
+            return false;
+        }
+
+        if (!password.equals(passwordConfirm)) {
+            Toast.makeText(getActivity(), R.string.password_doesnt_match, Toast.LENGTH_SHORT).show();
             return false;
         }
 

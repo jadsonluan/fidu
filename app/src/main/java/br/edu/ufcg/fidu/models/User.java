@@ -1,6 +1,7 @@
 package br.edu.ufcg.fidu.models;
 
 public class User {
+
     private String name;
     private String email;
     private String password;
@@ -38,10 +39,10 @@ public class User {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (o == null ) return false;
+        if (getClass() != o.getClass()) return false;
 
         User user = (User) o;
-
         return email.equals(user.email);
     }
 
@@ -49,4 +50,5 @@ public class User {
     public int hashCode() {
         return email.hashCode();
     }
+
 }

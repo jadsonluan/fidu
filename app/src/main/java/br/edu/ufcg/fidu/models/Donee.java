@@ -1,9 +1,10 @@
 package br.edu.ufcg.fidu.models;
 
-public class Donatory extends User {
+public class Donee extends User {
+
     private String address;
 
-    public Donatory(String name, String email, String password, String address) {
+    public Donee(String name, String email, String password, String address) {
         super(name, email, password);
         this.address = address;
     }
@@ -15,4 +16,5 @@ public class Donatory extends User {
     public void setAddress(String address) {
         this.address = address;
     }
+    
 }

@@ -21,7 +21,8 @@ import com.google.firebase.database.FirebaseDatabase;
 
 import br.edu.ufcg.fidu.models.Donor;
 
-public class DonaterSignupFragment extends Fragment {
+public class DonorSignupFragment extends Fragment {
+
     // UI Components
     private EditText etName;
     private EditText etEmail;
@@ -29,22 +30,21 @@ public class DonaterSignupFragment extends Fragment {
     private EditText etPasswordConfirm;
     private Button btnSignup;
 
-    // Firebase stuff
+    // Firebase Components
     private FirebaseAuth mAuth;
     private DatabaseReference mDatabase;
 
-    public DonaterSignupFragment() {}
+    public DonorSignupFragment() {}
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Log.d("DonaterSignUpFragment", "onCreate()");
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_donater_signup, container, false);
+        return inflater.inflate(R.layout.fragment_donor_signup, container, false);
     }
 
     @Override
@@ -57,6 +57,7 @@ public class DonaterSignupFragment extends Fragment {
         etPassword = (EditText) view.findViewById(R.id.etPassword);
         etPasswordConfirm = (EditText) view.findViewById(R.id.etPasswordConfirm);
         btnSignup = (Button) view.findViewById(R.id.btnSignup);
+
         btnSignup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -70,7 +71,9 @@ public class DonaterSignupFragment extends Fragment {
         });
     }
 
-    private void signup(final String name, final String email, final String password, final String passwordConfirm) {
+    private void signup(final String name, final String email, final String password,
+                        final String passwordConfirm) {
+
         if (!validate(name, email, password, passwordConfirm)) {
             return;
         }
@@ -83,7 +86,9 @@ public class DonaterSignupFragment extends Fragment {
                     Donor donor = new Donor(name, email, password);
                     mDatabase.child("users").child("donors").child(uid).setValue(donor);
                     Toast.makeText(getActivity(), R.string.signup_success, Toast.LENGTH_SHORT).show();
-                } else {
+                }
+
+                else {
                     Toast.makeText(getActivity(), R.string.signup_failed, Toast.LENGTH_SHORT).show();
                 }
             }
@@ -92,23 +97,28 @@ public class DonaterSignupFragment extends Fragment {
     }
 
     private boolean validate(String name, String email, String password, String passwordConfirm) {
-        if (!password.equals(passwordConfirm)) {
-            Toast.makeText(getActivity(), R.string.password_doesnt_matches, Toast.LENGTH_SHORT).show();
+        if (name == null || name.trim().equals("")) {
+            Toast.makeText(getActivity(), R.string.name_is_empty, Toast.LENGTH_SHORT).show();
             return false;
         }
 
-        if (password.length() <= 4) {
-            Toast.makeText(getActivity(), R.string.password_too_short, Toast.LENGTH_SHORT).show();
+        if (email == null || email.trim().equals("")) {
+            Toast.makeText(getActivity(), R.string.email_empty, Toast.LENGTH_SHORT).show();
             return false;
         }
 
-        if (!email.contains("@")) {
+        if (!email.contains("@") || !email.contains(".")) {
             Toast.makeText(getActivity(), R.string.email_invalid, Toast.LENGTH_SHORT).show();
             return false;
         }
 
-        if (name == null || name.trim().equals("")) {
-            Toast.makeText(getActivity(), R.string.name_is_empty, Toast.LENGTH_SHORT).show();
+        if (password.length() < 5) {
+            Toast.makeText(getActivity(), R.string.password_too_short, Toast.LENGTH_SHORT).show();
+            return false;
+        }
+
+        if (!password.equals(passwordConfirm)) {
+            Toast.makeText(getActivity(), R.string.password_doesnt_match, Toast.LENGTH_SHORT).show();
             return false;
         }
 
@@ -124,4 +134,5 @@ public class DonaterSignupFragment extends Fragment {
     public void onDetach() {
         super.onDetach();
     }
+
 }

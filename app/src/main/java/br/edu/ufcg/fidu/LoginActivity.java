@@ -14,11 +14,39 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 
 public class LoginActivity extends AppCompatActivity {
-    private FirebaseAuth mAuth;
+
     // UI Components
     private EditText etEmail;
     private EditText etPassword;
     private Button btnLogin;
+
+    // Firebase Components
+    private FirebaseAuth mAuth;
+
+    private void login(String email, String password) {
+        if (email == null || email.trim().equals("")) {
+            Toast.makeText(LoginActivity.this, R.string.email_empty, Toast.LENGTH_LONG)
+                    .show();
+        }
+
+        else if (password == null || password.trim().equals("")) {
+            Toast.makeText(LoginActivity.this, R.string.password_empty, Toast.LENGTH_LONG)
+                    .show();
+        }
+
+        else {
+            mAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                @Override
+                public void onComplete(@NonNull Task<AuthResult> task) {
+                    if (task.isSuccessful()) {
+                        Toast.makeText(LoginActivity.this, R.string.auth_success, Toast.LENGTH_LONG).show();
+                    } else {
+                        Toast.makeText(LoginActivity.this, R.string.auth_failed, Toast.LENGTH_LONG).show();
+                    }
+                }
+            });
+        }
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,23 +72,4 @@ public class LoginActivity extends AppCompatActivity {
         });
     }
 
-    private void login(String email, String password) {
-        if (email == null || email.trim().equals("") || password == null || password.trim().equals("")) {
-            Toast.makeText(LoginActivity.this, "E-mail ou senha vazios.", Toast.LENGTH_LONG)
-                .show();
-        }
-
-        else {
-            mAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                @Override
-                public void onComplete(@NonNull Task<AuthResult> task) {
-                    if (task.isSuccessful()) {
-                        Toast.makeText(LoginActivity.this, R.string.auth_success, Toast.LENGTH_LONG).show();
-                    } else {
-                        Toast.makeText(LoginActivity.this, R.string.auth_failed, Toast.LENGTH_LONG).show();
-                    }
-                }
-            });
-        }
-    }
 }

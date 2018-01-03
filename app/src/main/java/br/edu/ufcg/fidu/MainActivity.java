@@ -7,9 +7,18 @@ import android.view.View;
 import android.widget.Button;
 
 public class MainActivity extends AppCompatActivity {
+
     // UI Components
     private Button btnEntrar;
     private Button btnCadastrar;
+
+    private void entra() {
+        startActivity(new Intent(MainActivity.this, LoginActivity.class));
+    }
+
+    private void cadastra() {
+        startActivity(new Intent(MainActivity.this, SelectRoleActivity.class));
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,11 +44,4 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    private void entra() {
-        startActivity(new Intent(MainActivity.this, LoginActivity.class));
-    }
-
-    private void cadastra() {
-        startActivity(new Intent(MainActivity.this, SelectRoleActivity.class));
-    }
 }

@@ -4,13 +4,13 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.RadioButton;
 
 public class SelectRoleActivity extends AppCompatActivity {
-    private RadioButton rbtnDonator;
-    private RadioButton rbtnDonatary;
+
+    private RadioButton rbtnDonor;
+    private RadioButton rbtnDonee;
     private FragmentManager fm;
 
     @Override
@@ -21,38 +21,39 @@ public class SelectRoleActivity extends AppCompatActivity {
         // Fragment
         fm = getSupportFragmentManager();
         FragmentTransaction ft = fm.beginTransaction();
-        ft.add(R.id.signup_content, new DonaterSignupFragment());
+        ft.add(R.id.signup_content, new DonorSignupFragment());
         ft.commit();
 
         // UI Components
-        rbtnDonator = (RadioButton) findViewById(R.id.rbtnDonater);
-        rbtnDonatary = (RadioButton) findViewById(R.id.rbtnDonatary);
+        rbtnDonor = (RadioButton) findViewById(R.id.rbtnDonor);
+        rbtnDonee = (RadioButton) findViewById(R.id.rbtnDonee);
+    }
+
+    private void callDonorSignup() {
+        FragmentTransaction ft = fm.beginTransaction();
+        ft.replace(R.id.signup_content, new DonorSignupFragment());
+        ft.commit();
+    }
+
+    private void callDoneeSignup() {
+        FragmentTransaction ft = fm.beginTransaction();
+        ft.replace(R.id.signup_content, new DoneeSignupFragment());
+        ft.commit();
     }
 
     public void onRadioButtonClicked(View view) {
         boolean checked = ((RadioButton) view).isChecked();
 
         switch(view.getId()) {
-            case R.id.rbtnDonater:
+            case R.id.rbtnDonor:
                 if (checked)
-                    callDonaterSignup();
+                    callDonorSignup();
                     break;
-            case R.id.rbtnDonatary:
+            case R.id.rbtnDonee:
                 if (checked)
-                    callDonatarySignup();
+                    callDoneeSignup();
                     break;
         }
     }
 
-    private void callDonaterSignup() {
-        FragmentTransaction ft = fm.beginTransaction();
-        ft.replace(R.id.signup_content, new DonaterSignupFragment());
-        ft.commit();
-    }
-
-    private void callDonatarySignup() {
-        FragmentTransaction ft = fm.beginTransaction();
-        ft.replace(R.id.signup_content, new DonatorySignupFragment());
-        ft.commit();
-    }
 }
