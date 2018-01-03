@@ -48,14 +48,16 @@ public class LoginActivity extends AppCompatActivity {
         if (email == null || email.trim().equals("") || password == null || password.trim().equals("")) {
             Toast.makeText(LoginActivity.this, "E-mail ou senha vazios.", Toast.LENGTH_LONG)
                 .show();
-        } else {
+        }
+
+        else {
             mAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                 @Override
                 public void onComplete(@NonNull Task<AuthResult> task) {
                     if (task.isSuccessful()) {
-                        Toast.makeText(LoginActivity.this, "Autenticado", Toast.LENGTH_LONG).show();
+                        Toast.makeText(LoginActivity.this, R.string.auth_success, Toast.LENGTH_LONG).show();
                     } else {
-                        Toast.makeText(LoginActivity.this, "Falha ao autenticar", Toast.LENGTH_LONG).show();
+                        Toast.makeText(LoginActivity.this, R.string.auth_failed, Toast.LENGTH_LONG).show();
                     }
                 }
             });
