@@ -3,9 +3,12 @@
     <string name="signup">Cadastrar</string>
     <string name="login">Entrar</string>
     <string name="forget_password">Esqueceu sua senha?</string>
+    <string name="name">Nome</string>
+    <string name="address">Endereço</string>
     <string name="email">E-mail</string>
     <string name="password">Senha</string>
     <string name="donater">Doador</string>
     <string name="donatory">Instituição</string>
+    <string name="confirm_password">Confirme sua senha</string>
 
 </resources>

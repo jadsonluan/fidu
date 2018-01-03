@@ -23,12 +23,23 @@ public class MainActivity extends AppCompatActivity {
         btnEntrar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                entrar();
+                entra();
+            }
+        });
+
+        btnCadastrar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                cadastra();
             }
         });
     }
 
-    private void entrar() {
+    private void entra() {
         startActivity(new Intent(MainActivity.this, LoginActivity.class));
+    }
+
+    private void cadastra() {
+        startActivity(new Intent(MainActivity.this, SelectRoleActivity.class));
     }
 }
