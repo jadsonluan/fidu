@@ -3,7 +3,7 @@ apply plugin: 'com.android.application'
 android {
     compileSdkVersion 26
     defaultConfig {
-        applicationId "ufcg.edu.br.fidu"
+        applicationId "br.edu.ufcg.fidu"
         minSdkVersion 15
         targetSdkVersion 26
         versionCode 1
