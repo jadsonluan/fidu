@@ -1,5 +1,6 @@
 package br.edu.ufcg.fidu.views.activities;
 
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -17,12 +18,10 @@ import br.edu.ufcg.fidu.R;
 
 public class LoginActivity extends AppCompatActivity {
 
-    // UI Components
-    private EditText etEmail;
-    private EditText etPassword;
-    private Button btnLogin;
+    private EditText mEtEmail;
+    private EditText mEtPassword;
+    private Button mBtnLogin;
 
-    // Firebase Components
     private FirebaseAuth mAuth;
 
     private void login(String email, String password) {
@@ -55,23 +54,27 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        // Authentication
         mAuth = FirebaseAuth.getInstance();
 
-        // UI Components
-        etEmail = (EditText) findViewById(R.id.etEmail);
-        etPassword = (EditText) findViewById(R.id.etPassword);
-        btnLogin = (Button) findViewById(R.id.btnLogin);
+        mEtEmail = findViewById(R.id.etEmail);
+        mEtPassword = findViewById(R.id.etPassword);
+        mBtnLogin = findViewById(R.id.btnLogin);
 
-        btnLogin.setOnClickListener(new View.OnClickListener() {
+        mBtnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String email = etEmail.getText().toString();
-                String password = etPassword.getText().toString();
+                String email = mEtEmail.getText().toString();
+                String password = mEtPassword.getText().toString();
 
                 login(email, password);
             }
         });
     }
 
+    @Override
+    public void onBackPressed() {
+        startActivity(new Intent(LoginActivity.this, MainActivity.class));
+        overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+        finish();
+    }
 }

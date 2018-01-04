@@ -1,5 +1,6 @@
 package br.edu.ufcg.fidu.views.fragments;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -20,10 +21,11 @@ import com.google.firebase.database.FirebaseDatabase;
 
 import br.edu.ufcg.fidu.R;
 import br.edu.ufcg.fidu.models.Donee;
+import br.edu.ufcg.fidu.views.activities.MainActivity;
+import br.edu.ufcg.fidu.views.activities.SelectRoleActivity;
 
 public class DoneeSignupFragment extends Fragment {
 
-    // UI Components
     private EditText etName;
     private EditText etEmail;
     private EditText etPassword;
@@ -31,7 +33,6 @@ public class DoneeSignupFragment extends Fragment {
     private EditText etAddress;
     private Button btnSignup;
 
-    // Firebase Components
     private FirebaseAuth mAuth;
     private DatabaseReference mDatabase;
 
@@ -53,12 +54,12 @@ public class DoneeSignupFragment extends Fragment {
         mAuth = FirebaseAuth.getInstance();
         mDatabase = FirebaseDatabase.getInstance().getReference();
 
-        etName = (EditText) view.findViewById(R.id.etName);
-        etEmail = (EditText) view.findViewById(R.id.etEmail);
-        etPassword = (EditText) view.findViewById(R.id.etPassword);
-        etPasswordConfirm = (EditText) view.findViewById(R.id.etPasswordConfirm);
-        etAddress = (EditText) view.findViewById(R.id.etAddress);
-        btnSignup = (Button) view.findViewById(R.id.btnSignup);
+        etName = view.findViewById(R.id.etName);
+        etEmail = view.findViewById(R.id.etEmail);
+        etPassword = view.findViewById(R.id.etPassword);
+        etPasswordConfirm = view.findViewById(R.id.etPasswordConfirm);
+        etAddress = view.findViewById(R.id.etAddress);
+        btnSignup = view.findViewById(R.id.btnSignup);
 
         btnSignup.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -1,77 +1,82 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/colorDarkPrimary"
-    tools:context="br.edu.ufcg.fidu.views.activities.SelectRoleActivity">
+    android:configChanges="keyboardHidden"
+    tools:context="br.edu.ufcg.fidu.views.activities.SelectRoleActivity"
+    android:orientation="vertical">
 
-    <ImageView
-        android:id="@+id/img_logo"
-        android:layout_width="0dp"
-        android:layout_height="75dp"
-        android:layout_marginEnd="64dp"
-        android:layout_marginStart="64dp"
-        android:layout_marginTop="32dp"
-        android:contentDescription="@string/app_name"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/green_apple_fidu" />
-
-    <RadioGroup
-        android:id="@+id/rgRole"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="64dp"
-        android:layout_marginStart="64dp"
-        android:layout_marginTop="16dp"
-        android:checkedButton="@+id/rbtnDonor"
-        android:orientation="horizontal"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/img_logo">
+        android:layout_height="match_parent"
+        android:id="@+id/layoutRole"
+        android:gravity="center"
+        android:orientation="vertical">
 
-        <RadioButton
-            android:id="@+id/rbtnDonor"
-            style="@style/Widget.AppCompat.CompoundButton.RadioButton"
+        <ImageView
+            android:id="@+id/img_logo"
+            android:layout_width="match_parent"
+            android:layout_height="75dp"
+            android:layout_marginTop="50dp"
+            android:contentDescription="@string/app_name"
+            app:srcCompat="@drawable/green_apple_fidu" />
+
+        <FrameLayout
+            android:layout_marginTop="32dp"
+            android:id="@+id/frameLayout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/background_switch">
+
+            <co.ceryle.segmentedbutton.SegmentedButtonGroup
+                android:id="@+id/segmentedButtonGroup"
+                android:layout_width="232dp"
+                android:layout_height="wrap_content"
+                android:layout_margin="1dp"
+                app:sbg_animateSelector="linear"
+                app:sbg_animateSelectorDuration="500"
+                app:sbg_backgroundColor="@android:color/white"
+                app:sbg_radius="8dp"
+                app:sbg_selectorColor="@color/colorAccent"
+                app:sbg_selectorTextColor="@android:color/white">
+
+                <Button
+                    android:id="@+id/txtLogin"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@color/colorAccent"
+                    android:fontFamily="@font/altair_thin_trial"
+                    android:minHeight="10dp"
+                    android:text="doador"
+                    android:textAllCaps="false" />
+
+                <Button
+                    android:id="@+id/txtRegister"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/altair_thin_trial"
+                    android:minHeight="10dp"
+                    android:text="receptor"
+                    android:textAllCaps="false" />
+
+            </co.ceryle.segmentedbutton.SegmentedButtonGroup>
+
+        </FrameLayout>
+
+        <FrameLayout
+            android:id="@+id/signup_content"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:buttonTint="@color/colorAccent"
-            android:onClick="onRadioButtonClicked"
-            android:text="@string/donor"
-            android:textAppearance="@style/TextAppearance.AppCompat.Medium.Inverse"
-            android:textColor="@color/colorText"
-            android:textSize="14sp" />
+            android:layout_marginTop="28dp"
+            android:paddingBottom="12dp"
+            android:paddingRight="22dp"
+            android:paddingLeft="22dp">
 
-        <RadioButton
-            android:id="@+id/rbtnDonee"
-            style="@style/Widget.AppCompat.CompoundButton.RadioButton"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:buttonTint="@color/colorAccent"
-            android:onClick="onRadioButtonClicked"
-            android:text="@string/donee"
-            android:textAppearance="@style/TextAppearance.AppCompat.Medium.Inverse"
-            android:textColor="@color/colorText"
-            android:textSize="14sp" />
+        </FrameLayout>
 
-    </RadioGroup>
+    </LinearLayout>
 
-    <FrameLayout
-        android:id="@+id/signup_content"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="16dp"
-        android:layout_marginEnd="32dp"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="16dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/rgRole" />
-
-</android.support.constraint.ConstraintLayout>
+</ScrollView>

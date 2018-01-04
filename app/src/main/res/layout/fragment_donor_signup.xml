@@ -1,79 +1,64 @@
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="br.edu.ufcg.fidu.views.fragments.DonorSignupFragment">
+    tools:context="br.edu.ufcg.fidu.views.fragments.DonorSignupFragment"
+    android:gravity="center"
+    android:orientation="vertical">
 
     <EditText
         android:id="@+id/etName"
-        android:layout_width="0dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:ems="10"
+        android:layout_marginTop="18dp"
+        android:background="@drawable/background_edittext"
+        android:fontFamily="@font/altair_thin_trial"
         android:hint="@string/name"
         android:inputType="textPersonName"
-        android:textColor="@color/colorText"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:textColor="@color/colorText" />
 
     <EditText
         android:id="@+id/etEmail"
-        android:layout_width="0dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="16dp"
-        android:ems="10"
+        android:layout_marginTop="12dp"
+        android:background="@drawable/background_edittext"
+        android:fontFamily="@font/altair_thin_trial"
         android:hint="@string/email"
         android:inputType="textEmailAddress"
-        android:textColor="@color/colorText"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/etName" />
+        android:textColor="@color/colorText" />
 
     <EditText
         android:id="@+id/etPassword"
-        android:layout_width="0dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="16dp"
-        android:ems="10"
+        android:layout_marginTop="12dp"
+        android:background="@drawable/background_edittext"
+        android:fontFamily="@font/altair_thin_trial"
         android:hint="@string/password"
         android:inputType="textPassword"
-        android:textColor="@color/colorText"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/etEmail" />
+        android:textColor="@color/colorText" />
 
     <EditText
         android:id="@+id/etPasswordConfirm"
-        android:layout_width="0dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="16dp"
-        android:ems="10"
+        android:layout_marginTop="12dp"
+        android:background="@drawable/background_edittext"
+        android:fontFamily="@font/altair_thin_trial"
         android:hint="@string/confirm_password"
         android:inputType="textPassword"
-        android:textColor="@color/colorText"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/etPassword" />
+        android:textColor="@color/colorText" />
 
     <Button
         android:id="@+id/btnSignup"
-        style="@style/Widget.AppCompat.Button.Colored"
-        android:layout_width="0dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="58dp"
+        android:background="@drawable/background_button_green"
+        android:elevation="2dp"
+        android:fontFamily="@font/altair_bold_trial"
         android:text="@string/signup"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/etPasswordConfirm" />
-</android.support.constraint.ConstraintLayout>
+        android:textColor="@android:color/white" />
+
+</LinearLayout>

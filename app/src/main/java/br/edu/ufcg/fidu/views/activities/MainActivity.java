@@ -10,40 +10,42 @@ import br.edu.ufcg.fidu.R;
 
 public class MainActivity extends AppCompatActivity {
 
-    // UI Components
-    private Button btnEntrar;
-    private Button btnCadastrar;
-
-    private void entra() {
-        startActivity(new Intent(MainActivity.this, LoginActivity.class));
-    }
-
-    private void cadastra() {
-        startActivity(new Intent(MainActivity.this, SelectRoleActivity.class));
-    }
+    private Button mBtnEntrar;
+    private Button mBtnCadastrar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        // UI Components
-        btnEntrar = (Button) findViewById(R.id.btnLogin);
-        btnCadastrar = (Button) findViewById(R.id.btnCadastrar);
+        mBtnEntrar = findViewById(R.id.btnLogin);
+        mBtnCadastrar = findViewById(R.id.btnCadastrar);
 
-        btnEntrar.setOnClickListener(new View.OnClickListener() {
+        mBtnEntrar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 entra();
             }
         });
 
-        btnCadastrar.setOnClickListener(new View.OnClickListener() {
+        mBtnCadastrar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 cadastra();
             }
         });
+    }
+
+    private void entra() {
+        startActivity(new Intent(MainActivity.this, LoginActivity.class));
+        overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
+        finish();
+    }
+
+    private void cadastra() {
+        startActivity(new Intent(MainActivity.this, SelectRoleActivity.class));
+        overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+        finish();
     }
 
 }

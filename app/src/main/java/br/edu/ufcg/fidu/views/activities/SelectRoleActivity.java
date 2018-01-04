@@ -1,20 +1,25 @@
 package br.edu.ufcg.fidu.views.activities;
 
+import android.content.Context;
+import android.content.Intent;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.RadioButton;
+import android.widget.Toast;
 
 import br.edu.ufcg.fidu.R;
 import br.edu.ufcg.fidu.views.fragments.DoneeSignupFragment;
 import br.edu.ufcg.fidu.views.fragments.DonorSignupFragment;
+import co.ceryle.segmentedbutton.SegmentedButtonGroup;
 
 public class SelectRoleActivity extends AppCompatActivity {
 
-    private RadioButton rbtnDonor;
-    private RadioButton rbtnDonee;
+    public static Context context;
+    private SegmentedButtonGroup mSbg;
     private FragmentManager fm;
 
     @Override
@@ -22,15 +27,22 @@ public class SelectRoleActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_select_role);
 
-        // Fragment
+        context = this;
         fm = getSupportFragmentManager();
         FragmentTransaction ft = fm.beginTransaction();
         ft.add(R.id.signup_content, new DonorSignupFragment());
         ft.commit();
 
-        // UI Components
-        rbtnDonor = (RadioButton) findViewById(R.id.rbtnDonor);
-        rbtnDonee = (RadioButton) findViewById(R.id.rbtnDonee);
+        mSbg = findViewById(R.id.segmentedButtonGroup);
+        mSbg.setOnClickedButtonPosition(new SegmentedButtonGroup.OnClickedButtonPosition() {
+            @Override
+            public void onClickedButtonPosition(int position) {
+                if(position == 0)
+                    callDonorSignup();
+                else if(position == 1)
+                    callDoneeSignup();
+            }
+        });
     }
 
     private void callDonorSignup() {
@@ -45,19 +57,10 @@ public class SelectRoleActivity extends AppCompatActivity {
         ft.commit();
     }
 
-    public void onRadioButtonClicked(View view) {
-        boolean checked = ((RadioButton) view).isChecked();
-
-        switch(view.getId()) {
-            case R.id.rbtnDonor:
-                if (checked)
-                    callDonorSignup();
-                    break;
-            case R.id.rbtnDonee:
-                if (checked)
-                    callDoneeSignup();
-                    break;
-        }
+    @Override
+    public void onBackPressed() {
+        startActivity(new Intent(SelectRoleActivity.this, MainActivity.class));
+        overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
+        finish();
     }
-
 }
