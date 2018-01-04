@@ -10,39 +10,39 @@ import br.edu.ufcg.fidu.R;
 
 public class MainActivity extends AppCompatActivity {
 
-    private Button mBtnEntrar;
-    private Button mBtnCadastrar;
+    private Button mBtnLogin;
+    private Button mBtnSignUp;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        mBtnEntrar = findViewById(R.id.btnLogin);
-        mBtnCadastrar = findViewById(R.id.btnCadastrar);
+        mBtnLogin = findViewById(R.id.btnLogin);
+        mBtnSignUp = findViewById(R.id.btnCadastrar);
 
-        mBtnEntrar.setOnClickListener(new View.OnClickListener() {
+        mBtnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                entra();
+                login();
             }
         });
 
-        mBtnCadastrar.setOnClickListener(new View.OnClickListener() {
+        mBtnSignUp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                cadastra();
+                signUp();
             }
         });
     }
 
-    private void entra() {
+    private void login() {
         startActivity(new Intent(MainActivity.this, LoginActivity.class));
         overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
         finish();
     }
 
-    private void cadastra() {
+    private void signUp() {
         startActivity(new Intent(MainActivity.this, SelectRoleActivity.class));
         overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
         finish();
