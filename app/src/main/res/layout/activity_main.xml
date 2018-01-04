@@ -9,7 +9,7 @@
     android:paddingRight="16dp"
     android:paddingTop="16dp"
     android:background="@color/colorDarkPrimary"
-    tools:context="br.edu.ufcg.fidu.MainActivity">
+    tools:context="br.edu.ufcg.fidu.views.activities.MainActivity">
 
     <Button
         android:id="@+id/btnCadastrar"

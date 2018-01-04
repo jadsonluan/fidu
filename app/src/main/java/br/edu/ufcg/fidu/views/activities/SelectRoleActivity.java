@@ -1,4 +1,4 @@
-package br.edu.ufcg.fidu;
+package br.edu.ufcg.fidu.views.activities;
 
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -6,6 +6,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.RadioButton;
+
+import br.edu.ufcg.fidu.R;
+import br.edu.ufcg.fidu.views.fragments.DoneeSignupFragment;
+import br.edu.ufcg.fidu.views.fragments.DonorSignupFragment;
 
 public class SelectRoleActivity extends AppCompatActivity {
 

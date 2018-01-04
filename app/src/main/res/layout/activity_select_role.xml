@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/colorDarkPrimary"
-    tools:context="br.edu.ufcg.fidu.SelectRoleActivity">
+    tools:context="br.edu.ufcg.fidu.views.activities.SelectRoleActivity">
 
     <ImageView
         android:id="@+id/img_logo"

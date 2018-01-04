@@ -1,9 +1,10 @@
-package br.edu.ufcg.fidu;
+package br.edu.ufcg.fidu.views.fragments;
 
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,23 +19,23 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
-import br.edu.ufcg.fidu.models.Donee;
+import br.edu.ufcg.fidu.R;
+import br.edu.ufcg.fidu.models.Donor;
 
-public class DoneeSignupFragment extends Fragment {
+public class DonorSignupFragment extends Fragment {
 
     // UI Components
     private EditText etName;
     private EditText etEmail;
     private EditText etPassword;
     private EditText etPasswordConfirm;
-    private EditText etAddress;
     private Button btnSignup;
 
     // Firebase Components
     private FirebaseAuth mAuth;
     private DatabaseReference mDatabase;
 
-    public DoneeSignupFragment() {}
+    public DonorSignupFragment() {}
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -44,7 +45,7 @@ public class DoneeSignupFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_donee_signup, container, false);
+        return inflater.inflate(R.layout.fragment_donor_signup, container, false);
     }
 
     @Override
@@ -56,7 +57,6 @@ public class DoneeSignupFragment extends Fragment {
         etEmail = (EditText) view.findViewById(R.id.etEmail);
         etPassword = (EditText) view.findViewById(R.id.etPassword);
         etPasswordConfirm = (EditText) view.findViewById(R.id.etPasswordConfirm);
-        etAddress = (EditText) view.findViewById(R.id.etAddress);
         btnSignup = (Button) view.findViewById(R.id.btnSignup);
 
         btnSignup.setOnClickListener(new View.OnClickListener() {
@@ -66,50 +66,40 @@ public class DoneeSignupFragment extends Fragment {
                 String email = etEmail.getText().toString();
                 String password = etPassword.getText().toString();
                 String passwordConfirm = etPasswordConfirm.getText().toString();
-                String address = etAddress.getText().toString();
 
-                signup(name, email, password, passwordConfirm, address);
+                signup(name, email, password, passwordConfirm);
             }
         });
     }
 
     private void signup(final String name, final String email, final String password,
-                        final String passwordConfirm, final String address) {
+                        final String passwordConfirm) {
 
-        if (!validate(name, email, password, passwordConfirm, address)) {
+        if (!validate(name, email, password, passwordConfirm)) {
             return;
         }
 
-        mAuth.createUserWithEmailAndPassword(email, password)
-        .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+        mAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if (task.isSuccessful()) {
-                    String uid = task.getResult().getUser().getUid();
-                    Donee donee = new Donee(name, email, password, address);
-                    mDatabase.child("users").child("donees").child(uid).setValue(donee);
-                    Toast.makeText(getActivity(), R.string.signup_success, Toast.LENGTH_SHORT)
-                            .show();
+                    String uid = task.getResult().getUser().getUid();;
+                    Donor donor = new Donor(name, email, password);
+                    mDatabase.child("users").child("donors").child(uid).setValue(donor);
+                    Toast.makeText(getActivity(), R.string.signup_success, Toast.LENGTH_SHORT).show();
                 }
 
                 else {
-                    Toast.makeText(getActivity(), R.string.signup_failed, Toast.LENGTH_SHORT)
-                            .show();
+                    Toast.makeText(getActivity(), R.string.signup_failed, Toast.LENGTH_SHORT).show();
                 }
             }
         });
 
     }
 
-    private boolean validate(String name, String email, String password, String passwordConfirm,
-                             String address) {
+    private boolean validate(String name, String email, String password, String passwordConfirm) {
         if (name == null || name.trim().equals("")) {
             Toast.makeText(getActivity(), R.string.name_is_empty, Toast.LENGTH_SHORT).show();
-            return false;
-        }
-
-        if (address == null || address.trim().equals("")) {
-            Toast.makeText(getActivity(), R.string.address_empty, Toast.LENGTH_SHORT).show();
             return false;
         }
 
@@ -145,4 +135,5 @@ public class DoneeSignupFragment extends Fragment {
     public void onDetach() {
         super.onDetach();
     }
+
 }
