@@ -11,14 +11,14 @@ import br.edu.ufcg.fidu.R;
 public class MainActivity extends AppCompatActivity {
 
     // UI Components
-    private Button btnEntrar;
-    private Button btnCadastrar;
+    private Button btnLogin;
+    private Button btnSignUp;
 
-    private void entra() {
+    private void login() {
         startActivity(new Intent(MainActivity.this, LoginActivity.class));
     }
 
-    private void cadastra() {
+    private void signUp() {
         startActivity(new Intent(MainActivity.this, SelectRoleActivity.class));
     }
 
@@ -28,20 +28,20 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         // UI Components
-        btnEntrar = (Button) findViewById(R.id.btnLogin);
-        btnCadastrar = (Button) findViewById(R.id.btnCadastrar);
+        btnLogin = (Button) findViewById(R.id.btnLogin);
+        btnSignUp = (Button) findViewById(R.id.btnCadastrar);
 
-        btnEntrar.setOnClickListener(new View.OnClickListener() {
+        btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                entra();
+                login();
             }
         });
 
-        btnCadastrar.setOnClickListener(new View.OnClickListener() {
+        btnSignUp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                cadastra();
+                signUp();
             }
         });
     }
