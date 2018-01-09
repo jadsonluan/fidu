@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,6 +17,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseAuthUserCollisionException;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -26,6 +28,7 @@ import br.edu.ufcg.fidu.views.activities.MainActivity;
 import br.edu.ufcg.fidu.views.activities.SelectRoleActivity;
 
 public class DoneeSignupFragment extends Fragment {
+    private final String TAG = "DoneeSignupFragment";
 
     private EditText etName;
     private EditText etEmail;
@@ -107,8 +110,7 @@ public class DoneeSignupFragment extends Fragment {
                     getActivity().finish();
                 }
                 else {
-                    Toast.makeText(getActivity(), R.string.signup_failed, Toast.LENGTH_SHORT)
-                            .show();
+                    handleErrors(task.getException());
                 }
             }
         });
@@ -120,39 +122,69 @@ public class DoneeSignupFragment extends Fragment {
         signupProgress.setVisibility(show ? View.VISIBLE : View.GONE);
     }
 
+    private void handleErrors(Exception exception) {
+        try {
+            throw exception;
+        } catch (FirebaseAuthUserCollisionException e) {
+            etEmail.setError(getString(R.string.email_already_in_use));
+            etEmail.requestFocus();
+        } catch (Exception e) {
+            Log.e(TAG, e.getMessage());
+        }
+    }
+
     private boolean validate(String name, String email, String password, String passwordConfirm,
                              String address) {
+        boolean isValid = true;
+        View focusView = null;
+
         if (name == null || name.trim().equals("")) {
-            Toast.makeText(getActivity(), R.string.name_is_empty, Toast.LENGTH_SHORT).show();
-            return false;
+            etName.setError(getResources().getText(R.string.name_is_empty));
+            focusView = etName;
+            isValid = false;
         }
 
         if (address == null || address.trim().equals("")) {
-            Toast.makeText(getActivity(), R.string.address_empty, Toast.LENGTH_SHORT).show();
-            return false;
+            etAddress.setError(getResources().getText(R.string.address_empty));
+            focusView = etAddress;
+            isValid = false;
         }
 
         if (email == null || email.trim().equals("")) {
-            Toast.makeText(getActivity(), R.string.email_empty, Toast.LENGTH_SHORT).show();
-            return false;
+            etEmail.setError(getResources().getText(R.string.email_empty));
+            focusView = etEmail;
+            isValid = false;
+        } else if (!email.contains("@") || !email.contains(".")) {
+            etEmail.setError(getResources().getText(R.string.email_invalid));
+            focusView = etEmail;
+            isValid = false;
         }
 
-        if (!email.contains("@") || !email.contains(".")) {
-            Toast.makeText(getActivity(), R.string.email_invalid, Toast.LENGTH_SHORT).show();
-            return false;
+        if (password == null || password.trim().equals("")) {
+            etPassword.setError(getResources().getText(R.string.password_empty));
+            focusView = etPassword;
+            isValid = false;
+        } else if (password.length() < 6) {
+            etPassword.setError(getResources().getText(R.string.password_too_short));
+            focusView = etPassword;
+            isValid = false;
         }
 
-        if (password.length() < 5) {
-            Toast.makeText(getActivity(), R.string.password_too_short, Toast.LENGTH_SHORT).show();
-            return false;
+        if (passwordConfirm == null || passwordConfirm.trim().equals("")) {
+            etPasswordConfirm.setError(getResources().getText(R.string.password_empty));
+            focusView = etPasswordConfirm;
+            isValid = false;
+        } else if (!password.equals(passwordConfirm)) {
+            etPasswordConfirm.setError(getResources().getText(R.string.password_doesnt_match));
+            focusView = etPasswordConfirm;
+            isValid = false;
         }
 
-        if (!password.equals(passwordConfirm)) {
-            Toast.makeText(getActivity(), R.string.password_doesnt_match, Toast.LENGTH_SHORT).show();
-            return false;
+        if (!isValid) {
+            focusView.requestFocus();
         }
 
-        return true;
+        return isValid;
     }
 
     @Override
