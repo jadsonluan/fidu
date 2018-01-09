@@ -4,30 +4,33 @@
     <string name="login">Entrar</string>
     <string name="signup">Cadastrar</string>
 
-    <string name="donor">Doador</string>
-    <string name="donee">Donatário</string>
+    <string name="donor">doador</string>
+    <string name="donee">instituição</string>
 
     <string name="name">Nome de exibição</string>
-    <string name="name_is_empty">Nome de exibição vazio</string>
+    <string name="name_is_empty">Nome de exibição não pode ser vazio</string>
 
     <string name="address">Endereço</string>
-    <string name="address_empty">Endereço vazio</string>
+    <string name="address_empty">Endereço não pode ser vazio</string>
 
     <string name="password">Senha</string>
-    <string name="password_empty">Senha vazia</string>
-    <string name="password_too_short">Senha muito curta</string>
+    <string name="password_empty">Senha não pode ser vazia</string>
+    <string name="password_too_short">Sua senha deve pelo menos 6 caracteres</string>
     <string name="confirm_password">Confirme sua senha</string>
     <string name="password_doesnt_match">As senhas não correspondem</string>
     <string name="forgot_password">Esqueceu sua senha?</string>
+    <string name="wrong_password">Senha incorreta</string>
 
     <string name="email">E-mail</string>
-    <string name="email_empty">E-mail vazio</string>
+    <string name="email_empty">E-mail não pode ser vazio</string>
     <string name="email_invalid">E-mail inválido</string>
+    <string name="inexistent_email">E-mail não cadastrado</string>
+    <string name="email_already_in_use">E-mail já cadastrado</string>
 
     <string name="auth_success">Autenticado</string>
     <string name="auth_failed">A autenticação falhou</string>
 
-    <string name="signup_success">Cadastro realizado</string>
+    <string name="signup_success">Cadastro concluído com êxito.</string>
     <string name="signup_failed">Falha no cadastro</string>
     <string name="title_activity_main">MainActivity</string>
     <string name="title_messages">Messagens</string>

@@ -63,7 +63,7 @@
                         android:background="@color/colorAccent"
                         android:fontFamily="@font/altair_thin_trial"
                         android:minHeight="10dp"
-                        android:text="doador"
+                        android:text="@string/donor"
                         android:textAllCaps="false" />
 
                     <Button
@@ -72,7 +72,7 @@
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/altair_thin_trial"
                         android:minHeight="10dp"
-                        android:text="receptor"
+                        android:text="@string/donee"
                         android:textAllCaps="false" />
 
                 </co.ceryle.segmentedbutton.SegmentedButtonGroup>

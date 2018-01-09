@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -13,6 +14,12 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseAuthException;
+import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
+import com.google.firebase.auth.FirebaseAuthInvalidUserException;
+import com.google.firebase.auth.FirebaseAuthUserCollisionException;
+import com.google.firebase.auth.FirebaseAuthWeakPasswordException;
+import com.google.firebase.auth.FirebaseUser;
 
 import br.edu.ufcg.fidu.R;
 import br.edu.ufcg.fidu.models.Donee;
@@ -21,6 +28,7 @@ import br.edu.ufcg.fidu.utils.FirebaseConnection;
 import br.edu.ufcg.fidu.utils.SaveData;
 
 public class LoginActivity extends AppCompatActivity {
+    private final String TAG = "LoginActivity";
 
     private EditText mEtEmail;
     private EditText mEtPassword;
@@ -31,34 +39,62 @@ public class LoginActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
 
     private void login(String email, String password) {
-        if (email == null || email.trim().equals("")) {
-            Toast.makeText(LoginActivity.this, R.string.email_empty, Toast.LENGTH_LONG)
-                    .show();
-        }
+        if (!validate(email, password)) return;
 
-        else if (password == null || password.trim().equals("")) {
-            Toast.makeText(LoginActivity.this, R.string.password_empty, Toast.LENGTH_LONG)
-                    .show();
-        }
-
-        else {
-            showProgress(true);
-            mAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                @Override
-                public void onComplete(@NonNull Task<AuthResult> task) {
-                    showProgress(false);
-                    if (task.isSuccessful()) {
-                        FirebaseConnection firebaseConnection = new FirebaseConnection(LoginActivity.this);
-                        firebaseConnection.saveUser(mAuth.getCurrentUser().getUid());
-                        Toast.makeText(LoginActivity.this, R.string.auth_success, Toast.LENGTH_LONG).show();
-                        startActivity(new Intent(LoginActivity.this, MainActivity.class));
-                        finish();
-                    } else {
-                        Toast.makeText(LoginActivity.this, R.string.auth_failed, Toast.LENGTH_LONG).show();
-                    }
+        showProgress(true);
+        mAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+            @Override
+            public void onComplete(@NonNull Task<AuthResult> task) {
+                showProgress(false);
+                if (task.isSuccessful()) {
+                    FirebaseConnection firebaseConnection = new FirebaseConnection(LoginActivity.this);
+                    firebaseConnection.saveUser(mAuth.getCurrentUser().getUid());
+                    startActivity(new Intent(LoginActivity.this, MainActivity.class));
+                    finish();
+                } else {
+                    handleErrors(task.getException());
                 }
-            });
+            }
+        });
+    }
+
+    private void handleErrors(Exception exception) {
+        try {
+            throw exception;
+        } catch (FirebaseAuthInvalidUserException ex) {
+            mEtEmail.setError(getString(R.string.inexistent_email));
+            mEtEmail.requestFocus();
+        } catch(FirebaseAuthInvalidCredentialsException e) {
+            mEtPassword.setError(getString(R.string.wrong_password));
+            mEtPassword.requestFocus();
+        } catch (Exception e) {
+            Log.e(TAG, e.getMessage());
+            Toast.makeText(this, "[DEBUG] Error", Toast.LENGTH_SHORT).show();
         }
+    }
+
+    private boolean validate(String email, String password) {
+        boolean isValid = true;
+        View focusView = null;
+
+        if (email == null || email.trim().equals("")) {
+            mEtEmail.setError(getResources().getText(R.string.email_empty));
+            focusView = mEtEmail;
+            isValid = false;
+        } else if (!email.contains("@")) {
+            mEtEmail.setError(getResources().getText(R.string.email_invalid));
+            focusView = mEtEmail;
+            isValid = false;
+        }
+
+        if (password == null || password.trim().equals("")) {
+            mEtPassword.setError(getResources().getText(R.string.password_empty));
+            focusView = mEtPassword;
+            isValid = false;
+        }
+
+        if (!isValid) focusView.requestFocus();
+        return isValid;
     }
 
     @Override
