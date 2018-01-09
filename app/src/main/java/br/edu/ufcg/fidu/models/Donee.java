@@ -4,8 +4,13 @@ public class Donee extends User {
 
     private String address;
 
-    public Donee(String name, String email, String password, String address) {
-        super(name, email, password);
+    public Donee(){
+        super();
+
+    }
+
+    public Donee(String name, String email, String address) {
+        super(name, email);
         this.address = address;
     }
 

@@ -29,5 +29,11 @@
 
     <string name="signup_success">Cadastro realizado</string>
     <string name="signup_failed">Falha no cadastro</string>
+    <string name="title_activity_main">MainActivity</string>
+    <string name="title_messages">Messagens</string>
+    <string name="title_map">Mapa</string>
+    <string name="title_profile">Perfil</string>
+
+    <string name="API_KEY">AIzaSyB7lWr1G6WiaVH9_Gd8Sch6TTQ2NVexZns</string>
 
 </resources>

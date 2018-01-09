@@ -6,10 +6,6 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.view.View;
-import android.widget.LinearLayout;
-import android.widget.RadioButton;
-import android.widget.Toast;
 
 import br.edu.ufcg.fidu.R;
 import br.edu.ufcg.fidu.views.fragments.DoneeSignupFragment;
@@ -59,8 +55,9 @@ public class SelectRoleActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        startActivity(new Intent(SelectRoleActivity.this, MainActivity.class));
+        startActivity(new Intent(SelectRoleActivity.this, InitialActivity.class));
         overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
         finish();
     }
+
 }

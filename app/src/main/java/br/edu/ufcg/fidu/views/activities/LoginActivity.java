@@ -15,6 +15,10 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 
 import br.edu.ufcg.fidu.R;
+import br.edu.ufcg.fidu.models.Donee;
+import br.edu.ufcg.fidu.models.Donor;
+import br.edu.ufcg.fidu.utils.FirebaseConnection;
+import br.edu.ufcg.fidu.utils.SaveData;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -40,7 +44,11 @@ public class LoginActivity extends AppCompatActivity {
                 @Override
                 public void onComplete(@NonNull Task<AuthResult> task) {
                     if (task.isSuccessful()) {
+                        FirebaseConnection firebaseConnection = new FirebaseConnection(LoginActivity.this);
+                        firebaseConnection.saveUser(mAuth.getCurrentUser().getUid());
                         Toast.makeText(LoginActivity.this, R.string.auth_success, Toast.LENGTH_LONG).show();
+                        startActivity(new Intent(LoginActivity.this, MainActivity.class));
+                        finish();
                     } else {
                         Toast.makeText(LoginActivity.this, R.string.auth_failed, Toast.LENGTH_LONG).show();
                     }
@@ -73,7 +81,7 @@ public class LoginActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        startActivity(new Intent(LoginActivity.this, MainActivity.class));
+        startActivity(new Intent(LoginActivity.this, InitialActivity.class));
         overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
         finish();
     }
