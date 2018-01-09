@@ -25,6 +25,8 @@ public class LoginActivity extends AppCompatActivity {
     private EditText mEtEmail;
     private EditText mEtPassword;
     private Button mBtnLogin;
+    private View loginProgress;
+    private View loginForm;
 
     private FirebaseAuth mAuth;
 
@@ -40,9 +42,11 @@ public class LoginActivity extends AppCompatActivity {
         }
 
         else {
+            showProgress(true);
             mAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                 @Override
                 public void onComplete(@NonNull Task<AuthResult> task) {
+                    showProgress(false);
                     if (task.isSuccessful()) {
                         FirebaseConnection firebaseConnection = new FirebaseConnection(LoginActivity.this);
                         firebaseConnection.saveUser(mAuth.getCurrentUser().getUid());
@@ -64,6 +68,9 @@ public class LoginActivity extends AppCompatActivity {
 
         mAuth = FirebaseAuth.getInstance();
 
+        loginProgress = findViewById(R.id.loginProgress);
+        loginForm = findViewById(R.id.loginForm);
+
         mEtEmail = findViewById(R.id.etEmail);
         mEtPassword = findViewById(R.id.etPassword);
         mBtnLogin = findViewById(R.id.btnLogin);
@@ -77,6 +84,11 @@ public class LoginActivity extends AppCompatActivity {
                 login(email, password);
             }
         });
+    }
+
+    private void showProgress(boolean show) {
+        loginForm.setVisibility(show ? View.GONE : View.VISIBLE);
+        loginProgress.setVisibility(show ? View.VISIBLE: View.GONE);
     }
 
     @Override

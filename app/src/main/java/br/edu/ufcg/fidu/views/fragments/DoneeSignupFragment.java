@@ -33,6 +33,8 @@ public class DoneeSignupFragment extends Fragment {
     private EditText etPasswordConfirm;
     private EditText etAddress;
     private Button btnSignup;
+    private View signupProgress;
+    private View signupForm;
 
     private FirebaseAuth mAuth;
     private DatabaseReference mDatabase;
@@ -54,6 +56,9 @@ public class DoneeSignupFragment extends Fragment {
     public void onViewCreated(View view, Bundle savedInstanceState) {
         mAuth = FirebaseAuth.getInstance();
         mDatabase = FirebaseDatabase.getInstance().getReference();
+
+        signupProgress = getActivity().findViewById(R.id.signupProgress);
+        signupForm = getActivity().findViewById(R.id.signupForm);
 
         etName = view.findViewById(R.id.etName);
         etEmail = view.findViewById(R.id.etEmail);
@@ -83,10 +88,13 @@ public class DoneeSignupFragment extends Fragment {
             return;
         }
 
+        showProgress(true);
         mAuth.createUserWithEmailAndPassword(email, password)
         .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
+                showProgress(false);
+                
                 if (task.isSuccessful()) {
                     String uid = task.getResult().getUser().getUid();
                     Donee donee = new Donee(name, email, address);
@@ -104,6 +112,11 @@ public class DoneeSignupFragment extends Fragment {
             }
         });
 
+    }
+
+    private void showProgress(boolean show) {
+        signupForm.setVisibility(show ? View.GONE : View.VISIBLE);
+        signupProgress.setVisibility(show ? View.VISIBLE : View.GONE);
     }
 
     private boolean validate(String name, String email, String password, String passwordConfirm,
