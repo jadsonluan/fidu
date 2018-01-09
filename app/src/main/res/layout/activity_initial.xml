@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorDarkPrimary"
+    tools:context="br.edu.ufcg.fidu.views.activities.InitialActivity"
+    android:orientation="vertical"
+    android:padding="12dp">
+
+    <ImageView
+        android:gravity="center"
+        android:id="@+id/img_logo"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="3"
+        android:contentDescription="@string/app_name"
+        app:srcCompat="@drawable/green_apple_fidu"
+        android:padding="32dp"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:orientation="horizontal"
+        android:gravity="bottom">
+
+        <Button
+            android:id="@+id/btnLogin"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@drawable/background_edittext"
+            android:fontFamily="@font/altair_bold_trial"
+            android:text="@string/login"
+            android:textColor="@color/colorDarkPrimary"
+            android:layout_marginRight="8dp"/>
+
+        <Button
+            android:id="@+id/btnCadastrar"
+            android:background="@drawable/background_button_green"
+            android:textColor="@android:color/white"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:fontFamily="@font/altair_bold_trial"
+            android:text="@string/signup" />
+
+    </LinearLayout>
+
+</LinearLayout>

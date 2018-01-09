@@ -1,7 +1,7 @@
 package br.edu.ufcg.fidu.views.fragments;
 
-import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
@@ -21,6 +21,7 @@ import com.google.firebase.database.FirebaseDatabase;
 
 import br.edu.ufcg.fidu.R;
 import br.edu.ufcg.fidu.models.Donee;
+import br.edu.ufcg.fidu.utils.SaveData;
 import br.edu.ufcg.fidu.views.activities.MainActivity;
 import br.edu.ufcg.fidu.views.activities.SelectRoleActivity;
 
@@ -88,12 +89,14 @@ public class DoneeSignupFragment extends Fragment {
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if (task.isSuccessful()) {
                     String uid = task.getResult().getUser().getUid();
-                    Donee donee = new Donee(name, email, password, address);
+                    Donee donee = new Donee(name, email, address);
+                    SaveData saveData = new SaveData(SelectRoleActivity.context);
+                    saveData.writeDonatee(donee);
                     mDatabase.child("users").child("donees").child(uid).setValue(donee);
                     Toast.makeText(getActivity(), R.string.signup_success, Toast.LENGTH_SHORT)
                             .show();
+                    startActivity(new Intent(SelectRoleActivity.context, MainActivity.class));
                 }
-
                 else {
                     Toast.makeText(getActivity(), R.string.signup_failed, Toast.LENGTH_SHORT)
                             .show();

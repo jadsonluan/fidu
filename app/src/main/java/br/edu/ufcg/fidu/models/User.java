@@ -4,12 +4,20 @@ public class User {
 
     private String name;
     private String email;
-    private String password;
 
-    public User(String name, String email, String password) {
+    public User(){
+
+    }
+
+    public User(String name, String email) {
+        verifyParameters(name, email);
         this.name = name;
         this.email = email;
-        this.password = password;
+    }
+
+    private void verifyParameters(String name, String email){
+        if(name == null || email == null)
+            throw new NullPointerException("Name or email cannot be null");
     }
 
     public String getName() {
@@ -26,14 +34,6 @@ public class User {
 
     public void setEmail(String email) {
         this.email = email;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
     }
 
     @Override
