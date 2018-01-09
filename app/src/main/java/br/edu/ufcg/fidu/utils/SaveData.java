@@ -52,4 +52,11 @@ public class SaveData {
     public boolean isLogged(){
         return sharedPreferences.getBoolean("isLogged", false);
     }
+
+    public void logout() {
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.clear();
+        editor.putBoolean("isLogged", false);
+        editor.commit();
+    }
 }
