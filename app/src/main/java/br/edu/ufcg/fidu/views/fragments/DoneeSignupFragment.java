@@ -104,6 +104,7 @@ public class DoneeSignupFragment extends Fragment {
                     Toast.makeText(getActivity(), R.string.signup_success, Toast.LENGTH_SHORT)
                             .show();
                     startActivity(new Intent(SelectRoleActivity.context, MainActivity.class));
+                    getActivity().finish();
                 }
                 else {
                     Toast.makeText(getActivity(), R.string.signup_failed, Toast.LENGTH_SHORT)

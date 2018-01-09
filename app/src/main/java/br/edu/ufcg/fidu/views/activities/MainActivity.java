@@ -7,10 +7,8 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
-import android.widget.TextView;
 
 import br.edu.ufcg.fidu.R;
-import br.edu.ufcg.fidu.views.fragments.DonorSignupFragment;
 import br.edu.ufcg.fidu.views.fragments.MapFragment;
 import br.edu.ufcg.fidu.views.fragments.MessagesFragment;
 import br.edu.ufcg.fidu.views.fragments.ProfileFragment;
@@ -18,6 +16,16 @@ import br.edu.ufcg.fidu.views.fragments.ProfileFragment;
 public class MainActivity extends AppCompatActivity {
 
     private android.support.v4.app.FragmentManager fm;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+        fm = getSupportFragmentManager();
+        BottomNavigationView navigation = findViewById(R.id.navigation);
+        navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
+        changeFragment(new MessagesFragment());
+    }
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -43,15 +51,6 @@ public class MainActivity extends AppCompatActivity {
         FragmentTransaction ft = fm.beginTransaction();
         ft.replace(R.id.frameLayout, fragment);
         ft.commit();
-    }
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        fm = getSupportFragmentManager();
-        BottomNavigationView navigation = findViewById(R.id.navigation);
-        navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
     }
 
 }

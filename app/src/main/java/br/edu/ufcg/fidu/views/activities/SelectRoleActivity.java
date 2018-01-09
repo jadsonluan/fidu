@@ -6,7 +6,6 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.view.View;
 import android.view.WindowManager;
 import br.edu.ufcg.fidu.R;
 import br.edu.ufcg.fidu.views.fragments.DoneeSignupFragment;

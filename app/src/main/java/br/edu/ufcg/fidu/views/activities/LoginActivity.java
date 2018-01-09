@@ -15,10 +15,7 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 
 import br.edu.ufcg.fidu.R;
-import br.edu.ufcg.fidu.models.Donee;
-import br.edu.ufcg.fidu.models.Donor;
 import br.edu.ufcg.fidu.utils.FirebaseConnection;
-import br.edu.ufcg.fidu.utils.SaveData;
 
 public class LoginActivity extends AppCompatActivity {
 
