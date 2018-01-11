@@ -102,7 +102,7 @@ public class DoneeSignupFragment extends Fragment {
                     String uid = task.getResult().getUser().getUid();
                     Donee donee = new Donee(name, email, address);
                     SaveData saveData = new SaveData(SelectRoleActivity.context);
-                    saveData.writeDonatee(donee);
+                    saveData.writeDonee(donee);
                     mDatabase.child("users").child("donees").child(uid).setValue(donee);
                     Toast.makeText(getActivity(), R.string.signup_success, Toast.LENGTH_SHORT)
                             .show();

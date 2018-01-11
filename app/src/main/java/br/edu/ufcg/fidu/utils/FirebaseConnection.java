@@ -33,7 +33,7 @@ public class FirebaseConnection {
                 Donee donee = dataSnapshot.getValue(Donee.class);
                 if(donee != null){
                     SaveData saveData = new SaveData(context);
-                    saveData.writeDonatee(donee);
+                    saveData.writeDonee(donee);
                 }
             }
 
@@ -53,7 +53,7 @@ public class FirebaseConnection {
                 Donor donor = dataSnapshot.getValue(Donor.class);
                 if(donor != null){
                     SaveData saveData = new SaveData(context);
-                    saveData.writeDonator(donor);
+                    saveData.writeDonor(donor);
                 }
             }
 

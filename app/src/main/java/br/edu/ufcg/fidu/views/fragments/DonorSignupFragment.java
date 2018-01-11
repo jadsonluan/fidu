@@ -96,7 +96,7 @@ public class DonorSignupFragment extends Fragment {
                     String uid = task.getResult().getUser().getUid();
                     Donor donor = new Donor(name, email);
                     SaveData saveData = new SaveData(SelectRoleActivity.context);
-                    saveData.writeDonator(donor);
+                    saveData.writeDonor(donor);
                     mDatabase.child("users").child("donors").child(uid).setValue(donor);
                     Toast.makeText(getActivity(), R.string.signup_success, Toast.LENGTH_SHORT).show();
                     startActivity(new Intent(SelectRoleActivity.context, MainActivity.class));

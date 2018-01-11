@@ -19,7 +19,7 @@ public class SaveData {
                 PREFERENCES_KEY, context.MODE_PRIVATE);
     }
 
-    public void writeDonator(Donor donor){
+    public void writeDonor(Donor donor){
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putBoolean("isLogged", true);
         editor.putString("email_donor", donor.getEmail());
@@ -33,7 +33,7 @@ public class SaveData {
         return new Donor(name, email);
     }
 
-    public void writeDonatee(Donee donee){
+    public void writeDonee(Donee donee){
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putBoolean("isLogged", true);
         editor.putString("email_donee", donee.getEmail());
@@ -42,7 +42,7 @@ public class SaveData {
         editor.commit();
     }
 
-    public Donee readDonatee(){
+    public Donee readDonee(){
         String email = sharedPreferences.getString("email_donee", null);
         String name = sharedPreferences.getString("name_donee", null);
         String address = sharedPreferences.getString("address_donee", null);
