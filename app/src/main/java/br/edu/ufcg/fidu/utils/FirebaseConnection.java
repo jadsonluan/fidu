@@ -2,6 +2,7 @@ package br.edu.ufcg.fidu.utils;
 
 import android.content.Context;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;

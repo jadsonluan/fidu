@@ -11,6 +11,9 @@ import br.edu.ufcg.fidu.models.Donor;
  */
 
 public class SaveData {
+    public static final int DONOR = 0;
+    public static final int DONEE = 1;
+
     private static final String PREFERENCES_KEY = "br.edu.ufcg.fidu.PREFERENCE_FILE_KEY";
     private SharedPreferences sharedPreferences;
 
@@ -21,6 +24,7 @@ public class SaveData {
 
     public void writeDonor(Donor donor){
         SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putInt("role", DONOR);
         editor.putBoolean("isLogged", true);
         editor.putString("email_donor", donor.getEmail());
         editor.putString("name_donor", donor.getName());
@@ -35,6 +39,7 @@ public class SaveData {
 
     public void writeDonee(Donee donee){
         SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putInt("role", DONEE);
         editor.putBoolean("isLogged", true);
         editor.putString("email_donee", donee.getEmail());
         editor.putString("name_donee", donee.getName());
@@ -51,6 +56,11 @@ public class SaveData {
 
     public boolean isLogged(){
         return sharedPreferences.getBoolean("isLogged", false);
+    }
+
+    public int getRole() {
+        if (!isLogged()) throw new IllegalStateException("User is not logged");
+        return sharedPreferences.getInt("role", 0);
     }
 
     public void logout() {
