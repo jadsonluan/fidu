@@ -14,6 +14,7 @@ import android.widget.Toast;
 
 import br.edu.ufcg.fidu.R;
 import br.edu.ufcg.fidu.models.Donee;
+import br.edu.ufcg.fidu.models.Donor;
 import br.edu.ufcg.fidu.models.User;
 import br.edu.ufcg.fidu.utils.SaveData;
 import br.edu.ufcg.fidu.views.activities.InitialActivity;
@@ -25,8 +26,20 @@ import br.edu.ufcg.fidu.views.activities.InitialActivity;
 public class ProfileFragment extends Fragment {
     private Button btnLogout;
     private TextView tvName;
+    private TextView tvOccupation;
+    private TextView tvDescription;
+    private TextView tvFoundedIn;
+    private TextView tvBenefited;
     private TextView tvAddress;
+    private TextView tvWebsite;
     private ImageView imgProfile;
+
+    private ViewGroup occupationLayout;
+    private ViewGroup descriptionLayout;
+    private ViewGroup foundedInLayout;
+    private ViewGroup benefitedLayout;
+    private ViewGroup addressLayout;
+    private ViewGroup websiteLayout;
 
     @Nullable
     @Override
@@ -39,8 +52,20 @@ public class ProfileFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         tvName = view.findViewById(R.id.tvName);
+        tvOccupation = view.findViewById(R.id.tvOccupation);
+        tvDescription = view.findViewById(R.id.tvDescription);
+        tvFoundedIn = view.findViewById(R.id.tvFoundedIn);
+        tvBenefited = view.findViewById(R.id.tvBenefited);
+        tvWebsite = view.findViewById(R.id.tvWebsite);
         tvAddress = view.findViewById(R.id.tvAddress);
         imgProfile = view.findViewById(R.id.imgProfile);
+
+        occupationLayout = view.findViewById(R.id.occupationLayout);
+        descriptionLayout = view.findViewById(R.id.descriptionLayout);
+        foundedInLayout = view.findViewById(R.id.foundedInLayout);
+        benefitedLayout = view.findViewById(R.id.benefitedLayout);
+        websiteLayout = view.findViewById(R.id.websiteLayout);
+        addressLayout = view.findViewById(R.id.addressLayout);
 
         btnLogout = view.findViewById(R.id.btnLogout);
         btnLogout.setOnClickListener(new View.OnClickListener() {
@@ -56,7 +81,7 @@ public class ProfileFragment extends Fragment {
         SaveData sv = new SaveData(getActivity());
 
         if (sv.isLogged()) {
-            User user;
+            User user = null;
             int role = sv.getRole();
 
             if (role == SaveData.DONEE) {
@@ -68,11 +93,20 @@ public class ProfileFragment extends Fragment {
             }
 
             tvName.setText(user.getName());
+            // tvOccupation.setText(user.getOccupation());
+            // tvWebsite.setText(user.getWebsite());
 
             if (user instanceof Donee) {
-                tvAddress.setText(((Donee) user).getAddress());
+                // Passa dados do Donee
+                Donee donee = (Donee) user;
+                tvAddress.setText(donee.getAddress());
+                // tvDescription.setText(donee.getDescription());
+                // tvBenefited.setText(donee.getBenefited());
             } else {
-                tvAddress.setVisibility(View.GONE);
+                // Oculta informações do Donee
+                addressLayout.setVisibility(View.GONE);
+                descriptionLayout.setVisibility(View.GONE);
+                benefitedLayout.setVisibility(View.GONE);
             }
         } else {
             Toast.makeText(getActivity(), "Usuário não logado", Toast.LENGTH_SHORT).show();

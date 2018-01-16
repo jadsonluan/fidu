@@ -27,6 +27,13 @@
     <string name="inexistent_email">E-mail não cadastrado</string>
     <string name="email_already_in_use">E-mail já cadastrado</string>
 
+    <string name="info_occupation">Área de Atuação:</string>
+    <string name="info_description">Descrição:</string>
+    <string name="info_founded_in">Ano de Fundação:</string>
+    <string name="info_benefited">Beneficiados:</string>
+    <string name="info_address">Endereço:</string>
+    <string name="info_website">Website:</string>
+
     <string name="auth_success">Autenticado</string>
     <string name="auth_failed">A autenticação falhou</string>
 
