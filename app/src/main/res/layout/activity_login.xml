@@ -35,7 +35,7 @@
             android:id="@+id/etEmail"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:fontFamily="@font/altair_thin_trial"
+            android:fontFamily="@font/quicksand"
             android:background="@drawable/background_edittext"
             android:hint="@string/email"
             android:inputType="textEmailAddress"
@@ -46,7 +46,7 @@
             android:background="@drawable/background_edittext"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:fontFamily="@font/altair_thin_trial"
+            android:fontFamily="@font/quicksand"
             android:hint="@string/password"
             android:inputType="textPassword"
             android:textColor="@color/colorText"
@@ -54,20 +54,20 @@
 
         <Button
             android:id="@+id/btnLogin"
-            android:background="@drawable/background_button_green"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="12dp"
-            android:fontFamily="@font/altair_bold_trial"
-            android:textColor="@android:color/white"
-            android:text="@string/login" />
+            android:background="@drawable/background_button_green"
+            android:fontFamily="@font/quicksand"
+            android:text="@string/login"
+            android:textColor="@android:color/white" />
 
         <Button
             android:id="@+id/btnEsqueceu"
             android:background="@android:color/transparent"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:fontFamily="@font/altair_bold_trial"
+            android:fontFamily="@font/quicksand"
             android:text="@string/forgot_password"
             android:textAppearance="@style/TextAppearance.AppCompat"
             android:textColor="@android:color/white"/>

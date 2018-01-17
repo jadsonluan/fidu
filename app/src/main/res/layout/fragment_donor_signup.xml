@@ -12,7 +12,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="18dp"
         android:background="@drawable/background_edittext"
-        android:fontFamily="@font/altair_thin_trial"
+        android:fontFamily="@font/quicksand"
         android:hint="@string/name"
         android:inputType="textPersonName"
         android:textColor="@color/colorText" />
@@ -23,7 +23,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="12dp"
         android:background="@drawable/background_edittext"
-        android:fontFamily="@font/altair_thin_trial"
+        android:fontFamily="@font/quicksand"
         android:hint="@string/email"
         android:inputType="textEmailAddress"
         android:textColor="@color/colorText" />
@@ -34,7 +34,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="12dp"
         android:background="@drawable/background_edittext"
-        android:fontFamily="@font/altair_thin_trial"
+        android:fontFamily="@font/quicksand"
         android:hint="@string/password"
         android:inputType="textPassword"
         android:textColor="@color/colorText" />
@@ -45,7 +45,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="12dp"
         android:background="@drawable/background_edittext"
-        android:fontFamily="@font/altair_thin_trial"
+        android:fontFamily="@font/quicksand"
         android:hint="@string/confirm_password"
         android:inputType="textPassword"
         android:textColor="@color/colorText" />
@@ -57,7 +57,7 @@
         android:layout_marginTop="58dp"
         android:background="@drawable/background_button_green"
         android:elevation="2dp"
-        android:fontFamily="@font/altair_bold_trial"
+        android:fontFamily="@font/quicksand"
         android:text="@string/signup"
         android:textColor="@android:color/white" />
 

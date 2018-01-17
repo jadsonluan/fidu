@@ -61,7 +61,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:background="@color/colorAccent"
-                        android:fontFamily="@font/altair_thin_trial"
+                        android:fontFamily="@font/quicksand"
                         android:minHeight="10dp"
                         android:text="@string/donor"
                         android:textAllCaps="false" />
@@ -70,7 +70,7 @@
                         android:id="@+id/txtRegister"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:fontFamily="@font/altair_thin_trial"
+                        android:fontFamily="@font/quicksand"
                         android:minHeight="10dp"
                         android:text="@string/donee"
                         android:textAllCaps="false" />
