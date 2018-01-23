@@ -10,4 +10,8 @@ public class Donor extends User {
         super(name, email);
     }
 
+    public Donor(String name, String email, String occupation, String website) {
+        super(name, email, occupation, website);
+    }
+
 }

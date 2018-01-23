@@ -3,6 +3,8 @@
     <string name="app_name">Fidu</string>
     <string name="login">Entrar</string>
     <string name="signup">Cadastrar</string>
+    <string name="logout">Sair</string>
+    <string name="update_profile">Editar perfil</string>
 
     <string name="donor">doador</string>
     <string name="donee">instituição</string>
@@ -34,6 +36,17 @@
     <string name="info_address">Endereço:</string>
     <string name="info_website">Website:</string>
 
+    <string name="occupation">Área de Atuação</string>
+    <string name="description">Descrição</string>
+    <string name="founded_in">Ano de Fundação</string>
+    <string name="benefited">Nº de Beneficiados</string>
+    <string name="website">Website</string>
+
+    <string name="your_profile">Seu Perfil</string>
+    <string name="profile_image">Imagem de perfil (URL)</string>
+    <string name="profile_updated">Perfil atualizado com sucesso</string>
+    <string name="upload_photo">Inserir foto</string>
+
     <string name="auth_success">Autenticado</string>
     <string name="auth_failed">A autenticação falhou</string>
 
@@ -43,6 +56,8 @@
     <string name="title_messages">Messagens</string>
     <string name="title_map">Mapa</string>
     <string name="title_profile">Perfil</string>
+
+    <string name="unknown_information">não informado</string>
 
     <string name="API_KEY">AIzaSyDXprQRZijSyL3ruqqQV8fukd6IA9oer5M</string>
 

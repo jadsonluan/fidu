@@ -8,50 +8,6 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:806247816116:android:cfe52e11dab1bc04",
-        "android_client_info": {
-          "package_name": "ufcg.edu.br.fidu"
-        }
-      },
-      "oauth_client": [
-        {
-          "client_id": "806247816116-tisrosdbk92hmu0ft4plaerqn8kum440.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "ufcg.edu.br.fidu",
-            "certificate_hash": "03ef72dffdcc14961716c28087e2e69df6127914"
-          }
-        },
-        {
-          "client_id": "806247816116-qoc68qlsvetbbjs5tdvj5fnhscc3hdm2.apps.googleusercontent.com",
-          "client_type": 3
-        }
-      ],
-      "api_key": [
-        {
-          "current_key": "AIzaSyCq4_KKxoaQbgJM7hK8iclCE5WpUbCJapo"
-        }
-      ],
-      "services": {
-        "analytics_service": {
-          "status": 1
-        },
-        "appinvite_service": {
-          "status": 2,
-          "other_platform_oauth_client": [
-            {
-              "client_id": "806247816116-qoc68qlsvetbbjs5tdvj5fnhscc3hdm2.apps.googleusercontent.com",
-              "client_type": 3
-            }
-          ]
-        },
-        "ads_service": {
-          "status": 2
-        }
-      }
-    },
-    {
-      "client_info": {
         "mobilesdk_app_id": "1:806247816116:android:b05671d5d6c52ab9",
         "android_client_info": {
           "package_name": "br.edu.ufcg.fidu"

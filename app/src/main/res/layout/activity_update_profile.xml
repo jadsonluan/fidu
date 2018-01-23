@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorDarkPrimary"
+    tools:context="br.edu.ufcg.fidu.views.activities.UpdateProfileActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="center_horizontal"
+        android:paddingBottom="16dp"
+        android:paddingLeft="16dp"
+        android:paddingRight="16dp"
+        android:paddingTop="24dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/altair_bold_trial"
+            android:text="@string/your_profile"
+            android:textColor="@android:color/white"
+            android:textSize="24sp"
+            android:textStyle="bold" />
+
+        <ProgressBar
+            android:id="@+id/uploadProgress"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:layout_marginTop="24dp"
+            android:indeterminate="true"
+            tools:visibility="gone" />
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/profilePhoto"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:layout_marginTop="24dp"
+            android:src="@color/colorLightPrimary"
+            app:civ_border_color="@color/colorLightPrimary"
+            app:civ_border_width="2dp"
+            android:tooltipText="Editar"/>
+
+        <!--<ImageView-->
+            <!--android:id="@+id/profilePhoto"-->
+            <!--android:layout_width="150dp"-->
+            <!--android:layout_height="150dp"-->
+            <!--android:layout_marginTop="24dp"-->
+            <!--android:src="@color/colorAccent"-->
+            <!--android:tooltipText="Editar"/>-->
+
+        <Button
+            android:id="@+id/btnUpdatePhoto"
+            style="@style/Widget.AppCompat.Button.Colored"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:fontFamily="@font/quicksand"
+            android:text="Editar foto"
+            android:textColor="@android:color/white"
+            android:textStyle="bold" />
+
+        <EditText
+            android:layout_marginTop="16dp"
+            android:id="@+id/etName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/quicksand"
+            android:background="@drawable/background_edittext"
+            android:hint="@string/name"
+            android:inputType="text"
+            android:textColor="@color/colorText"/>
+
+        <EditText
+            android:id="@+id/etOccupation"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:fontFamily="@font/quicksand"
+            android:background="@drawable/background_edittext"
+            android:hint="@string/occupation"
+            android:inputType="text"
+            android:textColor="@color/colorText"/>
+
+        <EditText
+            android:id="@+id/etWebsite"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:fontFamily="@font/quicksand"
+            android:background="@drawable/background_edittext"
+            android:hint="@string/website"
+            android:inputType="text"
+            android:textColor="@color/colorText"/>
+
+        <EditText
+            android:id="@+id/etAddress"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:fontFamily="@font/quicksand"
+            android:background="@drawable/background_edittext"
+            android:hint="@string/address"
+            android:inputType="text"
+            android:textColor="@color/colorText"/>
+
+        <EditText
+            android:id="@+id/etDescription"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/background_edittext"
+            android:fontFamily="@font/quicksand"
+            android:hint="@string/description"
+            android:inputType="textMultiLine"
+            android:textColor="@color/colorText" />
+
+        <EditText
+            android:id="@+id/etFoundedIn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/background_edittext"
+            android:fontFamily="@font/quicksand"
+            android:hint="@string/founded_in"
+            android:inputType="number"
+            android:textColor="@color/colorText" />
+
+        <EditText
+            android:id="@+id/etBenefited"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/background_edittext"
+            android:fontFamily="@font/quicksand"
+            android:hint="@string/benefited"
+            android:inputType="number"
+            android:singleLine="false"
+            android:textColor="@color/colorText" />
+
+        <Button
+            android:id="@+id/btnUpdate"
+            style="@style/Widget.AppCompat.Button.Colored"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:fontFamily="@font/quicksand"
+            android:text="Salvar alterações"
+            android:textSize="14sp"
+            android:textStyle="bold" />
+    </LinearLayout>
+</ScrollView>

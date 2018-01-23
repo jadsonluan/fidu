@@ -1,23 +1,43 @@
 package br.edu.ufcg.fidu.models;
 
+import android.util.Log;
+
 public class User {
 
     private String name;
     private String email;
+    private String occupation;
+    private String website;
 
     public User(){
 
     }
 
     public User(String name, String email) {
-        verifyParameters(name, email);
-        this.name = name;
-        this.email = email;
+        this(name, email, "", "");
     }
 
-    private void verifyParameters(String name, String email){
-        if(name == null || email == null)
-            throw new NullPointerException("Name or email cannot be null");
+    public User(String name, String email, String occupation, String website) {
+        Log.d("User", name);
+//        verifyParameters(name, email, occupation, website);
+        this.name = name;
+        this.email = email;
+        this.occupation = occupation;
+        this.website = website;
+    }
+
+    private void verifyParameters(String name, String email, String occupation, String website){
+        if(name == null)
+            throw new NullPointerException("Name cannot be null");
+
+        if(email == null)
+            throw new NullPointerException("Name cannot be null");
+
+        if(occupation  == null)
+            throw new NullPointerException("Name cannot be null");
+
+        if (website == null)
+            throw new NullPointerException("Website cannot be null");
     }
 
     public String getName() {
@@ -36,6 +56,14 @@ public class User {
         this.email = email;
     }
 
+    public String getOccupation() { return occupation; }
+
+    public void setOccupation(String occupation) { this.occupation = occupation; }
+
+    public String getWebsite() { return website; }
+
+    public void setWebsite(String website) { this.website = website; }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -51,4 +79,13 @@ public class User {
         return email.hashCode();
     }
 
+    @Override
+    public String toString() {
+        return "User{" +
+                "name='" + name + '\'' +
+                ", email='" + email + '\'' +
+                ", occupation='" + occupation + '\'' +
+                ", website='" + website + '\'' +
+                '}';
+    }
 }

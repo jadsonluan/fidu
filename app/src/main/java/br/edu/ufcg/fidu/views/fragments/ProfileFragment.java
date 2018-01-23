@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,19 +13,28 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.Key;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.signature.StringSignature;
+import com.firebase.ui.storage.images.FirebaseImageLoader;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+
+import java.io.File;
+
 import br.edu.ufcg.fidu.R;
 import br.edu.ufcg.fidu.models.Donee;
 import br.edu.ufcg.fidu.models.Donor;
 import br.edu.ufcg.fidu.models.User;
 import br.edu.ufcg.fidu.utils.SaveData;
 import br.edu.ufcg.fidu.views.activities.InitialActivity;
-
-/**
- * Created by vitoria on 08/01/18.
- */
+import br.edu.ufcg.fidu.views.activities.UpdateProfileActivity;
 
 public class ProfileFragment extends Fragment {
     private Button btnLogout;
+    private Button btnEdit;
     private TextView tvName;
     private TextView tvOccupation;
     private TextView tvDescription;
@@ -41,6 +51,8 @@ public class ProfileFragment extends Fragment {
     private ViewGroup addressLayout;
     private ViewGroup websiteLayout;
 
+    private StorageReference mStorage;
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
@@ -50,6 +62,8 @@ public class ProfileFragment extends Fragment {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        mStorage = FirebaseStorage.getInstance().getReference();
 
         tvName = view.findViewById(R.id.tvName);
         tvOccupation = view.findViewById(R.id.tvOccupation);
@@ -74,13 +88,33 @@ public class ProfileFragment extends Fragment {
                 logout();
             }
         });
+
+        btnEdit = view.findViewById(R.id.btnEdit);
+        btnEdit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                updateProfile();
+            }
+        });
         updateUI();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        updateUI();
+    }
+
+    private void updateProfile() {
+        startActivity(new Intent(getActivity(), UpdateProfileActivity.class));
+        getActivity().overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
     }
 
     private void updateUI() {
         SaveData sv = new SaveData(getActivity());
 
         if (sv.isLogged()) {
+            String unknown = getString(R.string.unknown_information);
             User user = null;
             int role = sv.getRole();
 
@@ -92,16 +126,35 @@ public class ProfileFragment extends Fragment {
                 return;
             }
 
+            String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
+            String occupation = user.getOccupation().equals("") ? unknown : user.getOccupation();
+            String website = user.getWebsite().equals("") ? unknown : user.getWebsite();
+
             tvName.setText(user.getName());
-            // tvOccupation.setText(user.getOccupation());
-            // tvWebsite.setText(user.getWebsite());
+            tvOccupation.setText(occupation);
+            tvWebsite.setText(website);
+
+            StorageReference photoRef = mStorage.child("profile_images").child(uid);
+            Glide.with(this)
+                    .using(new FirebaseImageLoader())
+                    .load(photoRef)
+                    .diskCacheStrategy(DiskCacheStrategy.NONE)
+                    .skipMemoryCache(true)
+                    .into(imgProfile);
 
             if (user instanceof Donee) {
                 // Passa dados do Donee
                 Donee donee = (Donee) user;
+                String benefited, foundedIn, description;
+
+                benefited = donee.getBenefited() == 0 ? unknown : donee.getBenefited() + " pessoa(s)";
+                foundedIn = donee.getFoundedIn() == 0 ? unknown : donee.getFoundedIn() + "";
+                description = donee.getDescription().equals("") ? unknown : donee.getDescription();
+
                 tvAddress.setText(donee.getAddress());
-                // tvDescription.setText(donee.getDescription());
-                // tvBenefited.setText(donee.getBenefited());
+                tvDescription.setText(description);
+                tvBenefited.setText(benefited);
+                tvFoundedIn.setText(foundedIn);
             } else {
                 // Oculta informações do Donee
                 addressLayout.setVisibility(View.GONE);

@@ -8,6 +8,8 @@
          location permissions for the 'MyLocation' functionality. 
     -->
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"></uses-permission>
 
     <application
         android:allowBackup="true"
@@ -23,24 +25,19 @@
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/API_KEY" />
 
-        <activity
-            android:name=".views.activities.InitialActivity">
+        <activity android:name=".views.activities.InitialActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
+        <activity android:name=".views.activities.LoginActivity" />
+        <activity android:name=".views.activities.SelectRoleActivity" />
         <activity
-            android:name=".views.activities.LoginActivity" />
-
-        <activity
-            android:name=".views.activities.SelectRoleActivity" />
-
-        <activity
-            android:theme="@style/AppThemeWithActionBar"
             android:name=".views.activities.MainActivity"
-            android:label="@string/app_name" />
+            android:label="@string/app_name"/>
+        <activity android:name=".views.activities.UpdateProfileActivity"></activity>
     </application>
 
 </manifest>
