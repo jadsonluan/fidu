@@ -28,22 +28,25 @@
 
         <Button
             android:id="@+id/btnLogin"
+            style="@style/Widget.AppCompat.Button.Colored"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginRight="8dp"
             android:layout_weight="1"
-            android:background="@drawable/background_edittext"
+            android:backgroundTint="@android:color/white"
             android:fontFamily="@font/quicksand"
+            android:padding="20dp"
             android:text="@string/login"
             android:textColor="@color/primaryText" />
 
         <Button
             android:id="@+id/btnCadastrar"
+            style="@style/Widget.AppCompat.Button.Colored"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:background="@drawable/background_button_green"
             android:fontFamily="@font/quicksand"
+            android:padding="20dp"
             android:text="@string/signup"
             android:textColor="@color/secondaryText" />
 
