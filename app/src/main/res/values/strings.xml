@@ -22,6 +22,10 @@
     <string name="password_doesnt_match">As senhas não correspondem</string>
     <string name="forgot_password">Esqueceu sua senha?</string>
     <string name="wrong_password">Senha incorreta</string>
+    <string name="password_reset_sent">Sucesso! Verifique seu e-mail para resetar sua senha.</string>
+    <string name="forgot_password_explanation">
+        Insira seu e-mail abaixo e lhe enviaremos instruções para a definição de uma nova senha.
+    </string>
 
     <string name="email">E-mail</string>
     <string name="email_empty">E-mail não pode ser vazio</string>

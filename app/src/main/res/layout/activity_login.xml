@@ -63,13 +63,13 @@
             android:textColor="@android:color/white" />
 
         <Button
-            android:id="@+id/btnEsqueceu"
-            android:background="@android:color/transparent"
+            android:id="@+id/btnForgot"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="@android:color/transparent"
             android:fontFamily="@font/quicksand"
             android:text="@string/forgot_password"
             android:textAppearance="@style/TextAppearance.AppCompat"
-            android:textColor="@android:color/white"/>
+            android:textColor="@android:color/white" />
     </LinearLayout>
 </LinearLayout>

@@ -30,6 +30,7 @@ public class LoginActivity extends AppCompatActivity {
     private EditText mEtEmail;
     private EditText mEtPassword;
     private Button mBtnLogin;
+    private Button btnForgot;
     private View loginProgress;
     private View loginForm;
 
@@ -107,6 +108,7 @@ public class LoginActivity extends AppCompatActivity {
         mEtEmail = findViewById(R.id.etEmail);
         mEtPassword = findViewById(R.id.etPassword);
         mBtnLogin = findViewById(R.id.btnLogin);
+        btnForgot = (Button) findViewById(R.id.btnForgot);
 
         mBtnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -117,6 +119,19 @@ public class LoginActivity extends AppCompatActivity {
                 login(email, password);
             }
         });
+
+        btnForgot.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                forgotPassword();
+            }
+        });
+    }
+
+    private void forgotPassword() {
+        startActivity(new Intent(LoginActivity.this, ForgotPasswordActivity.class));
+        overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
+        finish();
     }
 
     private void showProgress(boolean show) {

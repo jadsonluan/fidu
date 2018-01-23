@@ -6,7 +6,7 @@
         <item name="colorPrimaryDark">@color/colorDarkPrimary</item>
         <item name="colorAccent">@color/colorAccent</item>
         <!-- EditText bottom line color -->
-        <item name="colorControlNormal">@color/colorText</item>
+        <item name="colorControlNormal">@color/primaryText</item>
         <item name="colorControlActivated">@color/colorAccent</item>
         <item name="colorControlHighlight">@color/colorAccent</item>
         <item name="android:textColorHint">@color/colorLightPrimary</item>
