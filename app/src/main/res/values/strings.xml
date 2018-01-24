@@ -61,6 +61,8 @@
     <string name="title_map">Mapa</string>
     <string name="title_profile">Perfil</string>
 
+    <string name="network_error">Problema na conexão com a internet.</string>
+
     <string name="unknown_information">não informado</string>
 
     <string name="API_KEY">AIzaSyDXprQRZijSyL3ruqqQV8fukd6IA9oer5M</string>

@@ -14,6 +14,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.FirebaseNetworkException;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthUserCollisionException;
@@ -90,21 +91,21 @@ public class DonorSignupFragment extends Fragment {
         mAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
-                showProgress(false);
+            showProgress(false);
 
-                if (task.isSuccessful()) {
-                    String uid = task.getResult().getUser().getUid();
-                    Donor donor = new Donor(name, email);
-                    SaveData saveData = new SaveData(SelectRoleActivity.context);
-                    saveData.writeDonor(donor);
-                    mDatabase.child("users").child("donors").child(uid).setValue(donor);
-                    Toast.makeText(getActivity(), R.string.signup_success, Toast.LENGTH_SHORT).show();
-                    startActivity(new Intent(SelectRoleActivity.context, MainActivity.class));
-                    getActivity().finish();
-                }
-                else {
-                    handleErrors(task.getException());
-                }
+            if (task.isSuccessful()) {
+                String uid = task.getResult().getUser().getUid();
+                Donor donor = new Donor(name, email);
+                SaveData saveData = new SaveData(SelectRoleActivity.context);
+                saveData.writeDonor(donor);
+                mDatabase.child("users").child("donors").child(uid).setValue(donor);
+                Toast.makeText(getActivity(), R.string.signup_success, Toast.LENGTH_SHORT).show();
+                startActivity(new Intent(SelectRoleActivity.context, MainActivity.class));
+                getActivity().finish();
+            }
+            else {
+                handleErrors(task.getException());
+            }
             }
         });
 
@@ -116,8 +117,11 @@ public class DonorSignupFragment extends Fragment {
         } catch (FirebaseAuthUserCollisionException e) {
             etEmail.setError(getString(R.string.email_already_in_use));
             etEmail.requestFocus();
+        } catch (FirebaseNetworkException e) {
+            Toast.makeText(getActivity(), R.string.network_error, Toast.LENGTH_SHORT).show();
         } catch (Exception e) {
-            Log.e(TAG, e.getMessage());
+            e.printStackTrace();
+            Toast.makeText(getActivity(), "Error", Toast.LENGTH_SHORT).show();
         }
     }
 
