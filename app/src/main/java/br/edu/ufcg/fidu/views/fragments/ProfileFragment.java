@@ -151,6 +151,7 @@ public class ProfileFragment extends Fragment {
                 addressLayout.setVisibility(View.GONE);
                 descriptionLayout.setVisibility(View.GONE);
                 benefitedLayout.setVisibility(View.GONE);
+                foundedInLayout.setVisibility(View.GONE);
             }
         } else {
             Toast.makeText(getActivity(), "Usuário não logado", Toast.LENGTH_SHORT).show();
