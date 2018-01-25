@@ -32,8 +32,8 @@
             android:layout_height="100dp"
             android:layout_marginTop="49dp"
             android:layout_marginBottom="24dp"
-            android:indeterminate="true"
-            tools:visibility="gone" />
+            android:visibility="gone"
+            android:indeterminate="true"/>
 
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/profilePhoto"
