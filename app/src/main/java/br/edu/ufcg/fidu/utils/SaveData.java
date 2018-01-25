@@ -3,25 +3,20 @@ package br.edu.ufcg.fidu.utils;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.util.Log;
-import android.widget.Toast;
 
 import br.edu.ufcg.fidu.models.Donee;
 import br.edu.ufcg.fidu.models.Donor;
-
-/**
- * Created by vitoria on 08/01/18.
- */
 
 public class SaveData {
     public static final int DONOR = 0;
     public static final int DONEE = 1;
 
     private static final String PREFERENCES_KEY = "br.edu.ufcg.fidu.PREFERENCE_FILE_KEY";
-    private SharedPreferences sharedPreferences;
+    private final SharedPreferences sharedPreferences;
 
     public SaveData(Context context){
         sharedPreferences = context.getSharedPreferences(
-                PREFERENCES_KEY, context.MODE_PRIVATE);
+                PREFERENCES_KEY, Context.MODE_PRIVATE);
     }
 
     public void writeDonor(Donor donor){
@@ -32,7 +27,7 @@ public class SaveData {
         editor.putString("name_donor", donor.getName());
         editor.putString("occupation_donor", donor.getOccupation());
         editor.putString("website_donor", donor.getWebsite());
-        editor.commit();
+        editor.apply();
     }
 
     public Donor readDonor(){
@@ -56,7 +51,7 @@ public class SaveData {
         editor.putInt("benefited_donee", donee.getBenefited());
         editor.putInt("founded_in_donee", donee.getFoundedIn());
         editor.putString("description_donee", donee.getDescription());
-        editor.commit();
+        editor.apply();
     }
 
     public Donee readDonee(){
@@ -84,6 +79,6 @@ public class SaveData {
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.clear();
         editor.putBoolean("isLogged", false);
-        editor.commit();
+        editor.apply();
     }
 }

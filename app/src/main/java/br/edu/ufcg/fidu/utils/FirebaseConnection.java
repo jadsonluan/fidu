@@ -2,7 +2,6 @@ package br.edu.ufcg.fidu.utils;
 
 import android.content.Context;
 import android.util.Log;
-import android.widget.Toast;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -13,13 +12,9 @@ import com.google.firebase.database.ValueEventListener;
 import br.edu.ufcg.fidu.models.Donee;
 import br.edu.ufcg.fidu.models.Donor;
 
-/**
- * Created by vitoria on 08/01/18.
- */
-
 public class FirebaseConnection {
     private static final FirebaseDatabase database = FirebaseDatabase.getInstance();
-    private Context context;
+    private final Context context;
 
     public FirebaseConnection(Context context){
         this.context = context;

@@ -19,7 +19,6 @@ import br.edu.ufcg.fidu.R;
 
 public class ForgotPasswordActivity extends AppCompatActivity {
     private EditText etEmail;
-    private Button btnForgot;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,7 +26,8 @@ public class ForgotPasswordActivity extends AppCompatActivity {
         setContentView(R.layout.activity_forgot_password);
 
         etEmail = findViewById(R.id.etEmail);
-        btnForgot = findViewById(R.id.btnForgot);
+
+        Button btnForgot = findViewById(R.id.btnForgot);
         btnForgot.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -46,7 +46,7 @@ public class ForgotPasswordActivity extends AppCompatActivity {
     private void sendResetPassword() {
         String email = etEmail.getText().toString();
 
-        if (email == null || email.trim().equals("")) {
+        if (email.trim().equals("")) {
             etEmail.setError(getResources().getText(R.string.email_empty));
             return;
         } else if (!email.contains("@")) {
@@ -77,7 +77,7 @@ public class ForgotPasswordActivity extends AppCompatActivity {
             Toast.makeText(this, R.string.network_error, Toast.LENGTH_SHORT).show();
         } catch (Exception e) {
             e.printStackTrace();
-            Toast.makeText(this, "Error", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, R.string.default_error_message, Toast.LENGTH_SHORT).show();
         }
     }
 }

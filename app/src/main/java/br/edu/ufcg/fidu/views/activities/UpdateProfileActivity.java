@@ -1,18 +1,13 @@
 package br.edu.ufcg.fidu.views.activities;
 
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.net.Uri;
-import android.os.AsyncTask;
 import android.os.Environment;
-import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
@@ -22,38 +17,26 @@ import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.Key;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.load.resource.drawable.GlideDrawable;
 import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.target.Target;
-import com.bumptech.glide.signature.StringSignature;
 import com.firebase.ui.storage.images.FirebaseImageLoader;
-import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
-import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
 import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.EventListener;
 
 import br.edu.ufcg.fidu.R;
 import br.edu.ufcg.fidu.models.Donee;
 import br.edu.ufcg.fidu.models.Donor;
-import br.edu.ufcg.fidu.models.User;
-import br.edu.ufcg.fidu.utils.FirebaseConnection;
 import br.edu.ufcg.fidu.utils.SaveData;
-import de.hdodenhof.circleimageview.CircleImageView;
 
 public class UpdateProfileActivity extends AppCompatActivity {
     private EditText etName;
@@ -63,7 +46,6 @@ public class UpdateProfileActivity extends AppCompatActivity {
     private EditText etDescription;
     private EditText etFoundedIn;
     private EditText etBenefited;
-    private Button btnUpdate;
     private ImageView profilePhoto;
     private ProgressBar progressBar;
 
@@ -87,15 +69,15 @@ public class UpdateProfileActivity extends AppCompatActivity {
         mStorage = FirebaseStorage.getInstance().getReference();
         sv = new SaveData(this);
 
-        profilePhoto = (ImageView) findViewById(R.id.profilePhoto);
-        progressBar = (ProgressBar) findViewById(R.id.imgLoading);
-        etName = (EditText) findViewById(R.id.etName);
-        etOccupation = (EditText) findViewById(R.id.etOccupation);
-        etWebsite = (EditText) findViewById(R.id.etWebsite);
-        etAddress = (EditText) findViewById(R.id.etAddress);
-        etDescription = (EditText) findViewById(R.id.etDescription);
-        etFoundedIn = (EditText) findViewById(R.id.etFoundedIn);
-        etBenefited = (EditText) findViewById(R.id.etBenefited);
+        profilePhoto = findViewById(R.id.profilePhoto);
+        progressBar = findViewById(R.id.imgLoading);
+        etName = findViewById(R.id.etName);
+        etOccupation = findViewById(R.id.etOccupation);
+        etWebsite = findViewById(R.id.etWebsite);
+        etAddress = findViewById(R.id.etAddress);
+        etDescription = findViewById(R.id.etDescription);
+        etFoundedIn = findViewById(R.id.etFoundedIn);
+        etBenefited = findViewById(R.id.etBenefited);
         etBenefited.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {}
@@ -113,7 +95,7 @@ public class UpdateProfileActivity extends AppCompatActivity {
             public void afterTextChanged(Editable editable) {}
         });
 
-        btnUpdate = (Button) findViewById(R.id.btnUpdate);
+        Button btnUpdate = findViewById(R.id.btnUpdate);
         btnUpdate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -131,7 +113,7 @@ public class UpdateProfileActivity extends AppCompatActivity {
             }
         });
 
-        Button btnUpdatePhoto = (Button) findViewById(R.id.btnUpdatePhoto);
+        Button btnUpdatePhoto = findViewById(R.id.btnUpdatePhoto);
         btnUpdatePhoto.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -157,31 +139,34 @@ public class UpdateProfileActivity extends AppCompatActivity {
         if (resultCode == RESULT_OK) {
             if (requestCode == IMAGE_GALLERY_REQUEST) {
                 final Uri imageUri = data.getData();
-                final String uid = mAuth.getCurrentUser().getUid();
 
-                // Show progress
-                showProgress(true);
+                if (imageUri != null) {
+                    final String uid = mAuth.getCurrentUser().getUid();
 
-                final UploadTask uploadTask;
-                uploadTask = mStorage.child("profile_images").child(uid).putFile(imageUri);
+                    // Show progress
+                    showProgress(true);
 
-                // Success
-                uploadTask.addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                    @Override
-                    public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                    updatePhoto();
-                // Failure
-                    }
-                }).addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                    showProgress(false);
+                    final UploadTask uploadTask;
+                    uploadTask = mStorage.child("profile_images").child(uid).putFile(imageUri);
 
-                    Toast.makeText(UpdateProfileActivity.this,
-                            e.getMessage(), Toast.LENGTH_SHORT).show();
-                    e.printStackTrace();
-                    }
-                });
+                    // Success
+                    uploadTask.addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                        @Override
+                        public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                            updatePhoto();
+                            // Failure
+                        }
+                    }).addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            showProgress(false);
+
+                            Toast.makeText(UpdateProfileActivity.this,
+                                    e.getMessage(), Toast.LENGTH_SHORT).show();
+                            e.printStackTrace();
+                        }
+                    });
+                }
             }
         }
 
@@ -234,8 +219,8 @@ public class UpdateProfileActivity extends AppCompatActivity {
                 etOccupation.setText(user.getOccupation());
                 etWebsite.setText(user.getWebsite());
             }
-        } else {
-            Toast.makeText(this, "Carregando informações", Toast.LENGTH_SHORT).show();
+//        } else {
+//             TELA AINDA NÃO CARREGADA [FAZER ALGO SOBRE ISSO], TALVEZ UM LOADING
         }
     }
 

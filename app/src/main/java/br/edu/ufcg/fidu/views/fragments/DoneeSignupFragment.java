@@ -1,11 +1,10 @@
 package br.edu.ufcg.fidu.views.fragments;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -29,14 +28,11 @@ import br.edu.ufcg.fidu.views.activities.MainActivity;
 import br.edu.ufcg.fidu.views.activities.SelectRoleActivity;
 
 public class DoneeSignupFragment extends Fragment {
-    private final String TAG = "DoneeSignupFragment";
-
     private EditText etName;
     private EditText etEmail;
     private EditText etPassword;
     private EditText etPasswordConfirm;
     private EditText etAddress;
-    private Button btnSignup;
     private View signupProgress;
     private View signupForm;
 
@@ -46,13 +42,7 @@ public class DoneeSignupFragment extends Fragment {
     public DoneeSignupFragment() {}
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-    }
-
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_donee_signup, container, false);
     }
 
@@ -69,8 +59,8 @@ public class DoneeSignupFragment extends Fragment {
         etPassword = view.findViewById(R.id.etPassword);
         etPasswordConfirm = view.findViewById(R.id.etPasswordConfirm);
         etAddress = view.findViewById(R.id.etAddress);
-        btnSignup = view.findViewById(R.id.btnSignup);
 
+        Button btnSignup = view.findViewById(R.id.btnSignup);
         btnSignup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -178,7 +168,7 @@ public class DoneeSignupFragment extends Fragment {
             etPasswordConfirm.setError(getResources().getText(R.string.password_empty));
             focusView = etPasswordConfirm;
             isValid = false;
-        } else if (!password.equals(passwordConfirm)) {
+        } else if (!passwordConfirm.equals(password)) {
             etPasswordConfirm.setError(getResources().getText(R.string.password_doesnt_match));
             focusView = etPasswordConfirm;
             isValid = false;
@@ -191,13 +181,4 @@ public class DoneeSignupFragment extends Fragment {
         return isValid;
     }
 
-    @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-    }
-
-    @Override
-    public void onDetach() {
-        super.onDetach();
-    }
 }

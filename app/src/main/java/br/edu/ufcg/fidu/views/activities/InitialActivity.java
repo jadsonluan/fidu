@@ -11,30 +11,28 @@ import br.edu.ufcg.fidu.utils.SaveData;
 
 public class InitialActivity extends AppCompatActivity {
 
-    private Button mBtnLogin;
-    private Button mBtnSignUp;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_initial);
 
         SaveData saveData = new SaveData(this);
+
         if(saveData.isLogged()){
             startActivity(new Intent(this, MainActivity.class));
             finish();
         }
-        mBtnLogin = findViewById(R.id.btnLogin);
-        mBtnSignUp = findViewById(R.id.btnCadastrar);
 
-        mBtnLogin.setOnClickListener(new View.OnClickListener() {
+        Button btnLogin = findViewById(R.id.btnLogin);
+        btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 login();
             }
         });
 
-        mBtnSignUp.setOnClickListener(new View.OnClickListener() {
+        Button btnSignUp = findViewById(R.id.btnCadastrar);
+        btnSignUp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 signUp();

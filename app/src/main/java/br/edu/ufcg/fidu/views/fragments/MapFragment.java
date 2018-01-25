@@ -15,9 +15,6 @@ import com.google.android.gms.maps.model.LatLng;
 
 import br.edu.ufcg.fidu.R;
 
-/**
- * Created by vitoria on 08/01/18.
- */
 
 public class MapFragment extends Fragment implements OnMapReadyCallback {
     private SupportMapFragment mSupportMapFragment;

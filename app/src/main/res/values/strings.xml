@@ -62,6 +62,7 @@
     <string name="title_profile">Perfil</string>
 
     <string name="network_error">Problema na conexão com a internet.</string>
+    <string name="default_error_message">Ocorreu um erro ao executar essa ação. Tente novamente</string>
 
     <string name="unknown_information">não informado</string>
 

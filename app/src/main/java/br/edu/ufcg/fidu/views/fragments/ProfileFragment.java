@@ -31,8 +31,6 @@ import br.edu.ufcg.fidu.views.activities.InitialActivity;
 import br.edu.ufcg.fidu.views.activities.UpdateProfileActivity;
 
 public class ProfileFragment extends Fragment {
-    private Button btnLogout;
-    private Button btnEdit;
     private TextView tvName;
     private TextView tvOccupation;
     private TextView tvDescription;
@@ -81,7 +79,7 @@ public class ProfileFragment extends Fragment {
         websiteLayout = view.findViewById(R.id.websiteLayout);
         addressLayout = view.findViewById(R.id.addressLayout);
 
-        btnLogout = view.findViewById(R.id.btnLogout);
+        Button btnLogout = view.findViewById(R.id.btnLogout);
         btnLogout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -89,7 +87,7 @@ public class ProfileFragment extends Fragment {
             }
         });
 
-        btnEdit = view.findViewById(R.id.btnEdit);
+        Button btnEdit = view.findViewById(R.id.btnEdit);
         btnEdit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -115,7 +113,7 @@ public class ProfileFragment extends Fragment {
 
         if (sv.isLogged()) {
             String unknown = getString(R.string.unknown_information);
-            User user = null;
+            User user;
             int role = sv.getRole();
 
             if (role == SaveData.DONEE) {

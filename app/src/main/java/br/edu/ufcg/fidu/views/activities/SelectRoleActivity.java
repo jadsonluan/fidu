@@ -15,7 +15,6 @@ import co.ceryle.segmentedbutton.SegmentedButtonGroup;
 public class SelectRoleActivity extends AppCompatActivity {
 
     public static Context context;
-    private SegmentedButtonGroup mSbg;
     private FragmentManager fm;
 
     @Override
@@ -29,7 +28,7 @@ public class SelectRoleActivity extends AppCompatActivity {
         ft.add(R.id.signup_content, new DonorSignupFragment());
         ft.commit();
 
-        mSbg = findViewById(R.id.segmentedButtonGroup);
+        SegmentedButtonGroup mSbg = findViewById(R.id.segmentedButtonGroup);
         mSbg.setOnClickedButtonPosition(new SegmentedButtonGroup.OnClickedButtonPosition() {
             @Override
             public void onClickedButtonPosition(int position) {

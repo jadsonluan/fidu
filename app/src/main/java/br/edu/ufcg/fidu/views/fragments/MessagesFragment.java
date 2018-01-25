@@ -9,10 +9,6 @@ import android.view.ViewGroup;
 
 import br.edu.ufcg.fidu.R;
 
-/**
- * Created by vitoria on 08/01/18.
- */
-
 public class MessagesFragment extends Fragment {
 
     @Nullable

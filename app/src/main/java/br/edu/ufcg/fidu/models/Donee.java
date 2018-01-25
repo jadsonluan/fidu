@@ -2,14 +2,10 @@ package br.edu.ufcg.fidu.models;
 
 public class Donee extends User {
 
-    private String address;
-    private String description;
-    private int foundedIn;
-    private int benefited;
-
-    public Donee(){
-        super();
-    }
+    private final String address;
+    private final String description;
+    private final int foundedIn;
+    private final int benefited;
 
     public Donee(String name, String email, String address) {
         this(name, email, "", "", address, "", 0, 0);
@@ -36,32 +32,16 @@ public class Donee extends User {
         return address;
     }
 
-    public void setAddress(String address) {
-        this.address = address;
-    }
-
     public String getDescription() {
         return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
     }
 
     public int getFoundedIn() {
         return foundedIn;
     }
 
-    public void setFoundedIn(int foundedIn) {
-        this.foundedIn = foundedIn;
-    }
-
     public int getBenefited() {
         return benefited;
-    }
-
-    public void setBenefited(int benefited) {
-        this.benefited = benefited;
     }
 
     @Override

@@ -1,25 +1,18 @@
 package br.edu.ufcg.fidu.models;
 
-import android.util.Log;
-
 public class User {
 
-    private String name;
-    private String email;
-    private String occupation;
-    private String website;
-
-    public User(){
-
-    }
+    private final String name;
+    private final String email;
+    private final String occupation;
+    private final String website;
 
     public User(String name, String email) {
         this(name, email, "", "");
     }
 
     public User(String name, String email, String occupation, String website) {
-        Log.d("User", name);
-//        verifyParameters(name, email, occupation, website);
+        verifyParameters(name, email, occupation, website);
         this.name = name;
         this.email = email;
         this.occupation = occupation;
@@ -44,25 +37,13 @@ public class User {
         return name;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
     public String getEmail() {
         return email;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
     public String getOccupation() { return occupation; }
 
-    public void setOccupation(String occupation) { this.occupation = occupation; }
-
     public String getWebsite() { return website; }
-
-    public void setWebsite(String website) { this.website = website; }
 
     @Override
     public boolean equals(Object o) {
