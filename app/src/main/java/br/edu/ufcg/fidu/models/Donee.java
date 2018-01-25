@@ -2,10 +2,12 @@ package br.edu.ufcg.fidu.models;
 
 public class Donee extends User {
 
-    private final String address;
-    private final String description;
-    private final int foundedIn;
-    private final int benefited;
+    private String address;
+    private String description;
+    private int foundedIn;
+    private int benefited;
+
+    public Donee() {}
 
     public Donee(String name, String email, String address) {
         this(name, email, "", "", address, "", 0, 0);

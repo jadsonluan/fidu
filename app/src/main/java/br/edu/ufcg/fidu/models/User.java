@@ -2,10 +2,12 @@ package br.edu.ufcg.fidu.models;
 
 public class User {
 
-    private final String name;
-    private final String email;
-    private final String occupation;
-    private final String website;
+    private String name;
+    private String email;
+    private String occupation;
+    private String website;
+
+    public User() {}
 
     public User(String name, String email) {
         this(name, email, "", "");
