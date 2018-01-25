@@ -209,6 +209,8 @@ public class UpdateProfileActivity extends AppCompatActivity {
                 etFoundedIn.setText(user.getFoundedIn() == 0 ? "" : user.getFoundedIn() + "");
                 etBenefited.setText(user.getBenefited() == 0 ? "" : user.getBenefited() + "");
             } else {
+                updatePhoto();
+                
                 etAddress.setVisibility(View.GONE);
                 etDescription.setVisibility(View.GONE);
                 etFoundedIn.setVisibility(View.GONE);
