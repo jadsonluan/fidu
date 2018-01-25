@@ -58,8 +58,6 @@ public class ProfileFragment extends Fragment {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
-        ((AppCompatActivity) getActivity()).getSupportActionBar().hide();
         mStorage = FirebaseStorage.getInstance().getReference();
 
         // corrige problema com o titulo da appbar

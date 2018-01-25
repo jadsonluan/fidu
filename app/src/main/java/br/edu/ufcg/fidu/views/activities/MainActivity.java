@@ -42,13 +42,16 @@ public class MainActivity extends AppCompatActivity {
                 case R.id.navigation_messages:
                     changeFragment(new MessagesFragment());
                     getSupportActionBar().setTitle(R.string.title_messages);
+                    getSupportActionBar().show();
                     return true;
                 case R.id.navigation_map:
                     changeFragment(MapFragment.newInstance(-7.2179305, -35.906639));
                     getSupportActionBar().setTitle(R.string.title_map);
+                    getSupportActionBar().show();
                     return true;
                 case R.id.navigation_profile:
                     changeFragment(new ProfileFragment());
+                    getSupportActionBar().hide();
                     getSupportActionBar().setTitle(R.string.title_profile);
                     return true;
             }
