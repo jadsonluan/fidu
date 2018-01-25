@@ -128,7 +128,7 @@ public class ProfileFragment extends Fragment {
 
     private void updateProfile() {
         startActivity(new Intent(getActivity(), UpdateProfileActivity.class));
-        getActivity().overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
+        getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
     }
 
     private void updateUI() {
