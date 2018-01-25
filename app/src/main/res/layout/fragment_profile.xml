@@ -3,33 +3,19 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/colorPrimary">
+    android:layout_height="match_parent">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:gravity="center_horizontal"
-        android:paddingTop="24dp"
-        android:paddingLeft="16dp"
-        android:paddingRight="16dp"
-        android:paddingBottom="16dp">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:fontFamily="@font/altair_bold_trial"
-            android:text="@string/your_profile"
-            android:textColor="@android:color/white"
-            android:textSize="24sp"
-            android:textStyle="bold" />
+        android:padding="16dp">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical"
-            android:layout_marginTop="24dp"
             android:layout_marginBottom="16dp"
             android:gravity="center_horizontal">
 
@@ -46,9 +32,9 @@
                 android:id="@+id/imgProfile"
                 android:layout_width="150dp"
                 android:layout_height="150dp"
-                android:src="@color/colorLightPrimary"
+                android:src="@color/colorPrimary"
                 app:civ_border_color="@color/colorDarkPrimary"
-                app:civ_border_width="2dp" />
+                app:civ_border_width="1dp" />
 
             <TextView
                 android:id="@+id/tvName"
@@ -86,7 +72,7 @@
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/quicksand"
                 android:text="Lorem ipsum"
-                android:textColor="@color/secondaryText"
+                android:textColor="@color/secondaryDarkText"
                 android:textSize="16sp" />
         </LinearLayout>
 
@@ -114,7 +100,7 @@
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/quicksand"
                 android:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc massa ante, porta non augue ut, gravida posuere odio. Aliquam ut lorem et lorem ullamcorper aliquet vel in sem. Curabitur ultricies mi neque, at vestibulum lorem gravida in. Nullam a quam sit amet nunc sollicitudin luctus et vitae nisl. Maecenas vel orci auctor, suscipit sapien tempor, pulvinar eros. Etiam at enim sem. Nulla pellentesque neque eu ligula semper, et ultricies arcu volutpat. Suspendisse tempor facilisis posuere volutpat. "
-                android:textColor="@color/secondaryText"
+                android:textColor="@color/secondaryDarkText"
                 android:textSize="16sp" />
         </LinearLayout>
 
@@ -142,7 +128,7 @@
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/quicksand"
                 android:text="2014"
-                android:textColor="@color/secondaryText"
+                android:textColor="@color/secondaryDarkText"
                 android:textSize="16sp" />
         </LinearLayout>
 
@@ -170,7 +156,7 @@
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/quicksand"
                 android:text="100 pessoas"
-                android:textColor="@color/secondaryText"
+                android:textColor="@color/secondaryDarkText"
                 android:textSize="16sp" />
         </LinearLayout>
 
@@ -200,7 +186,7 @@
                 android:text="Rua Alguma Coisa, XXX, Tal Bairro, Cidade Tal, Tal Estado"
                 android:textAlignment="viewStart"
                 android:layout_gravity="start"
-                android:textColor="@color/secondaryText"
+                android:textColor="@color/secondaryDarkText"
                 android:textSize="16sp" />
         </LinearLayout>
 
@@ -230,7 +216,7 @@
                 android:fontFamily="@font/quicksand"
                 android:text="www.loremipsum.org"
                 android:textAlignment="viewStart"
-                android:textColor="@color/secondaryText"
+                android:textColor="@color/secondaryDarkText"
                 android:textSize="16sp" />
         </LinearLayout>
 

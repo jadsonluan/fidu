@@ -9,6 +9,7 @@
     <color name="colorText">#212121</color>
     <color name="colorSecondaryText">#757575</color>
 
-    <color name="primaryText">#8BC34A</color>
+    <color name="primaryText">#673ab7</color>
     <color name="secondaryText">#FFFFFF</color>
+    <color name="secondaryDarkText">#212121</color>
 </resources>
