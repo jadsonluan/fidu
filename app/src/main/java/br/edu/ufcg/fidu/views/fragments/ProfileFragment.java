@@ -3,21 +3,21 @@ package br.edu.ufcg.fidu.views.fragments;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.AppBarLayout;
+import android.support.design.widget.CollapsingToolbarLayout;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
-import com.bumptech.glide.load.resource.drawable.GlideDrawable;
-import com.bumptech.glide.request.RequestListener;
-import com.bumptech.glide.request.target.Target;
 import com.firebase.ui.storage.images.FirebaseImageLoader;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.storage.FirebaseStorage;
@@ -38,8 +38,7 @@ public class ProfileFragment extends Fragment {
     private TextView tvBenefited;
     private TextView tvAddress;
     private TextView tvWebsite;
-    private ImageView profilePhoto;
-    private ProgressBar progressBar;
+    private ImageView backdrop;
 
     private ViewGroup occupationLayout;
     private ViewGroup descriptionLayout;
@@ -60,8 +59,34 @@ public class ProfileFragment extends Fragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        ((AppCompatActivity) getActivity()).getSupportActionBar().hide();
         mStorage = FirebaseStorage.getInstance().getReference();
 
+        // corrige problema com o titulo da appbar
+        final CollapsingToolbarLayout collapsingToolbarLayout;
+        collapsingToolbarLayout = view.findViewById(R.id.main_collapsing);
+        collapsingToolbarLayout.setTitle(" ");
+        AppBarLayout appBarLayout = view.findViewById(R.id.main_appbar);
+        appBarLayout.addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener() {
+            boolean isShow = false;
+            int scrollRange = -1;
+
+            @Override
+            public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
+                if (scrollRange == -1) {
+                    scrollRange = appBarLayout.getTotalScrollRange();
+                }
+                if (scrollRange + verticalOffset == 0) {
+                    collapsingToolbarLayout.setTitle(getString(R.string.title_profile));
+                    isShow = true;
+                } else if(isShow) {
+                    collapsingToolbarLayout.setTitle(" ");
+                    isShow = false;
+                }
+            }
+        });
+
+        backdrop = view.findViewById(R.id.main_backdrop);
         tvName = view.findViewById(R.id.tvName);
         tvOccupation = view.findViewById(R.id.tvOccupation);
         tvDescription = view.findViewById(R.id.tvDescription);
@@ -69,8 +94,6 @@ public class ProfileFragment extends Fragment {
         tvBenefited = view.findViewById(R.id.tvBenefited);
         tvWebsite = view.findViewById(R.id.tvWebsite);
         tvAddress = view.findViewById(R.id.tvAddress);
-        profilePhoto = view.findViewById(R.id.imgProfile);
-        progressBar = view.findViewById(R.id.progressBar);
 
         occupationLayout = view.findViewById(R.id.occupationLayout);
         descriptionLayout = view.findViewById(R.id.descriptionLayout);
@@ -87,7 +110,7 @@ public class ProfileFragment extends Fragment {
             }
         });
 
-        Button btnEdit = view.findViewById(R.id.btnEdit);
+        FloatingActionButton btnEdit = view.findViewById(R.id.btnEdit);
         btnEdit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -159,7 +182,6 @@ public class ProfileFragment extends Fragment {
     }
 
     private void updatePhoto() {
-        showProgress(true);
         String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
         StorageReference photoRef = mStorage.child("profile_images").child(uid);
         Glide.with(this)
@@ -167,31 +189,12 @@ public class ProfileFragment extends Fragment {
                 .load(photoRef)
                 .diskCacheStrategy(DiskCacheStrategy.NONE)
                 .skipMemoryCache(true)
-                .listener(new RequestListener<StorageReference, GlideDrawable>() {
-                    @Override
-                    public boolean onException(Exception e, StorageReference model, Target<GlideDrawable> target, boolean isFirstResource) {
-                        e.printStackTrace();
-                        showProgress(false);
-                        return false;
-                    }
-
-                    @Override
-                    public boolean onResourceReady(GlideDrawable resource, StorageReference model, Target<GlideDrawable> target, boolean isFromMemoryCache, boolean isFirstResource) {
-                        showProgress(false);
-                        return false;
-                    }
-                })
-                .into(profilePhoto);
+                .into(backdrop);
     }
 
     private void logout() {
         SaveData sv = new SaveData(getActivity());
         sv.logout();
         startActivity(new Intent(getActivity(), InitialActivity.class));
-    }
-
-    private void showProgress(boolean show) {
-        progressBar.setVisibility(show ? View.VISIBLE : View.GONE);
-        profilePhoto.setVisibility(show ? View.GONE : View.VISIBLE);
     }
 }
