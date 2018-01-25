@@ -24,6 +24,9 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.Key;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.load.resource.drawable.GlideDrawable;
+import com.bumptech.glide.request.RequestListener;
+import com.bumptech.glide.request.target.Target;
 import com.bumptech.glide.signature.StringSignature;
 import com.firebase.ui.storage.images.FirebaseImageLoader;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -62,7 +65,7 @@ public class UpdateProfileActivity extends AppCompatActivity {
     private EditText etBenefited;
     private Button btnUpdate;
     private ImageView profilePhoto;
-    private ProgressBar uploadProgress;
+    private ProgressBar progressBar;
 
     private SaveData sv;
     private FirebaseAuth mAuth;
@@ -85,8 +88,7 @@ public class UpdateProfileActivity extends AppCompatActivity {
         sv = new SaveData(this);
 
         profilePhoto = (ImageView) findViewById(R.id.profilePhoto);
-        uploadProgress = (ProgressBar) findViewById(R.id.uploadProgress);
-        uploadProgress.setVisibility(View.GONE);
+        progressBar = (ProgressBar) findViewById(R.id.imgLoading);
         etName = (EditText) findViewById(R.id.etName);
         etOccupation = (EditText) findViewById(R.id.etOccupation);
         etWebsite = (EditText) findViewById(R.id.etWebsite);
@@ -158,8 +160,7 @@ public class UpdateProfileActivity extends AppCompatActivity {
                 final String uid = mAuth.getCurrentUser().getUid();
 
                 // Show progress
-                profilePhoto.setVisibility(View.GONE);
-                uploadProgress.setVisibility(View.VISIBLE);
+                showProgress(true);
 
                 final UploadTask uploadTask;
                 uploadTask = mStorage.child("profile_images").child(uid).putFile(imageUri);
@@ -169,15 +170,12 @@ public class UpdateProfileActivity extends AppCompatActivity {
                     @Override
                     public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                     updatePhoto();
-                    profilePhoto.setVisibility(View.VISIBLE);
-                    uploadProgress.setVisibility(View.GONE);
                 // Failure
                     }
                 }).addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
-                    profilePhoto.setVisibility(View.VISIBLE);
-                    uploadProgress.setVisibility(View.GONE);
+                    showProgress(false);
 
                     Toast.makeText(UpdateProfileActivity.this,
                             e.getMessage(), Toast.LENGTH_SHORT).show();
@@ -248,6 +246,7 @@ public class UpdateProfileActivity extends AppCompatActivity {
     }
 
     private void updatePhoto() {
+        showProgress(true);
         String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
         StorageReference photoRef = mStorage.child("profile_images").child(uid);
         Glide.with(this)
@@ -255,6 +254,26 @@ public class UpdateProfileActivity extends AppCompatActivity {
                 .load(photoRef)
                 .diskCacheStrategy(DiskCacheStrategy.NONE)
                 .skipMemoryCache(true)
+                .listener(new RequestListener<StorageReference, GlideDrawable>() {
+                    @Override
+                    public boolean onException(Exception e, StorageReference model, Target<GlideDrawable> target, boolean isFirstResource) {
+                        e.printStackTrace();
+                        Toast.makeText(UpdateProfileActivity.this, "error", Toast.LENGTH_SHORT).show();
+                        showProgress(false);
+                        return false;
+                    }
+
+                    @Override
+                    public boolean onResourceReady(GlideDrawable resource, StorageReference model, Target<GlideDrawable> target, boolean isFromMemoryCache, boolean isFirstResource) {
+                        showProgress(false);
+                        return false;
+                    }
+                })
                 .into(profilePhoto);
+    }
+
+    private void showProgress(boolean show) {
+        progressBar.setVisibility(show ? View.VISIBLE : View.GONE);
+        profilePhoto.setVisibility(show ? View.GONE : View.VISIBLE);
     }
 }

@@ -33,12 +33,21 @@
             android:layout_marginBottom="16dp"
             android:gravity="center_horizontal">
 
+            <ProgressBar
+                android:id="@+id/progressBar"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:indeterminate="true"
+                android:visibility="gone"
+                android:layout_marginTop="25dp"
+                android:layout_marginBottom="25dp"/>
+
             <de.hdodenhof.circleimageview.CircleImageView
                 android:id="@+id/imgProfile"
                 android:layout_width="150dp"
                 android:layout_height="150dp"
                 android:src="@color/colorLightPrimary"
-                app:civ_border_color="@color/colorLightPrimary"
+                app:civ_border_color="@color/colorDarkPrimary"
                 app:civ_border_width="2dp" />
 
             <TextView

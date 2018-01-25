@@ -4,29 +4,27 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.Key;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
-import com.bumptech.glide.signature.StringSignature;
+import com.bumptech.glide.load.resource.drawable.GlideDrawable;
+import com.bumptech.glide.request.RequestListener;
+import com.bumptech.glide.request.target.Target;
 import com.firebase.ui.storage.images.FirebaseImageLoader;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
-import java.io.File;
-
 import br.edu.ufcg.fidu.R;
 import br.edu.ufcg.fidu.models.Donee;
-import br.edu.ufcg.fidu.models.Donor;
 import br.edu.ufcg.fidu.models.User;
 import br.edu.ufcg.fidu.utils.SaveData;
 import br.edu.ufcg.fidu.views.activities.InitialActivity;
@@ -42,7 +40,8 @@ public class ProfileFragment extends Fragment {
     private TextView tvBenefited;
     private TextView tvAddress;
     private TextView tvWebsite;
-    private ImageView imgProfile;
+    private ImageView profilePhoto;
+    private ProgressBar progressBar;
 
     private ViewGroup occupationLayout;
     private ViewGroup descriptionLayout;
@@ -72,7 +71,8 @@ public class ProfileFragment extends Fragment {
         tvBenefited = view.findViewById(R.id.tvBenefited);
         tvWebsite = view.findViewById(R.id.tvWebsite);
         tvAddress = view.findViewById(R.id.tvAddress);
-        imgProfile = view.findViewById(R.id.imgProfile);
+        profilePhoto = view.findViewById(R.id.imgProfile);
+        progressBar = view.findViewById(R.id.progressBar);
 
         occupationLayout = view.findViewById(R.id.occupationLayout);
         descriptionLayout = view.findViewById(R.id.descriptionLayout);
@@ -126,7 +126,6 @@ public class ProfileFragment extends Fragment {
                 return;
             }
 
-            String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
             String occupation = user.getOccupation().equals("") ? unknown : user.getOccupation();
             String website = user.getWebsite().equals("") ? unknown : user.getWebsite();
 
@@ -134,13 +133,7 @@ public class ProfileFragment extends Fragment {
             tvOccupation.setText(occupation);
             tvWebsite.setText(website);
 
-            StorageReference photoRef = mStorage.child("profile_images").child(uid);
-            Glide.with(this)
-                    .using(new FirebaseImageLoader())
-                    .load(photoRef)
-                    .diskCacheStrategy(DiskCacheStrategy.NONE)
-                    .skipMemoryCache(true)
-                    .into(imgProfile);
+            updatePhoto();
 
             if (user instanceof Donee) {
                 // Passa dados do Donee
@@ -166,9 +159,40 @@ public class ProfileFragment extends Fragment {
         }
     }
 
+    private void updatePhoto() {
+        showProgress(true);
+        String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
+        StorageReference photoRef = mStorage.child("profile_images").child(uid);
+        Glide.with(this)
+                .using(new FirebaseImageLoader())
+                .load(photoRef)
+                .diskCacheStrategy(DiskCacheStrategy.NONE)
+                .skipMemoryCache(true)
+                .listener(new RequestListener<StorageReference, GlideDrawable>() {
+                    @Override
+                    public boolean onException(Exception e, StorageReference model, Target<GlideDrawable> target, boolean isFirstResource) {
+                        e.printStackTrace();
+                        showProgress(false);
+                        return false;
+                    }
+
+                    @Override
+                    public boolean onResourceReady(GlideDrawable resource, StorageReference model, Target<GlideDrawable> target, boolean isFromMemoryCache, boolean isFirstResource) {
+                        showProgress(false);
+                        return false;
+                    }
+                })
+                .into(profilePhoto);
+    }
+
     private void logout() {
         SaveData sv = new SaveData(getActivity());
         sv.logout();
         startActivity(new Intent(getActivity(), InitialActivity.class));
+    }
+
+    private void showProgress(boolean show) {
+        progressBar.setVisibility(show ? View.VISIBLE : View.GONE);
+        profilePhoto.setVisibility(show ? View.GONE : View.VISIBLE);
     }
 }
