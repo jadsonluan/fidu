@@ -46,6 +46,10 @@
     <string name="benefited">Nº de Beneficiados</string>
     <string name="website">Website</string>
 
+    <string name="empty_description">Descrição não pode ser vazio</string>
+    <string name="invalid_founded_in">Ano de fundação inválido</string>
+    <string name="invalid_benefited">Número de beneficiados inválido</string>
+
     <string name="your_profile">Seu Perfil</string>
     <string name="profile_image">Imagem de perfil (URL)</string>
     <string name="profile_updated">Perfil atualizado com sucesso</string>

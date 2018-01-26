@@ -32,6 +32,7 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
 import java.io.File;
+import java.util.Calendar;
 
 import br.edu.ufcg.fidu.R;
 import br.edu.ufcg.fidu.models.Donee;
@@ -99,17 +100,7 @@ public class UpdateProfileActivity extends AppCompatActivity {
         btnUpdate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String name = etName.getText().toString();
-                String occupation = etOccupation.getText().toString();
-                String website = etWebsite.getText().toString();
-                String address = etAddress.getText().toString();
-                String description = etDescription.getText().toString();
-                String strFoundedIn = etFoundedIn.getText().toString();
-                String strBenefited = etBenefited.getText().toString();
-                int foundedIn = strFoundedIn.equals("") ? 0 : Integer.parseInt(strFoundedIn);
-                int benefited = strBenefited.equals("") ? 0 : Integer.parseInt(strBenefited);
-
-                updateInfo(name, occupation, website, address, description, foundedIn, benefited);
+                updateInfo();
             }
         });
 
@@ -172,8 +163,20 @@ public class UpdateProfileActivity extends AppCompatActivity {
 
     }
 
-    private void updateInfo(String name, String occupation, String website, String address,
-                            String description, int foundedIn, int benefited) {
+    private void updateInfo() {
+        Toast.makeText(this, "btnUpdate pressed", Toast.LENGTH_SHORT).show();
+        String name = etName.getText().toString();
+        String occupation = etOccupation.getText().toString();
+        String website = etWebsite.getText().toString();
+        String address = etAddress.getText().toString();
+        String description = etDescription.getText().toString();
+        String strFoundedIn = etFoundedIn.getText().toString();
+        String strBenefited = etBenefited.getText().toString();
+        int foundedIn = strFoundedIn.equals("") ? 0 : Integer.parseInt(strFoundedIn);
+        int benefited = strBenefited.equals("") ? 0 : Integer.parseInt(strBenefited);
+
+        if (!validate(name, occupation, website, address, description, foundedIn, benefited)) return;
+
         if (sv.isLogged()) {
             String uid = mAuth.getCurrentUser().getUid();
             String email = mAuth.getCurrentUser().getEmail();
@@ -194,6 +197,45 @@ public class UpdateProfileActivity extends AppCompatActivity {
             overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
             finish();
         }
+    }
+
+    private boolean validate(String name, String occupation, String website, String address,
+                             String description, int foundedIn, int benefited) {
+        boolean isValid = true;
+        View focusView = null;
+
+        if (name.trim().equals("")) {
+            focusView = etName;
+            isValid = false;
+            etName.setError(getString(R.string.name_is_empty));
+        }
+
+        if (etDescription.getVisibility() == View.VISIBLE) {
+            if (description.trim().equals("")) {
+                focusView = etDescription;
+                isValid = false;
+                etDescription.setError(getString(R.string.empty_description));
+            }
+        }
+
+        if (etFoundedIn.getVisibility() == View.VISIBLE) {
+            if (foundedIn < 0 || foundedIn >  Calendar.getInstance().get(Calendar.YEAR)) {
+                focusView = etFoundedIn;
+                isValid = false;
+                etFoundedIn.setError(getString(R.string.invalid_founded_in));
+            }
+        }
+
+        if (etBenefited.getVisibility() == View.VISIBLE) {
+            if (benefited < 0) {
+                focusView = etBenefited;
+                isValid = false;
+                etBenefited.setError(getString(R.string.invalid_benefited));
+            }
+        }
+
+        if (focusView != null) focusView.requestFocus();
+        return isValid;
     }
 
     private void updateUI() {
