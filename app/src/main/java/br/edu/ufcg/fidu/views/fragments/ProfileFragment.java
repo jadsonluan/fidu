@@ -61,28 +61,28 @@ public class ProfileFragment extends Fragment {
         mStorage = FirebaseStorage.getInstance().getReference();
 
         // corrige problema com o titulo da appbar
-        final CollapsingToolbarLayout collapsingToolbarLayout;
-        collapsingToolbarLayout = view.findViewById(R.id.main_collapsing);
-        collapsingToolbarLayout.setTitle(" ");
-        AppBarLayout appBarLayout = view.findViewById(R.id.main_appbar);
-        appBarLayout.addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener() {
-            boolean isShow = false;
-            int scrollRange = -1;
-
-            @Override
-            public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
-                if (scrollRange == -1) {
-                    scrollRange = appBarLayout.getTotalScrollRange();
-                }
-                if (scrollRange + verticalOffset == 0) {
-                    collapsingToolbarLayout.setTitle(getString(R.string.title_profile));
-                    isShow = true;
-                } else if(isShow) {
-                    collapsingToolbarLayout.setTitle(" ");
-                    isShow = false;
-                }
-            }
-        });
+//        final CollapsingToolbarLayout collapsingToolbarLayout;
+//        collapsingToolbarLayout = view.findViewById(R.id.main_collapsing);
+//        collapsingToolbarLayout.setTitle(" ");
+//        AppBarLayout appBarLayout = view.findViewById(R.id.main_appbar);
+//        appBarLayout.addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener() {
+//            boolean isShow = false;
+//            int scrollRange = -1;
+//
+//            @Override
+//            public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
+//                if (scrollRange == -1) {
+//                    scrollRange = appBarLayout.getTotalScrollRange();
+//                }
+//                if (scrollRange + verticalOffset == 0) {
+//                    collapsingToolbarLayout.setTitle(getString(R.string.title_profile));
+//                    isShow = true;
+//                } else if(isShow) {
+//                    collapsingToolbarLayout.setTitle(" ");
+//                    isShow = false;
+//                }
+//            }
+//        });
 
         backdrop = view.findViewById(R.id.main_backdrop);
         tvName = view.findViewById(R.id.tvName);
