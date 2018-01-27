@@ -133,7 +133,6 @@ public class ProfileFragment extends Fragment {
         SaveData sv = new SaveData(getActivity());
 
         if (sv.isLogged()) {
-            String unknown = getString(R.string.unknown_information);
             User user;
             int role = sv.getRole();
 
@@ -145,37 +144,48 @@ public class ProfileFragment extends Fragment {
                 return;
             }
 
-            String occupation = user.getOccupation().equals("") ? unknown : user.getOccupation();
-            String website = user.getWebsite().equals("") ? unknown : user.getWebsite();
-
             tvName.setText(user.getName());
-            tvOccupation.setText(occupation);
-            tvWebsite.setText(website);
-
+            setInformation(user.getOccupation(), tvOccupation, occupationLayout);
+            setInformation(user.getWebsite(), tvWebsite, websiteLayout);
             updatePhoto();
 
             if (user instanceof Donee) {
-                // Passa dados do Donee
                 Donee donee = (Donee) user;
-                String benefited, foundedIn, description;
+                String benefited, foundedIn;
 
-                benefited = donee.getBenefited() == 0 ? unknown : donee.getBenefited() + " pessoa(s)";
-                foundedIn = donee.getFoundedIn() == 0 ? unknown : donee.getFoundedIn() + "";
-                description = donee.getDescription().equals("") ? unknown : donee.getDescription();
+                benefited = donee.getBenefited() == 0 ? "" : donee.getBenefited() + " pessoa(s)";
+                foundedIn = donee.getFoundedIn() == 0 ? "" : donee.getFoundedIn() + "";
 
-                tvAddress.setText(donee.getAddress());
-                tvDescription.setText(description);
-                tvBenefited.setText(benefited);
-                tvFoundedIn.setText(foundedIn);
+                setInformation(donee.getAddress(), tvAddress, addressLayout);
+                setInformation(donee.getDescription(), tvDescription, descriptionLayout);
+                setInformation(benefited, tvBenefited, benefitedLayout);
+                setInformation(foundedIn, tvFoundedIn, foundedInLayout);
             } else {
-                // Oculta informações do Donee
                 addressLayout.setVisibility(View.GONE);
                 descriptionLayout.setVisibility(View.GONE);
                 benefitedLayout.setVisibility(View.GONE);
                 foundedInLayout.setVisibility(View.GONE);
             }
         } else {
+            // Por um loading
             Toast.makeText(getActivity(), "Usuário não logado", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    /**
+     * Adiciona informação ao TextView especificado. Caso a informação seja vazia,
+     * o layout que possui o TextView ficará oculto.
+     *
+     * @param value a informação a ser atribuída
+     * @param view o componente que vai exibir a informação
+     * @param layout o layout onde o <b>view</b> está contido
+     */
+    private void setInformation(String value, TextView view, ViewGroup layout) {
+        if (value.equals("")) {
+            layout.setVisibility(View.GONE);
+        } else {
+            layout.setVisibility(View.VISIBLE);
+            view.setText(value);
         }
     }
 
