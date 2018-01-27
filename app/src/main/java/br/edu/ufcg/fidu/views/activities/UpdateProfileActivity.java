@@ -164,7 +164,6 @@ public class UpdateProfileActivity extends AppCompatActivity {
     }
 
     private void updateInfo() {
-        Toast.makeText(this, "btnUpdate pressed", Toast.LENGTH_SHORT).show();
         String name = etName.getText().toString();
         String occupation = etOccupation.getText().toString();
         String website = etWebsite.getText().toString();
