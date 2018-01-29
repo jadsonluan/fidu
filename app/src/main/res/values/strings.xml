@@ -8,6 +8,7 @@
 
     <string name="donor">doador</string>
     <string name="donee">instituição</string>
+    <string name="donees">Instituições</string>
 
     <string name="name">Nome de exibição</string>
     <string name="name_is_empty">Nome de exibição não pode ser vazio</string>
@@ -54,6 +55,8 @@
     <string name="profile_image">Imagem de perfil (URL)</string>
     <string name="profile_updated">Perfil atualizado com sucesso</string>
     <string name="upload_photo">Inserir foto</string>
+
+    <string name="search_donee">Procurar instituição</string>
 
     <string name="auth_success">Autenticado</string>
     <string name="auth_failed">A autenticação falhou</string>

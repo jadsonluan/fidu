@@ -38,7 +38,13 @@
             android:name=".views.activities.MainActivity"
             android:label="@string/app_name" />
         <activity android:name=".views.activities.UpdateProfileActivity" />
-        <activity android:name=".views.activities.ForgotPasswordActivity"></activity>
+        <activity android:name=".views.activities.ForgotPasswordActivity" />
+        <activity
+            android:name=".views.activities.SearchDoneeActivity"
+            android:theme="@style/AppThemeWithActionBar"
+            android:label="@string/donees"
+            >
+        </activity>
     </application>
 
 </manifest>

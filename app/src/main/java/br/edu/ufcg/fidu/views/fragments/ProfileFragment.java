@@ -32,6 +32,7 @@ import br.edu.ufcg.fidu.models.Donee;
 import br.edu.ufcg.fidu.models.User;
 import br.edu.ufcg.fidu.utils.SaveData;
 import br.edu.ufcg.fidu.views.activities.InitialActivity;
+import br.edu.ufcg.fidu.views.activities.SearchDoneeActivity;
 import br.edu.ufcg.fidu.views.activities.UpdateProfileActivity;
 
 public class ProfileFragment extends Fragment {
@@ -121,7 +122,20 @@ public class ProfileFragment extends Fragment {
                 updateProfile();
             }
         });
+
+        Button btnSearch = view.findViewById(R.id.btnSearch);
+        btnSearch.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                searchDonee();
+            }
+        });
+
         updateUI();
+    }
+
+    private void searchDonee() {
+        startActivity(new Intent(getActivity(), SearchDoneeActivity.class));
     }
 
     @Override
