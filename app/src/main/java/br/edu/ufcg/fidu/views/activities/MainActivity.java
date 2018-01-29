@@ -1,5 +1,6 @@
 package br.edu.ufcg.fidu.views.activities;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
@@ -8,8 +9,10 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
+import android.view.View;
 
 import br.edu.ufcg.fidu.R;
+import br.edu.ufcg.fidu.utils.SaveData;
 import br.edu.ufcg.fidu.views.fragments.MapFragment;
 import br.edu.ufcg.fidu.views.fragments.MessagesFragment;
 import br.edu.ufcg.fidu.views.fragments.ProfileFragment;
@@ -23,7 +26,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
+        Toolbar myToolbar = findViewById(R.id.my_toolbar);
         setSupportActionBar(myToolbar);
 
         fm = getSupportFragmentManager();
@@ -41,15 +44,12 @@ public class MainActivity extends AppCompatActivity {
             switch (item.getItemId()) {
                 case R.id.navigation_messages:
                     changeFragment(new MessagesFragment());
-                    getSupportActionBar().setTitle(R.string.title_messages);
                     return true;
                 case R.id.navigation_map:
                     changeFragment(MapFragment.newInstance(-7.2179305, -35.906639));
-                    getSupportActionBar().setTitle(R.string.title_map);
                     return true;
                 case R.id.navigation_profile:
                     changeFragment(new ProfileFragment());
-                    getSupportActionBar().setTitle(R.string.title_profile);
                     return true;
             }
             return false;
