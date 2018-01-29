@@ -16,14 +16,13 @@
 
             <FrameLayout
                 android:layout_width="match_parent"
-                android:layout_height="200dp"
+                android:layout_height="250dp"
                 android:background="@color/colorLightPrimary">
 
                 <ImageView
                     android:layout_width="match_parent"
                     android:layout_height="300dp"
                     android:src="@drawable/bg_fruits"
-                    android:layout_gravity="center_horizontal"
                     android:scaleType="fitCenter"
                     />
 
@@ -31,19 +30,42 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:orientation="vertical"
-                    android:gravity="center_horizontal"
+                    android:gravity="center"
                     >
 
                     <de.hdodenhof.circleimageview.CircleImageView
                         android:id="@+id/main.backdrop"
                         android:layout_width="150dp"
                         android:layout_height="150dp"
-                        android:layout_marginBottom="16dp"
-                        android:layout_marginTop="32dp"
                         android:elevation="5dp"
-                        android:src="@color/colorDarkPrimary"
-                        app:civ_border_color="#FFFFFFFF"
+                        android:src="@color/colorPrimary"
+                        app:civ_border_color="@color/colorDarkPrimary"
                         app:civ_border_width="3dp" />
+
+                    <ProgressBar
+                        android:id="@+id/main.loading"
+                        android:layout_width="150dp"
+                        android:layout_height="150dp"
+                        android:indeterminateTint="@color/colorDarkPrimary"
+                        android:visibility="gone"
+                        />
+
+                    <TextView
+                        android:id="@+id/tvName"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/profile_elements_vertical_margin"
+                        android:background="@color/colorPrimary"
+                        android:fontFamily="@font/altair_bold_trial"
+                        android:paddingBottom="5dp"
+                        android:paddingLeft="10dp"
+                        android:paddingRight="10dp"
+                        android:paddingTop="5dp"
+                        android:text="@string/name"
+                        android:textAlignment="center"
+                        android:textColor="@color/secondaryText"
+                        android:textSize="24sp"
+                        android:textStyle="bold" />
                 </LinearLayout>
             </FrameLayout>
 
@@ -53,32 +75,19 @@
                 android:orientation="vertical"
                 android:padding="16dp">
 
-                <TextView
-                    android:id="@+id/tvName"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/profile_elements_vertical_margin"
-                    android:fontFamily="@font/quicksand"
-                    android:text="@string/name"
-                    android:textColor="@color/colorDarkPrimary"
-                    android:textSize="24sp"
-                    android:elevation="4dp"
-                    android:layout_marginBottom="8dp"
-                    android:textStyle="bold" />
-
                 <LinearLayout
                     android:id="@+id/occupationLayout"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_marginTop="@dimen/profile_elements_vertical_margin"
-                    android:orientation="horizontal">
+                    android:orientation="vertical">
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginEnd="8dp"
                         android:layout_marginRight="8dp"
-                        android:fontFamily="@font/quicksand"
+                        android:fontFamily="@font/altair_thin_trial"
                         android:text="@string/info_occupation"
                         android:textColor="@color/primaryText"
                         android:textSize="16sp"
@@ -106,7 +115,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginEnd="8dp"
                         android:layout_marginRight="8dp"
-                        android:fontFamily="@font/quicksand"
+                        android:fontFamily="@font/altair_thin_trial"
                         android:text="@string/info_description"
                         android:textColor="@color/primaryText"
                         android:textSize="16sp"
@@ -127,14 +136,14 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_marginTop="@dimen/profile_elements_vertical_margin"
-                    android:orientation="horizontal">
+                    android:orientation="vertical">
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginEnd="8dp"
                         android:layout_marginRight="8dp"
-                        android:fontFamily="@font/quicksand"
+                        android:fontFamily="@font/altair_thin_trial"
                         android:text="@string/info_founded_in"
                         android:textColor="@color/primaryText"
                         android:textSize="16sp"
@@ -155,14 +164,14 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_marginTop="@dimen/profile_elements_vertical_margin"
-                    android:orientation="horizontal">
+                    android:orientation="vertical">
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginRight="8dp"
                         android:layout_marginEnd="8dp"
-                        android:fontFamily="@font/quicksand"
+                        android:fontFamily="@font/altair_thin_trial"
                         android:text="@string/info_benefited"
                         android:textColor="@color/primaryText"
                         android:textSize="16sp"
@@ -190,7 +199,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginRight="8dp"
                         android:layout_marginEnd="8dp"
-                        android:fontFamily="@font/quicksand"
+                        android:fontFamily="@font/altair_thin_trial"
                         android:text="@string/info_address"
                         android:textColor="@color/primaryText"
                         android:textSize="16sp"
@@ -220,7 +229,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginRight="8dp"
                         android:layout_marginEnd="8dp"
-                        android:fontFamily="@font/quicksand"
+                        android:fontFamily="@font/altair_thin_trial"
                         android:text="@string/info_website"
                         android:textColor="@color/primaryText"
                         android:textSize="16sp"
