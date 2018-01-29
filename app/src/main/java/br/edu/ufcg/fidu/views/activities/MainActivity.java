@@ -1,6 +1,5 @@
 package br.edu.ufcg.fidu.views.activities;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
@@ -9,10 +8,8 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
-import android.view.View;
 
 import br.edu.ufcg.fidu.R;
-import br.edu.ufcg.fidu.utils.SaveData;
 import br.edu.ufcg.fidu.views.fragments.MapFragment;
 import br.edu.ufcg.fidu.views.fragments.MessagesFragment;
 import br.edu.ufcg.fidu.views.fragments.ProfileFragment;
@@ -33,7 +30,6 @@ public class MainActivity extends AppCompatActivity {
         BottomNavigationView navigation = findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
         changeFragment(new MessagesFragment());
-        getSupportActionBar().setTitle(R.string.title_messages);
     }
 
     private final BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
