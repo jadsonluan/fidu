@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="#e2dee2"
+    tools:context=".views.activities.ChatActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/ic_frutas_total"
+        android:backgroundTint="@color/colorLightPrimary"
+        android:orientation="vertical">
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_weight="20"
+            android:layout_height="wrap_content"
+            android:id="@+id/scrollView">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:id="@+id/layout1">
+            </LinearLayout>
+        </ScrollView>
+
+        <LinearLayout
+            layout="@layout/message_area"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="bottom"
+            android:padding="8dp">
+
+            <EditText
+                android:background="@drawable/background_edittext"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:hint="Digite sua mensagem..."
+                android:id="@+id/messageArea"
+                android:maxHeight="80dp"
+                />
+
+            <ImageView
+                android:layout_marginLeft="8dp"
+                android:background="@drawable/background_button_green"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="5"
+                android:padding="8dp"
+                android:src="@drawable/ic_send_black_24dp"
+                android:id="@+id/sendButton"/>
+
+        </LinearLayout>
+
+    </LinearLayout>
+</FrameLayout>

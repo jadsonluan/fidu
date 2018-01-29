@@ -3,7 +3,7 @@
 
     <item
         android:id="@+id/navigation_messages"
-        android:icon="@drawable/ic_email_black_24dp"
+        android:icon="@drawable/ic_forum_black_24dp"
         android:title="@string/title_messages" />
 
     <item

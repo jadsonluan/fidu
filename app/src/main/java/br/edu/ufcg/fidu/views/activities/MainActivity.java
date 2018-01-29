@@ -23,14 +23,13 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
+        Toolbar myToolbar = findViewById(R.id.my_toolbar);
         setSupportActionBar(myToolbar);
 
         fm = getSupportFragmentManager();
         BottomNavigationView navigation = findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
         changeFragment(new MessagesFragment());
-        getSupportActionBar().setTitle(R.string.title_messages);
     }
 
     private final BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
@@ -41,15 +40,12 @@ public class MainActivity extends AppCompatActivity {
             switch (item.getItemId()) {
                 case R.id.navigation_messages:
                     changeFragment(new MessagesFragment());
-                    getSupportActionBar().setTitle(R.string.title_messages);
                     return true;
                 case R.id.navigation_map:
                     changeFragment(MapFragment.newInstance(-7.2179305, -35.906639));
-                    getSupportActionBar().setTitle(R.string.title_map);
                     return true;
                 case R.id.navigation_profile:
                     changeFragment(new ProfileFragment());
-                    getSupportActionBar().setTitle(R.string.title_profile);
                     return true;
             }
             return false;

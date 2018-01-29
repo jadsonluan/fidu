@@ -42,9 +42,18 @@
         <activity
             android:name=".views.activities.SearchDoneeActivity"
             android:theme="@style/AppThemeWithActionBar"
-            android:label="@string/donees"
-            >
+            android:label="@string/donees" />
+
+        <activity
+            android:name=".views.activities.ChatActivity"
+            android:label="Chat"
+            android:theme="@style/AppThemeWithActionBar"
+            android:parentActivityName=".views.activities.MainActivity">
+
+            <!-- Parent activity meta-data to support 4.0 and lower -->
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".views.activities.MainActivity" />
         </activity>
     </application>
-
 </manifest>

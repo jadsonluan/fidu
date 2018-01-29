@@ -23,4 +23,5 @@
         <item name="colorControlHighlight">@color/colorAccent</item>
         <item name="android:textColorHint">@color/colorLightPrimary</item>
     </style>
+
 </resources>

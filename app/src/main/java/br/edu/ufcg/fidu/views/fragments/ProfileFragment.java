@@ -244,5 +244,6 @@ public class ProfileFragment extends Fragment {
         SaveData sv = new SaveData(getActivity());
         sv.logout();
         startActivity(new Intent(getActivity(), InitialActivity.class));
+        getActivity().finish();
     }
 }
