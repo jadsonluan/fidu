@@ -13,11 +13,15 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.load.resource.drawable.GlideDrawable;
+import com.bumptech.glide.request.RequestListener;
+import com.bumptech.glide.request.target.Target;
 import com.firebase.ui.storage.images.FirebaseImageLoader;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.storage.FirebaseStorage;
@@ -39,6 +43,7 @@ public class ProfileFragment extends Fragment {
     private TextView tvAddress;
     private TextView tvWebsite;
     private ImageView backdrop;
+    private ProgressBar loading;
 
     private ViewGroup occupationLayout;
     private ViewGroup descriptionLayout;
@@ -84,6 +89,7 @@ public class ProfileFragment extends Fragment {
 //            }
 //        });
 
+        loading = view.findViewById(R.id.main_loading);
         backdrop = view.findViewById(R.id.main_backdrop);
         tvName = view.findViewById(R.id.tvName);
         tvOccupation = view.findViewById(R.id.tvOccupation);
@@ -192,12 +198,32 @@ public class ProfileFragment extends Fragment {
     private void updatePhoto() {
         String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
         StorageReference photoRef = mStorage.child("profile_images").child(uid);
+        showProgress(true);
         Glide.with(this)
                 .using(new FirebaseImageLoader())
                 .load(photoRef)
                 .diskCacheStrategy(DiskCacheStrategy.NONE)
                 .skipMemoryCache(true)
+                .listener(new RequestListener<StorageReference, GlideDrawable>() {
+                    @Override
+                    public boolean onException(Exception e, StorageReference model, Target<GlideDrawable> target, boolean isFirstResource) {
+                        showProgress(false);
+                        e.printStackTrace();
+                        return false;
+                    }
+
+                    @Override
+                    public boolean onResourceReady(GlideDrawable resource, StorageReference model, Target<GlideDrawable> target, boolean isFromMemoryCache, boolean isFirstResource) {
+                        showProgress(false);
+                        return false;
+                    }
+                })
                 .into(backdrop);
+    }
+
+    private void showProgress(boolean show) {
+        loading.setVisibility(show ? View.VISIBLE : View.GONE);
+        backdrop.setVisibility(show ? View.GONE : View.VISIBLE);
     }
 
     private void logout() {
