@@ -325,25 +325,30 @@ public class UpdateProfileActivity extends AppCompatActivity {
      */
     private void loadPhoto(String url) {
         showProgress(false, false);
-        if (!url.equals("")) {
-            showProgress(true, false);
-            Glide.with(profilePhoto.getContext())
-                    .load(url)
-                    .listener(new RequestListener<String, GlideDrawable>() {
-                        @Override
-                        public boolean onException(Exception e, String model, Target<GlideDrawable> target, boolean isFirstResource) {
-                            e.printStackTrace();
-                            showProgress(false, false);
-                            return false;
-                        }
 
-                        @Override
-                        public boolean onResourceReady(GlideDrawable resource, String model, Target<GlideDrawable> target, boolean isFromMemoryCache, boolean isFirstResource) {
-                            showProgress(false, false);
-                            return false;
-                        }
-                    })
-                    .into(profilePhoto);
+        try {
+            if (!url.equals("")) {
+                showProgress(true, false);
+                Glide.with(profilePhoto.getContext())
+                        .load(url)
+                        .listener(new RequestListener<String, GlideDrawable>() {
+                            @Override
+                            public boolean onException(Exception e, String model, Target<GlideDrawable> target, boolean isFirstResource) {
+                                e.printStackTrace();
+                                showProgress(false, false);
+                                return false;
+                            }
+
+                            @Override
+                            public boolean onResourceReady(GlideDrawable resource, String model, Target<GlideDrawable> target, boolean isFromMemoryCache, boolean isFirstResource) {
+                                showProgress(false, false);
+                                return false;
+                            }
+                        })
+                        .into(profilePhoto);
+            }
+        } catch (IllegalArgumentException e) {
+            e.printStackTrace();
         }
     }
 

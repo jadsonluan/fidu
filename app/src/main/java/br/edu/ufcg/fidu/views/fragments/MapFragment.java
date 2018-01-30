@@ -17,6 +17,8 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 
 import br.edu.ufcg.fidu.R;
+import br.edu.ufcg.fidu.models.User;
+import br.edu.ufcg.fidu.utils.SaveData;
 import br.edu.ufcg.fidu.views.activities.SearchDoneeActivity;
 
 
@@ -24,6 +26,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
     private SupportMapFragment mSupportMapFragment;
     private View mRootView;
     private static double mLat, mLng;
+    private View btnSearch;
 
     public static MapFragment newInstance(double lat, double lng) {
         MapFragment.mLat = lat;
@@ -55,13 +58,25 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        View btnSearch = view.findViewById(R.id.btnSearch);
+        btnSearch = view.findViewById(R.id.btnSearch);
         btnSearch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 searchDonees();
             }
         });
+
+        checkUser();
+    }
+
+    private void checkUser() {
+        SaveData sv = new SaveData(getActivity());
+
+        if (sv.isLogged()) {
+            if (sv.getRole() == SaveData.DONEE) {
+                btnSearch.setVisibility(View.GONE);
+            }
+        }
     }
 
     private void searchDonees() {

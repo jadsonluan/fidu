@@ -19,6 +19,7 @@ import android.widget.Toast;
 
 import br.edu.ufcg.fidu.R;
 import br.edu.ufcg.fidu.utils.SaveData;
+import br.edu.ufcg.fidu.views.fragments.HomeFragment;
 import br.edu.ufcg.fidu.views.fragments.MapFragment;
 import br.edu.ufcg.fidu.views.fragments.MessagesFragment;
 import br.edu.ufcg.fidu.views.fragments.ProfileFragment;
@@ -45,13 +46,15 @@ public class MainActivity extends AppCompatActivity {
             if (bundle != null) {
                 if (bundle.containsKey("show_map")) {
                     navigation.setSelectedItemId(R.id.navigation_map);
+                } else if (bundle.containsKey("show_profile")) {
+                    navigation.setSelectedItemId(R.id.navigation_profile);
                 }
             }
         } catch (PackageManager.NameNotFoundException e) {
             e.printStackTrace();
         }
 
-        navigation.setSelectedItemId(R.id.navigation_messages);
+        navigation.setSelectedItemId(R.id.navigation_home);
     }
 
     @Override
@@ -91,6 +94,10 @@ public class MainActivity extends AppCompatActivity {
                     return true;
                 case R.id.navigation_profile:
                     changeFragment(new ProfileFragment(), getString(R.string.title_profile));
+                    return true;
+
+                case R.id.navigation_home:
+                    changeFragment(new HomeFragment(), getString(R.string.title_home));
                     return true;
             }
             return false;

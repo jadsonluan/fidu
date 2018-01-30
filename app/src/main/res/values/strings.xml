@@ -68,6 +68,7 @@
     <string name="title_map">Mapa</string>
     <string name="title_profile">Perfil</string>
     <string name="title_donee_profile">Perfil da Instituição</string>
+    <string name="title_home">Início</string>
 
     <string name="network_error">Problema na conexão com a internet.</string>
     <string name="default_error_message">Ocorreu um erro ao executar essa ação. Tente novamente</string>
@@ -77,6 +78,9 @@
     <string name="no">Não</string>
     <string name="msg_confirm_logout">Tem certeza que deseja sair?</string>
     <string name="logout_title">Saindo</string>
+
+    <string name="greeting_placeholder">Olá, {user}!</string>
+    <string name="greeting_subtitle">Pronto para fazer o bem?</string>
 
     <string name="API_KEY">AIzaSyDXprQRZijSyL3ruqqQV8fukd6IA9oer5M</string>
 </resources>

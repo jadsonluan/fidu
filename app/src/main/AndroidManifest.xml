@@ -36,23 +36,27 @@
         <activity android:name=".views.activities.SelectRoleActivity" />
         <activity
             android:name=".views.activities.MainActivity"
-            android:theme="@style/AppThemeWithActionBar"
-            android:label="@string/app_name" />
+            android:label="@string/app_name"
+            android:theme="@style/AppThemeWithActionBar" />
         <activity
             android:name=".views.activities.UpdateProfileActivity"
             android:label="@string/update_profile"
-            android:theme="@style/AppThemeWithActionBar" />
-        />
+            android:parentActivityName=".views.activities.MainActivity"
+            android:theme="@style/AppThemeWithActionBar">
+            <meta-data
+                android:name="show_profile"
+                android:value="" />
+        </activity>
+        
         <activity android:name=".views.activities.ForgotPasswordActivity" />
         <activity
             android:name=".views.activities.SearchDoneeActivity"
             android:label="@string/donees"
-            android:theme="@style/AppThemeWithActionBar"
-            android:parentActivityName=".views.activities.MainActivity">
+            android:parentActivityName=".views.activities.MainActivity"
+            android:theme="@style/AppThemeWithActionBar">
             <meta-data
                 android:name="show_map"
-                android:value=""
-            />
+                android:value="" />
         </activity>
         <activity
             android:name=".views.activities.ChatActivity"
@@ -68,9 +72,8 @@
         <activity
             android:name=".views.activities.DoneeProfileActivity"
             android:label="@string/title_donee_profile"
-            android:theme="@style/AppThemeWithActionBar"
             android:parentActivityName=".views.activities.SearchDoneeActivity"
-            >
-        </activity>
+            android:theme="@style/AppThemeWithActionBar"></activity>
     </application>
+
 </manifest>
