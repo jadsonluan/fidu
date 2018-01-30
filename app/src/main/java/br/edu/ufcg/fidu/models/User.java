@@ -6,33 +6,43 @@ public class User {
     private String email;
     private String occupation;
     private String website;
+    private String photoUrl;
 
     public User() {}
 
     public User(String name, String email) {
-        this(name, email, "", "");
+        this(name, email, "", "", "");
     }
 
     public User(String name, String email, String occupation, String website) {
-        verifyParameters(name, email, occupation, website);
+        this(name, email, occupation, website, "");
+    }
+
+    public User(String name, String email, String occupation, String website, String photoUrl) {
+        verifyParameters(name, email, occupation, website, photoUrl);
         this.name = name;
         this.email = email;
         this.occupation = occupation;
         this.website = website;
+        this.photoUrl = photoUrl;
     }
 
-    private void verifyParameters(String name, String email, String occupation, String website){
+    private void verifyParameters(String name, String email, String occupation, String website,
+                                  String photoUrl){
         if(name == null)
             throw new NullPointerException("Name cannot be null");
 
         if(email == null)
-            throw new NullPointerException("Name cannot be null");
+            throw new NullPointerException("Email cannot be null");
 
         if(occupation  == null)
-            throw new NullPointerException("Name cannot be null");
+            throw new NullPointerException("Occupation cannot be null");
 
         if (website == null)
             throw new NullPointerException("Website cannot be null");
+
+        if (photoUrl == null)
+            throw new NullPointerException("PhotoUrl cannot me null");
     }
 
     public String getName() {
@@ -46,6 +56,8 @@ public class User {
     public String getOccupation() { return occupation; }
 
     public String getWebsite() { return website; }
+
+    public String getPhotoUrl() { return photoUrl; }
 
     @Override
     public boolean equals(Object o) {
@@ -69,6 +81,7 @@ public class User {
                 ", email='" + email + '\'' +
                 ", occupation='" + occupation + '\'' +
                 ", website='" + website + '\'' +
+                ", photoUrl='" + photoUrl + '\'' +
                 '}';
     }
 }

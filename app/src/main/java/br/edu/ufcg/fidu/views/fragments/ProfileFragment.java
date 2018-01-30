@@ -53,7 +53,7 @@ public class ProfileFragment extends Fragment {
     private ViewGroup addressLayout;
     private ViewGroup websiteLayout;
 
-    private StorageReference mStorage;
+    private SaveData sv;
 
     @Nullable
     @Override
@@ -64,31 +64,6 @@ public class ProfileFragment extends Fragment {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        mStorage = FirebaseStorage.getInstance().getReference();
-
-        // corrige problema com o titulo da appbar
-//        final CollapsingToolbarLayout collapsingToolbarLayout;
-//        collapsingToolbarLayout = view.findViewById(R.id.main_collapsing);
-//        collapsingToolbarLayout.setTitle(" ");
-//        AppBarLayout appBarLayout = view.findViewById(R.id.main_appbar);
-//        appBarLayout.addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener() {
-//            boolean isShow = false;
-//            int scrollRange = -1;
-//
-//            @Override
-//            public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
-//                if (scrollRange == -1) {
-//                    scrollRange = appBarLayout.getTotalScrollRange();
-//                }
-//                if (scrollRange + verticalOffset == 0) {
-//                    collapsingToolbarLayout.setTitle(getString(R.string.title_profile));
-//                    isShow = true;
-//                } else if(isShow) {
-//                    collapsingToolbarLayout.setTitle(" ");
-//                    isShow = false;
-//                }
-//            }
-//        });
 
         loading = view.findViewById(R.id.main_loading);
         backdrop = view.findViewById(R.id.main_backdrop);
@@ -131,6 +106,7 @@ public class ProfileFragment extends Fragment {
             }
         });
 
+        sv = new SaveData(getActivity());
         updateUI();
     }
 
@@ -150,24 +126,19 @@ public class ProfileFragment extends Fragment {
     }
 
     private void updateUI() {
-        SaveData sv = new SaveData(getActivity());
-
         if (sv.isLogged()) {
             User user;
-            int role = sv.getRole();
 
-            if (role == SaveData.DONEE) {
-                user = sv.readDonee();
-            } else if (role == SaveData.DONOR) {
-                user = sv.readDonor();
-            } else {
-                return;
+            switch(sv.getRole()) {
+                case SaveData.DONEE: user = sv.readDonee(); break;
+                case SaveData.DONOR: user = sv.readDonor(); break;
+                default: return;
             }
 
             tvName.setText(user.getName());
             setInformation(user.getOccupation(), tvOccupation, occupationLayout);
             setInformation(user.getWebsite(), tvWebsite, websiteLayout);
-            updatePhoto();
+            loadPhoto(user.getPhotoUrl());
 
             if (user instanceof Donee) {
                 Donee donee = (Donee) user;
@@ -209,30 +180,32 @@ public class ProfileFragment extends Fragment {
         }
     }
 
-    private void updatePhoto() {
-        String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
-        StorageReference photoRef = mStorage.child("profile_images").child(uid);
-        showProgress(true);
-        Glide.with(this)
-                .using(new FirebaseImageLoader())
-                .load(photoRef)
-                .diskCacheStrategy(DiskCacheStrategy.NONE)
-                .skipMemoryCache(true)
-                .listener(new RequestListener<StorageReference, GlideDrawable>() {
-                    @Override
-                    public boolean onException(Exception e, StorageReference model, Target<GlideDrawable> target, boolean isFirstResource) {
-                        showProgress(false);
-                        e.printStackTrace();
-                        return false;
-                    }
+    /**
+     * Carrega a imagem de URL especificada na view da foto de perfil do usuário
+     *
+     * @param url URL da imagem a ser carregada
+     */
+    private void loadPhoto(String url) {
+        if (!url.equals("")) {
+            showProgress(true);
+            Glide.with(backdrop.getContext())
+                    .load(url)
+                    .listener(new RequestListener<String, GlideDrawable>() {
+                        @Override
+                        public boolean onException(Exception e, String model, Target<GlideDrawable> target, boolean isFirstResource) {
+                            e.printStackTrace();
+                            showProgress(false);
+                            return false;
+                        }
 
-                    @Override
-                    public boolean onResourceReady(GlideDrawable resource, StorageReference model, Target<GlideDrawable> target, boolean isFromMemoryCache, boolean isFirstResource) {
-                        showProgress(false);
-                        return false;
-                    }
-                })
-                .into(backdrop);
+                        @Override
+                        public boolean onResourceReady(GlideDrawable resource, String model, Target<GlideDrawable> target, boolean isFromMemoryCache, boolean isFirstResource) {
+                            showProgress(false);
+                            return false;
+                        }
+                    })
+                    .into(backdrop);
+        }
     }
 
     private void showProgress(boolean show) {

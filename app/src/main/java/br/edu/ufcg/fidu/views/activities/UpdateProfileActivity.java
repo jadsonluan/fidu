@@ -17,17 +17,16 @@ import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.load.resource.drawable.GlideDrawable;
 import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.target.Target;
-import com.firebase.ui.storage.images.FirebaseImageLoader;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
@@ -49,11 +48,13 @@ public class UpdateProfileActivity extends AppCompatActivity {
     private EditText etBenefited;
     private ImageView profilePhoto;
     private ProgressBar progressBar;
+    private ProgressBar uploadBar;
 
     private SaveData sv;
     private FirebaseAuth mAuth;
     private DatabaseReference mDatabase;
     private StorageReference mStorage;
+    private String photoUrl;
 
     private final int IMAGE_GALLERY_REQUEST = 0;
 
@@ -69,9 +70,11 @@ public class UpdateProfileActivity extends AppCompatActivity {
         mDatabase = FirebaseDatabase.getInstance().getReference();
         mStorage = FirebaseStorage.getInstance().getReference();
         sv = new SaveData(this);
+        photoUrl = null;
 
         profilePhoto = findViewById(R.id.profilePhoto);
         progressBar = findViewById(R.id.imgLoading);
+        uploadBar = findViewById(R.id.uploadBar);
         etName = findViewById(R.id.etName);
         etOccupation = findViewById(R.id.etOccupation);
         etWebsite = findViewById(R.id.etWebsite);
@@ -100,7 +103,7 @@ public class UpdateProfileActivity extends AppCompatActivity {
         btnUpdate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                updateInfo();
+                updateUser();
             }
         });
 
@@ -108,14 +111,71 @@ public class UpdateProfileActivity extends AppCompatActivity {
         btnUpdatePhoto.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                selectPhoto();
+                showPhotoPicker();
             }
         });
 
-        updateUI();
+        refreshUI();
     }
 
-    private void selectPhoto() {
+    @Override
+    protected void onActivityResult(int requestCode, final int resultCode, Intent data) {
+        if (resultCode == RESULT_OK) {
+            if (requestCode == IMAGE_GALLERY_REQUEST) {
+                uploadPhoto(data.getData());
+            }
+        }
+
+    }
+
+    private void uploadPhoto(Uri data) {
+        if (data != null) {
+            final String uid = mAuth.getCurrentUser().getUid();
+
+            showProgress(true, true);
+
+            final UploadTask uploadTask;
+            uploadTask = mStorage.child("profile_images").child(uid).putFile(data);
+
+            // Success
+            uploadTask.addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                @Override
+                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                    photoUrl = taskSnapshot.getDownloadUrl().toString();
+                    loadPhoto(photoUrl);
+                    // Failure
+                }
+            }).addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception e) {
+                    showProgress(false, true);
+
+                    Toast.makeText(UpdateProfileActivity.this,
+                            e.getMessage(), Toast.LENGTH_SHORT).show();
+                    e.printStackTrace();
+                }
+            }).addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
+                @Override
+                public void onProgress(UploadTask.TaskSnapshot taskSnapshot) {
+                    double progress = (100.0 * taskSnapshot.getBytesTransferred()) / taskSnapshot.getTotalByteCount();
+                    System.out.println("Upload is " + progress + "% done");
+                    int currentprogress = (int) progress;
+                    uploadBar.setProgress(currentprogress);
+                }
+            });
+        }
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+    }
+
+    /**
+     * Abre a galeria de fotos do usuário
+     */
+    private void showPhotoPicker() {
         Intent photoPickerIntent = new Intent(Intent.ACTION_PICK);
 
         File pictureDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES);
@@ -125,45 +185,10 @@ public class UpdateProfileActivity extends AppCompatActivity {
         startActivityForResult(photoPickerIntent, IMAGE_GALLERY_REQUEST);
     }
 
-    @Override
-    protected void onActivityResult(int requestCode, final int resultCode, Intent data) {
-        if (resultCode == RESULT_OK) {
-            if (requestCode == IMAGE_GALLERY_REQUEST) {
-                final Uri imageUri = data.getData();
-
-                if (imageUri != null) {
-                    final String uid = mAuth.getCurrentUser().getUid();
-
-                    // Show progress
-                    showProgress(true);
-
-                    final UploadTask uploadTask;
-                    uploadTask = mStorage.child("profile_images").child(uid).putFile(imageUri);
-
-                    // Success
-                    uploadTask.addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                        @Override
-                        public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                            updatePhoto();
-                            // Failure
-                        }
-                    }).addOnFailureListener(new OnFailureListener() {
-                        @Override
-                        public void onFailure(@NonNull Exception e) {
-                            showProgress(false);
-
-                            Toast.makeText(UpdateProfileActivity.this,
-                                    e.getMessage(), Toast.LENGTH_SHORT).show();
-                            e.printStackTrace();
-                        }
-                    });
-                }
-            }
-        }
-
-    }
-
-    private void updateInfo() {
+    /**
+     * Edita as informações de um usuário
+     */
+    private void updateUser() {
         String name = etName.getText().toString();
         String occupation = etOccupation.getText().toString();
         String website = etWebsite.getText().toString();
@@ -181,15 +206,23 @@ public class UpdateProfileActivity extends AppCompatActivity {
             String email = mAuth.getCurrentUser().getEmail();
 
             if (sv.getRole() == SaveData.DONEE) {
-                Donee donee = new Donee(name, email, occupation, website, address, description,
-                        foundedIn, benefited);
+                Donee current_donee = sv.readDonee();
+                String url = photoUrl != null ? photoUrl : current_donee.getPhotoUrl();
+
+                Donee donee = new Donee(name, email, occupation, website, url, address,
+                        description, foundedIn, benefited);
                 mDatabase.child("users").child("donees").child(uid).setValue(donee);
                 sv.writeDonee(donee);
             } else {
-                Donor donor = new Donor(name, email, occupation, website);
+                Donor current_donor = sv.readDonor();
+                String url = photoUrl != null ? photoUrl : current_donor.getPhotoUrl();
+
+                Donor donor = new Donor(name, email, occupation, website, url);
                 mDatabase.child("users").child("donors").child(uid).setValue(donor);
                 sv.writeDonor(donor);
             }
+
+            photoUrl = null;
 
             Toast.makeText(this, R.string.profile_updated, Toast.LENGTH_SHORT).show();
             startActivity(new Intent(UpdateProfileActivity.this, MainActivity.class));
@@ -198,6 +231,19 @@ public class UpdateProfileActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * Valida informações e exibe mensagens de erro nas views correspondente a cada informação
+     * avaliada.
+     *
+     * @param name Nome do usuário
+     * @param occupation Área de atuação
+     * @param website Website
+     * @param address Logradouro (apenas Donee)
+     * @param description Descrição da instituição (apenas Donee)
+     * @param foundedIn Ano de fundação da instituição
+     * @param benefited Quantidade de pessoas beneficiadas (apenas Donee)
+     * @return true, se todas as informações forem válidas. Caso contrário, retorna false
+     */
     private boolean validate(String name, String occupation, String website, String address,
                              String description, int foundedIn, int benefited) {
         boolean isValid = true;
@@ -237,10 +283,12 @@ public class UpdateProfileActivity extends AppCompatActivity {
         return isValid;
     }
 
-    private void updateUI() {
+    /**
+     * Atualiza a interface do usuário com suas informações.
+     */
+    private void refreshUI() {
         if (sv.isLogged()) {
             if (sv.getRole() == SaveData.DONEE) {
-                updatePhoto();
                 Donee user = sv.readDonee();
                 etName.setText(user.getName());
                 etOccupation.setText(user.getOccupation());
@@ -249,8 +297,8 @@ public class UpdateProfileActivity extends AppCompatActivity {
                 etDescription.setText(user.getDescription());
                 etFoundedIn.setText(user.getFoundedIn() == 0 ? "" : user.getFoundedIn() + "");
                 etBenefited.setText(user.getBenefited() == 0 ? "" : user.getBenefited() + "");
+                loadPhoto(user.getPhotoUrl());
             } else {
-                updatePhoto();
 
                 etAddress.setVisibility(View.GONE);
                 etDescription.setVisibility(View.GONE);
@@ -261,46 +309,51 @@ public class UpdateProfileActivity extends AppCompatActivity {
                 etName.setText(user.getName());
                 etOccupation.setText(user.getOccupation());
                 etWebsite.setText(user.getWebsite());
+                loadPhoto(user.getPhotoUrl());
             }
 //        } else {
 //             TELA AINDA NÃO CARREGADA [FAZER ALGO SOBRE ISSO], TALVEZ UM LOADING
         }
     }
 
-    @Override
-    public void onBackPressed() {
-        super.onBackPressed();
-        overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+    /**
+     * Carrega a imagem de URL especificada na view da foto de perfil do usuário
+     *
+     * @param url URL da imagem a ser carregada
+     */
+    private void loadPhoto(String url) {
+        showProgress(false, false);
+        if (!url.equals("")) {
+            showProgress(true, false);
+            Glide.with(profilePhoto.getContext())
+                    .load(url)
+                    .listener(new RequestListener<String, GlideDrawable>() {
+                        @Override
+                        public boolean onException(Exception e, String model, Target<GlideDrawable> target, boolean isFirstResource) {
+                            e.printStackTrace();
+                            showProgress(false, false);
+                            return false;
+                        }
+
+                        @Override
+                        public boolean onResourceReady(GlideDrawable resource, String model, Target<GlideDrawable> target, boolean isFromMemoryCache, boolean isFirstResource) {
+                            showProgress(false, false);
+                            return false;
+                        }
+                    })
+                    .into(profilePhoto);
+        }
     }
 
-    private void updatePhoto() {
-        showProgress(true);
-        String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
-        StorageReference photoRef = mStorage.child("profile_images").child(uid);
-        Glide.with(this)
-                .using(new FirebaseImageLoader())
-                .load(photoRef)
-                .diskCacheStrategy(DiskCacheStrategy.NONE)
-                .skipMemoryCache(true)
-                .listener(new RequestListener<StorageReference, GlideDrawable>() {
-                    @Override
-                    public boolean onException(Exception e, StorageReference model, Target<GlideDrawable> target, boolean isFirstResource) {
-                        e.printStackTrace();
-                        Toast.makeText(UpdateProfileActivity.this, "error", Toast.LENGTH_SHORT).show();
-                        showProgress(false);
-                        return false;
-                    }
-
-                    @Override
-                    public boolean onResourceReady(GlideDrawable resource, StorageReference model, Target<GlideDrawable> target, boolean isFromMemoryCache, boolean isFirstResource) {
-                        showProgress(false);
-                        return false;
-                    }
-                })
-                .into(profilePhoto);
-    }
-
-    private void showProgress(boolean show) {
+    /**
+     * Controla a visibilidade das barras de progresso e da foto de perfil do usuário.
+     * Quando as barras de progresso estão visíveis, a foto de perfil não estará e vice-versa.
+     *
+     * @param show indica se as barras de progresso devem ou não serem mostradas
+     * @param isUpload indica se a barra de upload deve ou não ser mostrada
+     */
+    private void showProgress(boolean show, boolean isUpload) {
+        uploadBar.setVisibility(show && isUpload ? View.VISIBLE : View.GONE);
         progressBar.setVisibility(show ? View.VISIBLE : View.GONE);
         profilePhoto.setVisibility(show ? View.GONE : View.VISIBLE);
     }

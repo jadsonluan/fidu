@@ -5,23 +5,26 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.resource.drawable.GlideDrawable;
+import com.bumptech.glide.request.RequestListener;
+import com.bumptech.glide.request.target.Target;
 
 import java.util.ArrayList;
 
 import br.edu.ufcg.fidu.R;
 import br.edu.ufcg.fidu.models.Donee;
 
-/**
- * Created by luan on 28/01/18.
- */
-
 public class DoneeAdapter extends BaseAdapter {
 
     private final Activity activity;
     private final ArrayList<Donee> donees;
+
+    private ImageView photo;
+    private ProgressBar loading;
 
     public DoneeAdapter(ArrayList<Donee> donees, Activity activity) {
         this.donees = donees;
@@ -49,19 +52,44 @@ public class DoneeAdapter extends BaseAdapter {
                 .inflate(R.layout.item_donee, viewGroup, false);
 
         Donee donee = donees.get(i);
-        ImageView photo = view.findViewById(R.id.profilePhoto);
+        photo = view.findViewById(R.id.profilePhoto);
+        loading = view.findViewById(R.id.loading);
         TextView name = view.findViewById(R.id.tvName);
         TextView address = view.findViewById(R.id.tvAddress);
 
-//        Glide
-//            .with(photo.getContext())
-//            .load()
-//            .into(photo);
+        loadPhoto(donee.getPhotoUrl(), photo);
 
         name.setText(donee.getName());
         String unknown = activity.getString(R.string.unknown_information);
         address.setText(donee.getAddress() == null ? unknown : donee.getAddress());
 
         return view;
+    }
+
+    /**
+     * Carrega uma imagem em um ImageView especificado
+     *
+     * @param url URL da imagem a ser carregada
+     * @param image componente onde a imagem será carregada
+     */
+    private void loadPhoto(String url, ImageView image) {
+        if (!url.equals("")) {
+            Glide.with(image.getContext())
+                    .load(url)
+                    .listener(new RequestListener<String, GlideDrawable>() {
+                        @Override
+                        public boolean onException(Exception e, String model, Target<GlideDrawable> target, boolean isFirstResource) {
+                            e.printStackTrace();
+                            return false;
+                        }
+
+                        @Override
+                        public boolean onResourceReady(GlideDrawable resource, String model, Target<GlideDrawable> target, boolean isFromMemoryCache, boolean isFirstResource) {
+                            return false;
+                        }
+                    })
+                    .into(image);
+
+        }
     }
 }

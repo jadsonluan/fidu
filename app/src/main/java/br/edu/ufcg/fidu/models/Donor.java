@@ -9,7 +9,11 @@ public class Donor extends User {
     }
 
     public Donor(String name, String email, String occupation, String website) {
-        super(name, email, occupation, website);
+        super(name, email, occupation, website, "");
+    }
+
+    public Donor(String name, String email, String occupation, String website, String photoUrl) {
+        super(name, email, occupation, website, photoUrl);
     }
 
 }

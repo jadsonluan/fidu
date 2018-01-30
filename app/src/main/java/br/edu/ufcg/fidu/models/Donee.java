@@ -10,12 +10,18 @@ public class Donee extends User {
     public Donee() {}
 
     public Donee(String name, String email, String address) {
-        this(name, email, "", "", address, "", 0, 0);
+        this(name, email, "", "", "", address, "", 0,
+                0);
     }
 
-    public Donee(String name, String email, String occupation, String website, String address,
-                 String description, int foundedIn, int benefited) {
-        super(name, email, occupation, website);
+    public Donee(String name, String email, String occupation, String website,
+                 String address, String description, int foundedIn, int benefited) {
+        this(name, email, "", "", "", address, "", 0, 0);
+    }
+
+    public Donee(String name, String email, String occupation, String website, String photoUrl,
+                 String address, String description, int foundedIn, int benefited) {
+        super(name, email, occupation, website, photoUrl);
         verifyParams(address, description, foundedIn, benefited);
         this.address = address;
         this.description = description;
