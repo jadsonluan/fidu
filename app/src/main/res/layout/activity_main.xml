@@ -8,16 +8,6 @@
     android:orientation="vertical"
     tools:context="br.edu.ufcg.fidu.views.activities.MainActivity">
 
-    <android.support.v7.widget.Toolbar
-        android:id="@+id/my_toolbar"
-        android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
-        android:background="?attr/colorPrimary"
-        app:titleTextColor="@color/secondaryText"
-        android:elevation="2dp"
-        android:theme="@style/AppTheme"
-        app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
-
     <FrameLayout
         android:id="@+id/frameLayout"
         android:layout_width="match_parent"

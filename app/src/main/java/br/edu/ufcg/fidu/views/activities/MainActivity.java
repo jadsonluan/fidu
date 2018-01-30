@@ -1,5 +1,7 @@
 package br.edu.ufcg.fidu.views.activities;
 
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
@@ -7,12 +9,16 @@ import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.Toast;
 
 import br.edu.ufcg.fidu.R;
+import br.edu.ufcg.fidu.utils.SaveData;
 import br.edu.ufcg.fidu.views.fragments.MapFragment;
 import br.edu.ufcg.fidu.views.fragments.MessagesFragment;
 import br.edu.ufcg.fidu.views.fragments.ProfileFragment;
@@ -25,9 +31,6 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        Toolbar myToolbar = findViewById(R.id.my_toolbar);
-        setSupportActionBar(myToolbar);
 
         fm = getSupportFragmentManager();
         BottomNavigationView navigation = findViewById(R.id.navigation);
@@ -51,6 +54,28 @@ public class MainActivity extends AppCompatActivity {
         navigation.setSelectedItemId(R.id.navigation_messages);
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.main_options, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.action_logout:
+                logout();
+                return true;
+
+            default:
+                // If we got here, the user's action was not recognized.
+                // Invoke the superclass to handle it.
+                return super.onOptionsItemSelected(item);
+
+        }
+    }
+
     private final BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
 
@@ -62,7 +87,7 @@ public class MainActivity extends AppCompatActivity {
                     return true;
                 case R.id.navigation_map:
                     changeFragment(MapFragment.newInstance(-23.556822, -46.729966),
-                            getString(R.string.title_messages));
+                            getString(R.string.title_map));
                     return true;
                 case R.id.navigation_profile:
                     changeFragment(new ProfileFragment(), getString(R.string.title_profile));
@@ -77,5 +102,25 @@ public class MainActivity extends AppCompatActivity {
         FragmentTransaction ft = fm.beginTransaction();
         ft.replace(R.id.frameLayout, fragment);
         ft.commit();
+    }
+
+    private void logout() {
+        new AlertDialog.Builder(this)
+                .setIcon(android.R.drawable.ic_dialog_alert)
+                .setTitle(getString(R.string.logout_title))
+                .setMessage(getString(R.string.msg_confirm_logout))
+                .setNegativeButton(getString(R.string.no), null)
+                .setPositiveButton(getString(R.string.yes), new DialogInterface.OnClickListener()
+                {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        SaveData sv = new SaveData(MainActivity.this);
+                        sv.logout();
+                        startActivity(new Intent(MainActivity.this, InitialActivity.class));
+                        finish();
+                    }
+
+                })
+                .show();
     }
 }

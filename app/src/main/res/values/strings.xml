@@ -73,6 +73,10 @@
     <string name="default_error_message">Ocorreu um erro ao executar essa ação. Tente novamente</string>
 
     <string name="unknown_information">não informado</string>
+    <string name="yes">Sim</string>
+    <string name="no">Não</string>
+    <string name="msg_confirm_logout">Tem certeza que deseja sair?</string>
+    <string name="logout_title">Saindo</string>
 
     <string name="API_KEY">AIzaSyDXprQRZijSyL3ruqqQV8fukd6IA9oer5M</string>
 </resources>

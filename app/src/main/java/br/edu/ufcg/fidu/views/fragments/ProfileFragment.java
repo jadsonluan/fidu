@@ -55,8 +55,6 @@ public class ProfileFragment extends Fragment {
     private ProgressBar loading;
 
     private FloatingActionButton btnEdit;
-    private Button btnLogout;
-
     private ViewGroup occupationLayout;
     private ViewGroup descriptionLayout;
     private ViewGroup foundedInLayout;
@@ -92,14 +90,6 @@ public class ProfileFragment extends Fragment {
         benefitedLayout = view.findViewById(R.id.benefitedLayout);
         websiteLayout = view.findViewById(R.id.websiteLayout);
         addressLayout = view.findViewById(R.id.addressLayout);
-
-        btnLogout = view.findViewById(R.id.btnLogout);
-        btnLogout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                logout();
-            }
-        });
 
         btnEdit = view.findViewById(R.id.btnEdit);
         btnEdit.setOnClickListener(new View.OnClickListener() {
@@ -210,12 +200,5 @@ public class ProfileFragment extends Fragment {
     private void showProgress(boolean show) {
         loading.setVisibility(show ? View.VISIBLE : View.GONE);
         backdrop.setVisibility(show ? View.GONE : View.VISIBLE);
-    }
-
-    private void logout() {
-        SaveData sv = new SaveData(getActivity());
-        sv.logout();
-        startActivity(new Intent(getActivity(), InitialActivity.class));
-        getActivity().finish();
     }
 }
