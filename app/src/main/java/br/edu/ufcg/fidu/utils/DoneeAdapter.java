@@ -70,7 +70,6 @@ public class DoneeAdapter extends BaseAdapter {
                 Intent intent = new Intent(activity, DoneeProfileActivity.class);
                 intent.putExtra("donee_uid", donee.getUid());
                 activity.startActivity(intent);
-                activity.finish();
             }
         });
 
