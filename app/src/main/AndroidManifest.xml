@@ -46,7 +46,13 @@
         <activity
             android:name=".views.activities.SearchDoneeActivity"
             android:label="@string/donees"
-            android:theme="@style/AppThemeWithActionBar" />
+            android:theme="@style/AppThemeWithActionBar"
+            android:parentActivityName=".views.activities.MainActivity">
+            <meta-data
+                android:name="show_map"
+                android:value=""
+            />
+        </activity>
         <activity
             android:name=".views.activities.ChatActivity"
             android:label="Chat"
@@ -62,8 +68,8 @@
             android:name=".views.activities.DoneeProfileActivity"
             android:label="@string/title_donee_profile"
             android:theme="@style/AppThemeWithActionBar"
+            android:parentActivityName=".views.activities.SearchDoneeActivity"
             >
         </activity>
     </application>
-
 </manifest>

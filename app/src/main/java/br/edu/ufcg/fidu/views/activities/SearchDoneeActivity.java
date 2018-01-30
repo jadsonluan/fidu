@@ -35,6 +35,8 @@ public class SearchDoneeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search_donee);
 
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
         mDatabase = FirebaseDatabase.getInstance().getReference();
         doneeList = findViewById(R.id.doneeList);
         loadingBar = findViewById(R.id.loadingBar);

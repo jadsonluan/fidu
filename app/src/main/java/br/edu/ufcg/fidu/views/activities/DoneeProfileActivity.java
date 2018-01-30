@@ -50,6 +50,8 @@ public class DoneeProfileActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_donee_profile);
 
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
         loading = findViewById(R.id.main_loading);
         backdrop = findViewById(R.id.main_backdrop);
         tvName = findViewById(R.id.tvName);
