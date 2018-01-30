@@ -52,6 +52,7 @@
                 android:layout_marginTop="16dp"
                 android:fontFamily="@font/altair_thin_trial"
                 android:text="@string/greeting_placeholder"
+                android:visibility="gone"
                 android:textColor="@android:color/white"
                 android:textSize="18sp"
                 android:textStyle="bold" />

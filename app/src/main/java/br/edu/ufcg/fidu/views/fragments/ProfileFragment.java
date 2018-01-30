@@ -40,6 +40,7 @@ import br.edu.ufcg.fidu.models.User;
 import br.edu.ufcg.fidu.utils.FirebaseConnection;
 import br.edu.ufcg.fidu.utils.SaveData;
 import br.edu.ufcg.fidu.views.activities.InitialActivity;
+import br.edu.ufcg.fidu.views.activities.MainActivity;
 import br.edu.ufcg.fidu.views.activities.SearchDoneeActivity;
 import br.edu.ufcg.fidu.views.activities.UpdateProfileActivity;
 
@@ -147,8 +148,7 @@ public class ProfileFragment extends Fragment {
                 foundedInLayout.setVisibility(View.GONE);
             }
         } else {
-            // Por um loading
-            Toast.makeText(getActivity(), "Usuário não logado", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getActivity(), "Problema com a conexão. Tente novamente", Toast.LENGTH_SHORT).show();
         }
     }
 

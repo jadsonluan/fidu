@@ -257,14 +257,6 @@ public class UpdateProfileActivity extends AppCompatActivity {
             etName.setError(getString(R.string.name_is_empty));
         }
 
-        if (etDescription.getVisibility() == View.VISIBLE) {
-            if (description.trim().equals("")) {
-                focusView = etDescription;
-                isValid = false;
-                etDescription.setError(getString(R.string.empty_description));
-            }
-        }
-
         if (etFoundedIn.getVisibility() == View.VISIBLE) {
             if (foundedIn < 0 || foundedIn >  Calendar.getInstance().get(Calendar.YEAR)) {
                 focusView = etFoundedIn;

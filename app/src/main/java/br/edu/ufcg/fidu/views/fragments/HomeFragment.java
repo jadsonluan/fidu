@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import br.edu.ufcg.fidu.R;
 import br.edu.ufcg.fidu.models.User;
@@ -35,22 +36,20 @@ public class HomeFragment extends Fragment {
         SaveData sv = new SaveData(getActivity());
 
         if (sv.isLogged()) {
-            if (sv.isLogged()) {
-                User user;
+            User user;
 
-                switch (sv.getRole()) {
-                    case SaveData.DONEE:
-                        user = sv.readDonee();
-                        break;
-                    case SaveData.DONOR:
-                        user = sv.readDonor();
-                        break;
-                    default:
-                        return;
-                }
-
-                tvName.setText("Olá, " + user.getName() + "!");
+            switch (sv.getRole()) {
+                case SaveData.DONEE:
+                    user = sv.readDonee();
+                    break;
+                case SaveData.DONOR:
+                    user = sv.readDonor();
+                    break;
+                default:
+                    return;
             }
+
+            tvName.setText("Olá, " + user.getName() + "!");
         }
     }
 }
