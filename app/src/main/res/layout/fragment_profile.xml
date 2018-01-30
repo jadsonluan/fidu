@@ -262,17 +262,6 @@
                         android:text="@string/logout"
                         android:layout_marginTop="16dp"
                         android:textColor="@color/secondaryText" />
-
-                    <Button
-                        android:id="@+id/btnSearch"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        style="@style/Widget.AppCompat.Button.Colored"
-                        android:backgroundTint="@color/colorDarkPrimary"
-                        android:fontFamily="@font/quicksand"
-                        android:text="@string/search_donee"
-                        android:layout_marginTop="16dp"
-                        android:textColor="@color/secondaryText" />
                 </LinearLayout>
             </LinearLayout>
         </LinearLayout>

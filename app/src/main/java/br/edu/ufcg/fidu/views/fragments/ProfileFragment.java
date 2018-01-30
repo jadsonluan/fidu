@@ -56,7 +56,6 @@ public class ProfileFragment extends Fragment {
 
     private FloatingActionButton btnEdit;
     private Button btnLogout;
-    private Button btnSearch;
 
     private ViewGroup occupationLayout;
     private ViewGroup descriptionLayout;
@@ -110,20 +109,8 @@ public class ProfileFragment extends Fragment {
             }
         });
 
-        btnSearch = view.findViewById(R.id.btnSearch);
-        btnSearch.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                searchDonee();
-            }
-        });
-
         sv = new SaveData(getActivity());
         updateUI();
-    }
-
-    private void searchDonee() {
-        startActivity(new Intent(getActivity(), SearchDoneeActivity.class));
     }
 
     @Override

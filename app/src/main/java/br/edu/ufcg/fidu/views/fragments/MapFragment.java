@@ -1,6 +1,9 @@
 package br.edu.ufcg.fidu.views.fragments;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.view.LayoutInflater;
@@ -14,6 +17,7 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 
 import br.edu.ufcg.fidu.R;
+import br.edu.ufcg.fidu.views.activities.SearchDoneeActivity;
 
 
 public class MapFragment extends Fragment implements OnMapReadyCallback {
@@ -43,7 +47,25 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
             fragmentManager.beginTransaction().replace(R.id.frameLayout_map, mSupportMapFragment).commitAllowingStateLoss();
         }
         mSupportMapFragment.getMapAsync(this);
+
         return mRootView;
+    }
+
+    @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        View btnSearch = view.findViewById(R.id.btnSearch);
+        btnSearch.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                searchDonees();
+            }
+        });
+    }
+
+    private void searchDonees() {
+        startActivity(new Intent(getActivity(), SearchDoneeActivity.class));
     }
 
     @Override
