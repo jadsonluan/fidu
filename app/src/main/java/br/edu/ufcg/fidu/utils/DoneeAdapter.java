@@ -1,6 +1,7 @@
 package br.edu.ufcg.fidu.utils;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -17,6 +18,8 @@ import java.util.ArrayList;
 
 import br.edu.ufcg.fidu.R;
 import br.edu.ufcg.fidu.models.Donee;
+import br.edu.ufcg.fidu.views.activities.DoneeProfileActivity;
+import br.edu.ufcg.fidu.views.activities.MainActivity;
 
 public class DoneeAdapter extends BaseAdapter {
 
@@ -24,7 +27,6 @@ public class DoneeAdapter extends BaseAdapter {
     private final ArrayList<Donee> donees;
 
     private ImageView photo;
-    private ProgressBar loading;
 
     public DoneeAdapter(ArrayList<Donee> donees, Activity activity) {
         this.donees = donees;
@@ -51,9 +53,8 @@ public class DoneeAdapter extends BaseAdapter {
         View view = activity.getLayoutInflater()
                 .inflate(R.layout.item_donee, viewGroup, false);
 
-        Donee donee = donees.get(i);
+        final Donee donee = donees.get(i);
         photo = view.findViewById(R.id.profilePhoto);
-        loading = view.findViewById(R.id.loading);
         TextView name = view.findViewById(R.id.tvName);
         TextView address = view.findViewById(R.id.tvAddress);
 
@@ -62,6 +63,16 @@ public class DoneeAdapter extends BaseAdapter {
         name.setText(donee.getName());
         String unknown = activity.getString(R.string.unknown_information);
         address.setText(donee.getAddress() == null ? unknown : donee.getAddress());
+
+        view.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(activity, DoneeProfileActivity.class);
+                intent.putExtra("donee_uid", donee.getUid());
+                activity.startActivity(intent);
+                activity.finish();
+            }
+        });
 
         return view;
     }

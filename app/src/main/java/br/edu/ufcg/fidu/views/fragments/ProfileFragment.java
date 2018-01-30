@@ -8,6 +8,7 @@ import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,12 +25,19 @@ import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.target.Target;
 import com.firebase.ui.storage.images.FirebaseImageLoader;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
 import br.edu.ufcg.fidu.R;
 import br.edu.ufcg.fidu.models.Donee;
 import br.edu.ufcg.fidu.models.User;
+import br.edu.ufcg.fidu.utils.FirebaseConnection;
 import br.edu.ufcg.fidu.utils.SaveData;
 import br.edu.ufcg.fidu.views.activities.InitialActivity;
 import br.edu.ufcg.fidu.views.activities.SearchDoneeActivity;
@@ -45,6 +53,10 @@ public class ProfileFragment extends Fragment {
     private TextView tvWebsite;
     private ImageView backdrop;
     private ProgressBar loading;
+
+    private FloatingActionButton btnEdit;
+    private Button btnLogout;
+    private Button btnSearch;
 
     private ViewGroup occupationLayout;
     private ViewGroup descriptionLayout;
@@ -82,7 +94,7 @@ public class ProfileFragment extends Fragment {
         websiteLayout = view.findViewById(R.id.websiteLayout);
         addressLayout = view.findViewById(R.id.addressLayout);
 
-        Button btnLogout = view.findViewById(R.id.btnLogout);
+        btnLogout = view.findViewById(R.id.btnLogout);
         btnLogout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -90,7 +102,7 @@ public class ProfileFragment extends Fragment {
             }
         });
 
-        FloatingActionButton btnEdit = view.findViewById(R.id.btnEdit);
+        btnEdit = view.findViewById(R.id.btnEdit);
         btnEdit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -98,7 +110,7 @@ public class ProfileFragment extends Fragment {
             }
         });
 
-        Button btnSearch = view.findViewById(R.id.btnSearch);
+        btnSearch = view.findViewById(R.id.btnSearch);
         btnSearch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
