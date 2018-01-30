@@ -209,7 +209,7 @@ public class UpdateProfileActivity extends AppCompatActivity {
                 Donee current_donee = sv.readDonee();
                 String url = photoUrl != null ? photoUrl : current_donee.getPhotoUrl();
 
-                Donee donee = new Donee(name, email, occupation, website, url, address,
+                Donee donee = new Donee(uid, name, email, occupation, website, url, address,
                         description, foundedIn, benefited);
                 mDatabase.child("users").child("donees").child(uid).setValue(donee);
                 sv.writeDonee(donee);
@@ -217,7 +217,7 @@ public class UpdateProfileActivity extends AppCompatActivity {
                 Donor current_donor = sv.readDonor();
                 String url = photoUrl != null ? photoUrl : current_donor.getPhotoUrl();
 
-                Donor donor = new Donor(name, email, occupation, website, url);
+                Donor donor = new Donor(uid, name, email, occupation, website, url);
                 mDatabase.child("users").child("donors").child(uid).setValue(donor);
                 sv.writeDonor(donor);
             }
@@ -358,3 +358,4 @@ public class UpdateProfileActivity extends AppCompatActivity {
         profilePhoto.setVisibility(show ? View.GONE : View.VISIBLE);
     }
 }
+

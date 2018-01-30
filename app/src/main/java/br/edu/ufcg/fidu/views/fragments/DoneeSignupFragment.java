@@ -91,7 +91,7 @@ public class DoneeSignupFragment extends Fragment {
                 
                 if (task.isSuccessful()) {
                     String uid = task.getResult().getUser().getUid();
-                    Donee donee = new Donee(name, email, address);
+                    Donee donee = new Donee(uid, name, email, address);
                     SaveData saveData = new SaveData(SelectRoleActivity.context);
                     saveData.writeDonee(donee);
                     mDatabase.child("users").child("donees").child(uid).setValue(donee);

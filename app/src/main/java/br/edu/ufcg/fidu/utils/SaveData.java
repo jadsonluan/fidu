@@ -23,6 +23,7 @@ public class SaveData {
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putInt("role", DONOR);
         editor.putBoolean("isLogged", true);
+        editor.putString("uid", donor.getUid());
         editor.putString("email_donor", donor.getEmail());
         editor.putString("photo_donor", donor.getPhotoUrl());
         editor.putString("name_donor", donor.getName());
@@ -32,12 +33,13 @@ public class SaveData {
     }
 
     public Donor readDonor(){
+        String uid = sharedPreferences.getString("uid", null);
         String email = sharedPreferences.getString("email_donor", null);
         String photoUrl = sharedPreferences.getString("photo_donor", null);
         String name = sharedPreferences.getString("name_donor", null);
         String occupation = sharedPreferences.getString("occupation_donor", null);
         String website = sharedPreferences.getString("website_donor", null);
-        return new Donor(name, email, occupation, website, photoUrl);
+        return new Donor(uid, name, email, occupation, website, photoUrl);
     }
 
     public void writeDonee(Donee donee){
@@ -45,6 +47,7 @@ public class SaveData {
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putInt("role", DONEE);
         editor.putBoolean("isLogged", true);
+        editor.putString("uid", donee.getUid());
         editor.putString("email_donee", donee.getEmail());
         editor.putString("photo_donee", donee.getPhotoUrl());
         editor.putString("name_donee", donee.getName());
@@ -58,6 +61,7 @@ public class SaveData {
     }
 
     public Donee readDonee(){
+        String uid = sharedPreferences.getString("uid", null);
         String email = sharedPreferences.getString("email_donee", null);
         String photoUrl = sharedPreferences.getString("photo_donee", null);
         String name = sharedPreferences.getString("name_donee", null);
@@ -67,7 +71,7 @@ public class SaveData {
         int benefited = sharedPreferences.getInt("benefited_donee", 0);
         int foundedIn = sharedPreferences.getInt("founded_in_donee", 0);
         String description = sharedPreferences.getString("description_donee", null);
-        return new Donee(name, email, occupation, website, photoUrl, address, description, foundedIn, benefited);
+        return new Donee(uid, name, email, occupation, website, photoUrl, address, description, foundedIn, benefited);
     }
 
     public boolean isLogged(){

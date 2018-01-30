@@ -2,6 +2,7 @@ package br.edu.ufcg.fidu.models;
 
 public class User {
 
+    private String uid;
     private String name;
     private String email;
     private String occupation;
@@ -10,16 +11,17 @@ public class User {
 
     public User() {}
 
-    public User(String name, String email) {
-        this(name, email, "", "", "");
+    public User(String uid, String name, String email) {
+        this(uid, name, email, "", "", "");
     }
 
-    public User(String name, String email, String occupation, String website) {
-        this(name, email, occupation, website, "");
+    public User(String uid, String name, String email, String occupation, String website) {
+        this(uid, name, email, occupation, website, "");
     }
 
-    public User(String name, String email, String occupation, String website, String photoUrl) {
-        verifyParameters(name, email, occupation, website, photoUrl);
+    public User(String uid, String name, String email, String occupation, String website, String photoUrl) {
+        verifyParameters(uid, name, email, occupation, website, photoUrl);
+        this.uid = uid;
         this.name = name;
         this.email = email;
         this.occupation = occupation;
@@ -27,8 +29,11 @@ public class User {
         this.photoUrl = photoUrl;
     }
 
-    private void verifyParameters(String name, String email, String occupation, String website,
+    private void verifyParameters(String uid, String name, String email, String occupation, String website,
                                   String photoUrl){
+        if (uid == null)
+            throw new NullPointerException("Uid cannot be null");
+
         if(name == null)
             throw new NullPointerException("Name cannot be null");
 
@@ -44,6 +49,8 @@ public class User {
         if (photoUrl == null)
             throw new NullPointerException("PhotoUrl cannot me null");
     }
+
+    public String getUid() { return uid; }
 
     public String getName() {
         return name;

@@ -85,7 +85,7 @@ public class DonorSignupFragment extends Fragment {
 
             if (task.isSuccessful()) {
                 String uid = task.getResult().getUser().getUid();
-                Donor donor = new Donor(name, email);
+                Donor donor = new Donor(uid, name, email);
                 SaveData saveData = new SaveData(SelectRoleActivity.context);
                 saveData.writeDonor(donor);
                 mDatabase.child("users").child("donors").child(uid).setValue(donor);
