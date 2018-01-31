@@ -106,4 +106,14 @@ public class SaveData {
         editor.putBoolean("isLogged", false);
         editor.apply();
     }
+
+    public void setUser(User user) {
+        if (!isLogged()) return;
+
+        if (user instanceof Donee) {
+            writeDonee((Donee) user);
+        } else {
+            writeDonor((Donor) user);
+        }
+    }
 }
