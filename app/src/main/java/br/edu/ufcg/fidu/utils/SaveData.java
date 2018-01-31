@@ -6,6 +6,7 @@ import android.util.Log;
 
 import br.edu.ufcg.fidu.models.Donee;
 import br.edu.ufcg.fidu.models.Donor;
+import br.edu.ufcg.fidu.models.User;
 
 public class SaveData {
     public static final int DONOR = 0;
@@ -81,6 +82,13 @@ public class SaveData {
     public int getRole() {
         if (!isLogged()) throw new IllegalStateException("User is not logged");
         return sharedPreferences.getInt("role", 0);
+    }
+
+    public User getUser() {
+        if (!isLogged()) throw new IllegalStateException("User is not logged");
+
+        if (getRole() == DONEE) return readDonee();
+        else return readDonor();
     }
 
     public void logout() {
