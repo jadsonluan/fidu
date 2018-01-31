@@ -70,6 +70,9 @@
     <string name="title_donee_profile">Perfil da Instituição</string>
     <string name="title_home">Início</string>
 
+    <string name="dialog_title_update_location">Nova Localização</string>
+    <string name="dialog_body_update_location">Deseja salvar esse local como sua localização?</string>
+
     <string name="network_error">Problema na conexão com a internet.</string>
     <string name="default_error_message">Ocorreu um erro ao executar essa ação. Tente novamente</string>
 

@@ -1,5 +1,7 @@
 package br.edu.ufcg.fidu.views.fragments;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -15,6 +17,8 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
+import com.google.android.gms.maps.model.MarkerOptions;
 
 import br.edu.ufcg.fidu.R;
 import br.edu.ufcg.fidu.models.User;
@@ -25,8 +29,9 @@ import br.edu.ufcg.fidu.views.activities.SearchDoneeActivity;
 public class MapFragment extends Fragment implements OnMapReadyCallback {
     private SupportMapFragment mSupportMapFragment;
     private View mRootView;
-    private static double mLat, mLng;
     private View btnSearch;
+    private static double mLat, mLng;
+    private Marker myLocation;
 
     public static MapFragment newInstance(double lat, double lng) {
         MapFragment.mLat = lat;
@@ -45,9 +50,15 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
                              Bundle savedInstanceState) {
         mSupportMapFragment = SupportMapFragment.newInstance();
         mRootView = inflater.inflate(R.layout.fragment_map, null);
+
+        myLocation = null;
+
         FragmentManager fragmentManager = getFragmentManager();
         if (fragmentManager != null) {
-            fragmentManager.beginTransaction().replace(R.id.frameLayout_map, mSupportMapFragment).commitAllowingStateLoss();
+            fragmentManager
+                    .beginTransaction()
+                    .replace(R.id.frameLayout_map, mSupportMapFragment)
+                    .commitAllowingStateLoss();
         }
         mSupportMapFragment.getMapAsync(this);
 
@@ -84,8 +95,37 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
     }
 
     @Override
-    public void onMapReady(GoogleMap googleMap) {
+    public void onMapReady(final GoogleMap googleMap) {
         LatLng latLng = new LatLng(MapFragment.mLat, MapFragment.mLng);
         googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, 19));
+
+        googleMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
+            @Override
+            public void onMapClick(LatLng latLng) {
+                selectPosition(latLng, googleMap);
+            }
+        });
+    }
+
+    private void selectPosition(final LatLng point, final GoogleMap map) {
+        new AlertDialog.Builder(getActivity())
+//                .setIcon(android.R.drawable.ic_dialog_alert)
+                .setTitle(getString(R.string.dialog_title_update_location))
+                .setMessage(getString(R.string.dialog_body_update_location))
+                .setNegativeButton(getString(R.string.no), null)
+                .setPositiveButton(getString(R.string.yes), new DialogInterface.OnClickListener()
+                {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        if (myLocation != null) myLocation.remove();
+                        myLocation = map.addMarker(new MarkerOptions().position(point).title("Minha localização"));
+                        updateLocation(point);
+                    }
+                })
+                .show();
+    }
+
+    private void updateLocation(LatLng point) {
+
     }
 }
