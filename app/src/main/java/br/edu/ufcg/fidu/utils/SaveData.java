@@ -31,7 +31,7 @@ public class SaveData {
         editor.putString("occupation_donor", donor.getOccupation());
         editor.putString("website_donor", donor.getWebsite());
         editor.putFloat("lat_user", (float) donor.getLat());
-        editor.putFloat("lat_user", (float) donor.getLat());
+        editor.putFloat("lng_user", (float) donor.getLng());
         editor.apply();
     }
 
@@ -63,7 +63,7 @@ public class SaveData {
         editor.putInt("founded_in_donee", donee.getFoundedIn());
         editor.putString("description_donee", donee.getDescription());
         editor.putFloat("lat_user", (float) donee.getLat());
-        editor.putFloat("lat_user", (float) donee.getLat());
+        editor.putFloat("lng_user", (float) donee.getLng());
         editor.apply();
     }
 
@@ -94,7 +94,7 @@ public class SaveData {
     }
 
     public User getUser() {
-        if (!isLogged()) throw new IllegalStateException("User is not logged");
+        if (!isLogged()) return null;
 
         if (getRole() == DONEE) return readDonee();
         else return readDonor();
