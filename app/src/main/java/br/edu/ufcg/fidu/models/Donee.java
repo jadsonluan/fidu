@@ -9,24 +9,19 @@ public class Donee extends User {
 
     public Donee() {}
 
-    public Donee(String uid, String name, String email, String address) {
-        this(uid, name, email, "", "", "", address, "", 0,
-                0);
-    }
-
-    public Donee(String uid, String name, String email, String occupation, String website,
-                 String address, String description, int foundedIn, int benefited) {
-        this(uid, name, email, "", "", "", address, "", 0, 0);
-    }
-
     public Donee(String uid, String name, String email, String occupation, String website, String photoUrl,
-                 String address, String description, int foundedIn, int benefited) {
-        super(uid, name, email, occupation, website, photoUrl);
+                 double lat, double lng, String address, String description, int foundedIn, int benefited) {
+        super(uid, name, email, occupation, website, photoUrl, lat, lng);
         verifyParams(address, description, foundedIn, benefited);
         this.address = address;
         this.description = description;
         this.foundedIn = foundedIn;
         this.benefited = benefited;
+    }
+
+    public Donee(String uid, String name, String email, String address) {
+        this(uid, name, email, "", "", "", 0.0, 0.0, address,
+                "", 0, 0);
     }
 
     private void verifyParams(String address, String description, int foundedIn, int benefited) {
@@ -50,6 +45,22 @@ public class Donee extends User {
 
     public int getBenefited() {
         return benefited;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public void setFoundedIn(int foundedIn) {
+        this.foundedIn = foundedIn;
+    }
+
+    public void setBenefited(int benefited) {
+        this.benefited = benefited;
     }
 
     @Override

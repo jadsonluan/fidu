@@ -208,18 +208,29 @@ public class UpdateProfileActivity extends AppCompatActivity {
             String email = mAuth.getCurrentUser().getEmail();
 
             if (sv.getRole() == SaveData.DONEE) {
-                Donee current_donee = sv.readDonee();
-                String url = photoUrl != null ? photoUrl : current_donee.getPhotoUrl();
+                Donee donee = sv.readDonee();
+                String url = photoUrl != null ? photoUrl : donee.getPhotoUrl();
 
-                Donee donee = new Donee(uid, name, email, occupation, website, url, address,
-                        description, foundedIn, benefited);
+                donee.setName(name);
+                donee.setOccupation(description);
+                donee.setAddress(address);
+                donee.setDescription(description);
+                donee.setFoundedIn(foundedIn);
+                donee.setBenefited(benefited);
+                donee.setWebsite(website);
+                donee.setPhotoUrl(url);
+
                 mDatabase.child("users").child("donees").child(uid).setValue(donee);
                 sv.writeDonee(donee);
             } else {
-                Donor current_donor = sv.readDonor();
-                String url = photoUrl != null ? photoUrl : current_donor.getPhotoUrl();
+                Donor donor = sv.readDonor();
+                String url = photoUrl != null ? photoUrl : donor.getPhotoUrl();
 
-                Donor donor = new Donor(uid, name, email, occupation, website, url);
+                donor.setName(name);
+                donor.setOccupation(occupation);
+                donor.setWebsite(website);
+                donor.setPhotoUrl(url);
+
                 mDatabase.child("users").child("donors").child(uid).setValue(donor);
                 sv.writeDonor(donor);
             }

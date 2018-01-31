@@ -4,15 +4,12 @@ public class Donor extends User {
 
     public Donor() {}
 
+    public Donor(String uid, String name, String email, String occupation, String website,
+                 String photoUrl, double lat, double lng) {
+        super(uid, name, email, occupation, website, photoUrl, lat, lng);
+    }
+
     public Donor(String uid, String name, String email) {
-        super(uid, name, email);
-    }
-
-    public Donor(String uid, String name, String email, String occupation, String website) {
-        super(uid, name, email, occupation, website, "");
-    }
-
-    public Donor(String uid, String name, String email, String occupation, String website, String photoUrl) {
-        super(uid, name, email, occupation, website, photoUrl);
+        this(uid, name, email, "", "", "", 0.0, 0.0);
     }
 }

@@ -30,6 +30,8 @@ public class SaveData {
         editor.putString("name_donor", donor.getName());
         editor.putString("occupation_donor", donor.getOccupation());
         editor.putString("website_donor", donor.getWebsite());
+        editor.putFloat("lat_user", (float) donor.getLat());
+        editor.putFloat("lat_user", (float) donor.getLat());
         editor.apply();
     }
 
@@ -40,7 +42,9 @@ public class SaveData {
         String name = sharedPreferences.getString("name_donor", null);
         String occupation = sharedPreferences.getString("occupation_donor", null);
         String website = sharedPreferences.getString("website_donor", null);
-        return new Donor(uid, name, email, occupation, website, photoUrl);
+        double lat = sharedPreferences.getFloat("lat_user", 0);
+        double lng = sharedPreferences.getFloat("lng_user", 0);
+        return new Donor(uid, name, email, occupation, website, photoUrl, lat, lng);
     }
 
     public void writeDonee(Donee donee){
@@ -58,6 +62,8 @@ public class SaveData {
         editor.putInt("benefited_donee", donee.getBenefited());
         editor.putInt("founded_in_donee", donee.getFoundedIn());
         editor.putString("description_donee", donee.getDescription());
+        editor.putFloat("lat_user", (float) donee.getLat());
+        editor.putFloat("lat_user", (float) donee.getLat());
         editor.apply();
     }
 
@@ -72,7 +78,10 @@ public class SaveData {
         int benefited = sharedPreferences.getInt("benefited_donee", 0);
         int foundedIn = sharedPreferences.getInt("founded_in_donee", 0);
         String description = sharedPreferences.getString("description_donee", null);
-        return new Donee(uid, name, email, occupation, website, photoUrl, address, description, foundedIn, benefited);
+        double lat = sharedPreferences.getFloat("lat_user", 0);
+        double lng = sharedPreferences.getFloat("lng_user", 0);
+        return new Donee(uid, name, email, occupation, website, photoUrl, lat, lng, address,
+                description, foundedIn, benefited);
     }
 
     public boolean isLogged(){
