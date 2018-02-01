@@ -8,9 +8,11 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -19,8 +21,15 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
+import java.text.DecimalFormat;
 
 import br.edu.ufcg.fidu.R;
+import br.edu.ufcg.fidu.models.Donee;
+import br.edu.ufcg.fidu.models.Donor;
 import br.edu.ufcg.fidu.models.User;
 import br.edu.ufcg.fidu.utils.SaveData;
 import br.edu.ufcg.fidu.views.activities.SearchDoneeActivity;
@@ -30,15 +39,10 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
     private SupportMapFragment mSupportMapFragment;
     private View mRootView;
     private View btnSearch;
-    private static double mLat, mLng;
+    private double mLat, mLng;
     private Marker myLocation;
-
-    public static MapFragment newInstance(double lat, double lng) {
-        MapFragment.mLat = lat;
-        MapFragment.mLng = lng;
-        MapFragment fragment = new MapFragment();
-        return fragment;
-    }
+    private SaveData sv;
+    private User user;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -50,8 +54,6 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
                              Bundle savedInstanceState) {
         mSupportMapFragment = SupportMapFragment.newInstance();
         mRootView = inflater.inflate(R.layout.fragment_map, null);
-
-        myLocation = null;
 
         FragmentManager fragmentManager = getFragmentManager();
         if (fragmentManager != null) {
@@ -69,6 +71,10 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+
+        myLocation = null;
+        mLat = 0;
+        mLng = 0;
         btnSearch = view.findViewById(R.id.btnSearch);
         btnSearch.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -76,8 +82,17 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
                 searchDonees();
             }
         });
-
         checkUser();
+
+        sv = new SaveData(getActivity());
+        user = sv.getUser();
+
+        if (user != null) {
+            if (user.getLat() != 0 && user.getLng() != 0) {
+                mLat = user.getLat();
+                mLng = user.getLng();
+            }
+        }
     }
 
     private void checkUser() {
@@ -96,7 +111,19 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
 
     @Override
     public void onMapReady(final GoogleMap googleMap) {
-        LatLng latLng = new LatLng(MapFragment.mLat, MapFragment.mLng);
+        LatLng latLng;
+
+        if (mLat == 0 && mLng == 0) {
+            mLat = -23.556822;
+            mLng = -46.729966;
+            latLng = new LatLng(mLat, mLng);
+        } else {
+            latLng = new LatLng(mLat, mLng);
+            myLocation = googleMap.addMarker(
+                    new MarkerOptions().position(latLng).title("Minha localização")
+            );
+        }
+
         googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, 19));
 
         googleMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
@@ -126,6 +153,18 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
     }
 
     private void updateLocation(LatLng point) {
+        SaveData sv = new SaveData(getActivity());
+        User user = sv.getUser();
+        user.setLat(point.latitude);
+        user.setLng(point.longitude);
 
+        String role;
+        if (user instanceof Donee) role = "donees";
+        else role = "donors";
+
+        sv.setUser(user);
+        DatabaseReference dbRef = FirebaseDatabase.getInstance().getReference();
+        dbRef.child("users").child(role).child(user.getUid()).setValue(user);
+        Toast.makeText(getActivity(), R.string.location_updated, Toast.LENGTH_SHORT).show();
     }
 }

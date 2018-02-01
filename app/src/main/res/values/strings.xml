@@ -85,5 +85,7 @@
     <string name="greeting_placeholder">Olá, {user}!</string>
     <string name="greeting_subtitle">Pronto para fazer o bem?</string>
 
+    <string name="location_updated">Localização atualizada</string>
+
     <string name="API_KEY">AIzaSyDXprQRZijSyL3ruqqQV8fukd6IA9oer5M</string>
 </resources>

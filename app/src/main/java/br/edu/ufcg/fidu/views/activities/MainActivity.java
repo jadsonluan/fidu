@@ -89,7 +89,7 @@ public class MainActivity extends AppCompatActivity {
                     changeFragment(new MessagesFragment(), getString(R.string.title_messages));
                     return true;
                 case R.id.navigation_map:
-                    changeFragment(MapFragment.newInstance(-23.556822, -46.729966),
+                    changeFragment(new MapFragment(),
                             getString(R.string.title_map));
                     return true;
                 case R.id.navigation_profile:

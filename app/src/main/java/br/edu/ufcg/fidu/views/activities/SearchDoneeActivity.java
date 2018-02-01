@@ -9,6 +9,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.maps.model.LatLng;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -20,7 +21,9 @@ import java.util.ArrayList;
 
 import br.edu.ufcg.fidu.R;
 import br.edu.ufcg.fidu.models.Donee;
+import br.edu.ufcg.fidu.models.User;
 import br.edu.ufcg.fidu.utils.DoneeAdapter;
+import br.edu.ufcg.fidu.utils.SaveData;
 
 public class SearchDoneeActivity extends AppCompatActivity {
 
@@ -29,6 +32,7 @@ public class SearchDoneeActivity extends AppCompatActivity {
     private ListView doneeList;
     private TextView loadingText;
     private ProgressBar loadingBar;
+    private User current_user;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,6 +42,7 @@ public class SearchDoneeActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         mDatabase = FirebaseDatabase.getInstance().getReference();
+        current_user = (new SaveData(this)).getUser();
         doneeList = findViewById(R.id.doneeList);
         loadingBar = findViewById(R.id.loadingBar);
         loadingText = findViewById(R.id.loadingText);
@@ -75,7 +80,8 @@ public class SearchDoneeActivity extends AppCompatActivity {
     }
 
     private void fillAdapter(ArrayList<Donee> donees) {
-        adapter = new DoneeAdapter(donees, this);
+        LatLng point = new LatLng(current_user.getLat(), current_user.getLng());
+        adapter = new DoneeAdapter(donees, point, this);
         doneeList.onRemoteAdapterConnected();
         doneeList.setAdapter(adapter);
     }
