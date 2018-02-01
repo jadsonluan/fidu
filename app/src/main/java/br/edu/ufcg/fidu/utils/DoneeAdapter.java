@@ -77,9 +77,9 @@ public class DoneeAdapter extends BaseAdapter {
             String distanceTxt;
 
             if (distance < 1000) {
-                distanceTxt = String.format("%.f metros", distance);
+                distanceTxt = String.format("%d m", (int) Math.ceil(distance));
             } else {
-                distanceTxt = String.format(".2f km", distance * 0.001);
+                distanceTxt = String.format("%.2f km", distance * 0.001);
             }
 
             address.setText(distanceTxt);
@@ -104,7 +104,7 @@ public class DoneeAdapter extends BaseAdapter {
         float[] results = new float[1];
         Location.distanceBetween(start.latitude, start.longitude,
                 end.latitude, end.longitude, results);
-        return results[0] * 0.001;
+        return results[0];
     }
 
     /**
