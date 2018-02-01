@@ -212,7 +212,7 @@ public class UpdateProfileActivity extends AppCompatActivity {
                 String url = photoUrl != null ? photoUrl : donee.getPhotoUrl();
 
                 donee.setName(name);
-                donee.setOccupation(description);
+                donee.setOccupation(occupation);
                 donee.setAddress(address);
                 donee.setDescription(description);
                 donee.setFoundedIn(foundedIn);
