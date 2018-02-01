@@ -74,7 +74,15 @@ public class DoneeAdapter extends BaseAdapter {
             LatLng doneeLocation = new LatLng(donee.getLat(), donee.getLng());
             LatLng userLocation = new LatLng(user.getLat(), user.getLng());
             double distance = calculateDistance(userLocation, doneeLocation);
-            address.setText(String.format("%.2f km", distance));
+            String distanceTxt;
+
+            if (distance < 1000) {
+                distanceTxt = String.format("%.f metros", distance);
+            } else {
+                distanceTxt = String.format(".2f km", distance * 0.001);
+            }
+
+            address.setText(distanceTxt);
         } else {
             address.setText("localização não informada");
         }
@@ -96,7 +104,7 @@ public class DoneeAdapter extends BaseAdapter {
         float[] results = new float[1];
         Location.distanceBetween(start.latitude, start.longitude,
                 end.latitude, end.longitude, results);
-        return results[0];
+        return results[0] * 0.001;
     }
 
     /**

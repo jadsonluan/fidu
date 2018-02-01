@@ -64,7 +64,7 @@
     <string name="signup_success">Cadastro concluído com êxito.</string>
     <string name="signup_failed">Falha no cadastro</string>
     <string name="title_activity_main">MainActivity</string>
-    <string name="title_messages">Messagens</string>
+    <string name="title_messages">Conversas</string>
     <string name="title_map">Mapa</string>
     <string name="title_profile">Perfil</string>
     <string name="title_donee_profile">Perfil da Instituição</string>

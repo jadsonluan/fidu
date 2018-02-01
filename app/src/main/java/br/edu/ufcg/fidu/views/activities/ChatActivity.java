@@ -27,11 +27,15 @@ import br.edu.ufcg.fidu.R;
 import br.edu.ufcg.fidu.models.Message;
 
 public class ChatActivity extends AppCompatActivity {
-    LinearLayout layout;
-    ImageView sendButton;
-    EditText messageArea;
-    ScrollView scrollView;
-    DatabaseReference reference1, reference2;
+    private LinearLayout layout;
+    private ImageView sendButton;
+    private EditText messageArea;
+    private ScrollView scrollView;
+    private DatabaseReference reference1, reference2;
+
+    public static final String USER_UID = "user_uid";
+    public static final String OTHER_UID = "other_uid";
+    public static final String OTHERNAME = "othername";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,12 +51,16 @@ public class ChatActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
         if(intent != null){
-            final String userUID = intent.getStringExtra("user_uid");
-            final String otherUID = intent.getStringExtra("other_uid");
-            final String othername = intent.getStringExtra("othername");
+            final String userUID = intent.getStringExtra(USER_UID);
+            final String otherUID = intent.getStringExtra(OTHER_UID);
+            final String othername = intent.getStringExtra(OTHERNAME);
             setTitle(othername);
-            reference1 = FirebaseDatabase.getInstance().getReference("messages/" + userUID + "_" + otherUID);
-            reference2 = FirebaseDatabase.getInstance().getReference("messages/" + otherUID + "_" + userUID);
+
+            String userPath = "chats/" + userUID + "/talking_to/" + otherUID;
+            reference1 = FirebaseDatabase.getInstance().getReference(userPath);
+
+            String otherPath = "chats/" + otherUID + "/talking_to/" + userUID;
+            reference2 = FirebaseDatabase.getInstance().getReference(otherPath);
 
             sendButton.setOnClickListener(new View.OnClickListener() {
                 @Override
