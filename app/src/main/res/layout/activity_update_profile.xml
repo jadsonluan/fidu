@@ -53,7 +53,8 @@
                 android:layout_width="150dp"
                 android:layout_height="150dp"
                 android:layout_marginTop="24dp"
-                android:src="@color/colorDarkPrimary"
+                android:src="@drawable/ic_user"
+                android:elevation="4dp"
                 app:civ_border_color="@color/colorPrimary"
                 app:civ_border_width="2dp"
                 android:tooltipText="Editar"/>
