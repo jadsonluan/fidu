@@ -24,6 +24,8 @@ import com.google.firebase.database.ValueEventListener;
 
 import br.edu.ufcg.fidu.R;
 import br.edu.ufcg.fidu.models.Donee;
+import br.edu.ufcg.fidu.models.User;
+import br.edu.ufcg.fidu.utils.SaveData;
 
 public class DoneeProfileActivity extends AppCompatActivity {
     private TextView tvName;
@@ -50,6 +52,14 @@ public class DoneeProfileActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_donee_profile);
 
+        Bundle extras = getIntent().getExtras();
+
+        if (extras == null) {
+            onBackPressed();
+        } else if (!extras.containsKey("donee_uid")) {
+            onBackPressed();
+        }
+
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         loading = findViewById(R.id.main_loading);
@@ -69,23 +79,18 @@ public class DoneeProfileActivity extends AppCompatActivity {
         websiteLayout = findViewById(R.id.websiteLayout);
         addressLayout = findViewById(R.id.addressLayout);
 
-        btnContact = findViewById(R.id.btnContact);
-        btnContact.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Toast.makeText(DoneeProfileActivity.this, "Contatando instituição", Toast.LENGTH_SHORT).show();
-            }
-        });
-
-        Bundle extras = getIntent().getExtras();
-
-        if (extras == null) {
-            onBackPressed();
-        } else if (!extras.containsKey("donee_uid")) {
-            onBackPressed();
-        }
-
         updateUI();
+    }
+
+    private void contact(String doneeName) {
+        String doneeUID = getIntent().getExtras().getString("donee_uid");
+        String userUID = getIntent().getExtras().getString("user_uid");
+
+        Intent intent = new Intent(DoneeProfileActivity.this, ChatActivity.class);
+        intent.putExtra("user_uid", userUID);
+        intent.putExtra("other_uid", doneeUID);
+        intent.putExtra("othername", doneeName);
+        startActivity(intent);
     }
 
     private void updateUI() {
@@ -96,7 +101,7 @@ public class DoneeProfileActivity extends AppCompatActivity {
         query.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                Donee donee = dataSnapshot.getValue(Donee.class);
+                final Donee donee = dataSnapshot.getValue(Donee.class);
                 if (donee != null) {
                     tvName.setText(donee.getName());
                     setInformation(donee.getOccupation(), tvOccupation, occupationLayout);
@@ -111,6 +116,14 @@ public class DoneeProfileActivity extends AppCompatActivity {
                     setInformation(donee.getDescription(), tvDescription, descriptionLayout);
                     setInformation(benefited, tvBenefited, benefitedLayout);
                     setInformation(foundedIn, tvFoundedIn, foundedInLayout);
+
+                    btnContact = findViewById(R.id.btnContact);
+                    btnContact.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            contact(donee.getName());
+                        }
+                    });
                 }
             }
 

@@ -80,8 +80,7 @@ public class SearchDoneeActivity extends AppCompatActivity {
     }
 
     private void fillAdapter(ArrayList<Donee> donees) {
-        LatLng point = new LatLng(current_user.getLat(), current_user.getLng());
-        adapter = new DoneeAdapter(donees, point, this);
+        adapter = new DoneeAdapter(donees, current_user, this);
         doneeList.onRemoteAdapterConnected();
         doneeList.setAdapter(adapter);
     }

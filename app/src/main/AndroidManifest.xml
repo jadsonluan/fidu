@@ -61,13 +61,7 @@
         <activity
             android:name=".views.activities.ChatActivity"
             android:label="Chat"
-            android:parentActivityName=".views.activities.MainActivity"
             android:theme="@style/AppThemeWithActionBar">
-
-            <!-- Parent activity meta-data to support 4.0 and lower -->
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value=".views.activities.MainActivity" />
         </activity>
         <activity
             android:name=".views.activities.DoneeProfileActivity"

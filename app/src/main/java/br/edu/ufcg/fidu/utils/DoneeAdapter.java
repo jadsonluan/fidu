@@ -22,6 +22,7 @@ import java.util.ArrayList;
 
 import br.edu.ufcg.fidu.R;
 import br.edu.ufcg.fidu.models.Donee;
+import br.edu.ufcg.fidu.models.User;
 import br.edu.ufcg.fidu.views.activities.DoneeProfileActivity;
 import br.edu.ufcg.fidu.views.activities.MainActivity;
 
@@ -29,13 +30,13 @@ public class DoneeAdapter extends BaseAdapter {
 
     private final Activity activity;
     private final ArrayList<Donee> donees;
-    private final LatLng userLocation;
+    private final User user;
 
     private ImageView photo;
 
-    public DoneeAdapter(ArrayList<Donee> donees, LatLng userLocation, Activity activity) {
+    public DoneeAdapter(ArrayList<Donee> donees, User user, Activity activity) {
         this.donees = donees;
-        this.userLocation = userLocation;
+        this.user = user;
         this.activity = activity;
     }
 
@@ -70,7 +71,8 @@ public class DoneeAdapter extends BaseAdapter {
         String unknown = activity.getString(R.string.unknown_information);
 
         if (donee.getLat() != 0 && donee.getLng() != 0) {
-            LatLng doneeLocation = new LatLng(donee.getLat(), donee.getLng())   ;
+            LatLng doneeLocation = new LatLng(donee.getLat(), donee.getLng());
+            LatLng userLocation = new LatLng(user.getLat(), user.getLng());
             double distance = calculateDistance(userLocation, doneeLocation);
             address.setText(String.format("%.2f km", distance));
         } else {
@@ -82,6 +84,7 @@ public class DoneeAdapter extends BaseAdapter {
             public void onClick(View view) {
                 Intent intent = new Intent(activity, DoneeProfileActivity.class);
                 intent.putExtra("donee_uid", donee.getUid());
+                intent.putExtra("user_uid", user.getUid());
                 activity.startActivity(intent);
             }
         });

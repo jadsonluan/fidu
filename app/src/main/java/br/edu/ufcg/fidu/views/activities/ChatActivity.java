@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Gravity;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
@@ -37,6 +38,8 @@ public class ChatActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chat);
 
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
         layout = findViewById(R.id.layout1);
         sendButton = findViewById(R.id.sendButton);
         messageArea = findViewById(R.id.messageArea);
@@ -44,11 +47,12 @@ public class ChatActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
         if(intent != null){
-            final String username = intent.getStringExtra("user");
-            final String chatWith = intent.getStringExtra("chatWith");
-            setTitle(chatWith);
-            reference1 = FirebaseDatabase.getInstance().getReference("messages/" + username + "_" + chatWith);
-            reference2 = FirebaseDatabase.getInstance().getReference("messages/" + chatWith + "_" + username);
+            final String userUID = intent.getStringExtra("user_uid");
+            final String otherUID = intent.getStringExtra("other_uid");
+            final String othername = intent.getStringExtra("othername");
+            setTitle(othername);
+            reference1 = FirebaseDatabase.getInstance().getReference("messages/" + userUID + "_" + otherUID);
+            reference2 = FirebaseDatabase.getInstance().getReference("messages/" + otherUID + "_" + userUID);
 
             sendButton.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -58,7 +62,7 @@ public class ChatActivity extends AppCompatActivity {
                     if(!messageText.equals("")){
                         Map<String, String> map = new HashMap<>();
                         map.put("message", messageText);
-                        map.put("user", username);
+                        map.put("user", userUID);
                         map.put("date", new SimpleDateFormat("HH:mm").format(Calendar.getInstance().getTime()));
                         reference1.push().setValue(map);
                         reference2.push().setValue(map);
@@ -72,7 +76,7 @@ public class ChatActivity extends AppCompatActivity {
                 public void onChildAdded(DataSnapshot dataSnapshot, String s) {
                     Message message = dataSnapshot.getValue(Message.class);
 
-                    if (message.getUser().equals(username)) {
+                    if (message.getUser().equals(userUID)) {
                         addMessageBox(message.getMessage(), message.getDate(), 0);
                     } else {
                         addMessageBox(message.getMessage(), message.getDate(), 1);
@@ -142,5 +146,11 @@ public class ChatActivity extends AppCompatActivity {
                 scrollView.fullScroll(View.FOCUS_DOWN);
             }
         });
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        onBackPressed();
+        return true;
     }
 }
