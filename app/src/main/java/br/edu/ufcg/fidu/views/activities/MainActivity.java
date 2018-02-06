@@ -27,6 +27,7 @@ import br.edu.ufcg.fidu.views.fragments.ProfileFragment;
 public class MainActivity extends AppCompatActivity {
 
     private android.support.v4.app.FragmentManager fm;
+    private BottomNavigationView navigation;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,7 +35,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         fm = getSupportFragmentManager();
-        BottomNavigationView navigation = findViewById(R.id.navigation);
+        navigation = findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
 
         ApplicationInfo app = null;
@@ -129,5 +130,14 @@ public class MainActivity extends AppCompatActivity {
 
                 })
                 .show();
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (navigation.getSelectedItemId() != R.id.navigation_home) {
+            navigation.setSelectedItemId(R.id.navigation_home);
+        } else {
+            super.onBackPressed();
+        }
     }
 }

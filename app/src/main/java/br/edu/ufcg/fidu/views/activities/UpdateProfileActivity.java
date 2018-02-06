@@ -201,11 +201,10 @@ public class UpdateProfileActivity extends AppCompatActivity {
         int foundedIn = strFoundedIn.equals("") ? 0 : Integer.parseInt(strFoundedIn);
         int benefited = strBenefited.equals("") ? 0 : Integer.parseInt(strBenefited);
 
-        if (!validate(name, occupation, website, address, description, foundedIn, benefited)) return;
+        if (!validate(name, foundedIn, benefited)) return;
 
         if (sv.isLogged()) {
             String uid = mAuth.getCurrentUser().getUid();
-            String email = mAuth.getCurrentUser().getEmail();
 
             if (sv.getRole() == SaveData.DONEE) {
                 Donee donee = sv.readDonee();
@@ -249,16 +248,12 @@ public class UpdateProfileActivity extends AppCompatActivity {
      * avaliada.
      *
      * @param name Nome do usuário
-     * @param occupation Área de atuação
-     * @param website Website
-     * @param address Logradouro (apenas Donee)
-     * @param description Descrição da instituição (apenas Donee)
      * @param foundedIn Ano de fundação da instituição
      * @param benefited Quantidade de pessoas beneficiadas (apenas Donee)
      * @return true, se todas as informações forem válidas. Caso contrário, retorna false
      */
-    private boolean validate(String name, String occupation, String website, String address,
-                             String description, int foundedIn, int benefited) {
+    private boolean validate(String name,
+                             int foundedIn, int benefited) {
         boolean isValid = true;
         View focusView = null;
 
